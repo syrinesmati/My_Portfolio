@@ -13,6 +13,15 @@ import recommenderImage2 from "@/assets/recommender2.png";
 import recommenderImage3 from "@/assets/recommender3.png";
 import recommenderImage from "@/assets/recommender.png";
 import rescuelinkImage from "@/assets/rescuelink.png";
+import logoDinepilotImage from "@/assets/logo-dinepilot.png";
+import dinepilotImage from "@/assets/dinepilot.png";
+import dinepilotImage1 from "@/assets/dinepilot-1.png";
+import packageDeliveryImage from "@/assets/Package-delivery.png";
+import packageDeliveryImage2 from "@/assets/package-delivey2.png";
+import realestate1Image from "@/assets/realestate1.png";
+import realestate2Image from "@/assets/realestate2.png";
+import realestate4Image from "@/assets/realestate4.png";
+import taskflow1Image from "@/assets/taskflow1.png";
 import {
   Carousel,
   CarouselContent,
@@ -50,9 +59,9 @@ const ProjectDetail = () => {
       title: "DinePilot",
       description: "An AI-powered restaurant analytics platform providing real-time visibility into table occupancy, customer wait times, and floor activity.",
       fullDescription: "DinePilot is a smart restaurant floor monitoring system that leverages advanced computer vision to transform how restaurants manage their operations. Using YOLOv11x for object detection and YOLOv8x-pose for pose and occupancy estimation, the system provides real-time insights into table status, customer flow, and floor activity. The custom React dashboard features color-coded status indicators and intelligent detection of personal belongings to automatically mark tables as reserved. Integrated automated monthly reports with predictive analytics enable proactive planning and resource optimization.",
-      image: "src/assets/logo-dinepilot.png",
+      image: logoDinepilotImage,
       tags: ["React", "YOLOv11x", "YOLOv8x-pose", "Computer Vision", "Real-time Analytics"],
-      screenshots: ["/src/assets/logo-dinepilot.png", "/src/assets/dinepilot.png", "/src/assets/dinepilot-1.png"],
+      screenshots: [logoDinepilotImage, dinepilotImage, dinepilotImage1],
       videoPath: "/src/assets/Dinepilot-demo.mp4",
       award: {
         title: "2nd Place - Smart Service Challenge",
@@ -71,9 +80,9 @@ const ProjectDetail = () => {
       title: "Package Delivery System",
       description: "An AI-driven search system for optimizing package delivery in urban environments with multiple search strategies.",
       fullDescription: "This Package Delivery System is a search-based optimization platform that computes optimal delivery routes under traffic constraints and tunnel shortcuts. The system implements and compares eight different search strategies, providing comprehensive performance analysis including execution time, memory usage, CPU utilization, and node expansion metrics. Built with a modular Java backend featuring Strategy & Template Method design patterns, and a React/Vite frontend for real-time visualization of grids, truck movements, traffic levels, and algorithm metrics.",
-      image: "/src/assets/package-delivery.png",
+      image: packageDeliveryImage,
       tags: ["Java", "React", "Vite", "AI Search", "OOP Design Patterns", "Performance Analysis"],
-      screenshots: ["/src/assets/Package-delivery.png", "/src/assets/package-delivey2.png"],
+      screenshots: [packageDeliveryImage, packageDeliveryImage2],
       videoPath: "/src/assets/Package-delivery.mp4",
       features: [
         "Eight search strategy implementations",
@@ -119,9 +128,9 @@ const ProjectDetail = () => {
       title: "Tunisian Real Estate Price Prediction",
       description: "A machine learning-based platform for predicting real estate prices in Tunisia with high accuracy.",
       fullDescription: "A comprehensive end-to-end ML platform for predicting real estate prices in Tunisia. The system was trained on 12,000+ properties data and achieves 0.878 accuracy for rental price models. The pipeline includes data ingestion, cleaning, and validation stages, with models trained and evaluated using MLflow for experiment tracking. The prediction service is exposed through a RESTful FastAPI backend, containerized with Docker, and deployed to the cloud. An intuitive full-stack web application allows users to input property details and receive instant price predictions for both rental and sale properties.",
-      image: "/src/assets/realestate1.png",
+      image: realestate1Image,
       tags: ["FastAPI", "Machine Learning", "MLflow", "Docker", "Predictive Analytics", "Data Engineering"],
-      screenshots: ["/src/assets/realestate1.png", "/src/assets/realestate2.png", "/src/assets/realestate4.png"],
+      screenshots: [realestate1Image, realestate2Image, realestate4Image],
       videoPath: "/src/assets/demo.mp4",
       features: [
         "ML models trained on 12,000+ properties",
@@ -136,9 +145,9 @@ const ProjectDetail = () => {
       title: "TaskFlow-Pro",
       description: "A task and project management platform for effective team collaboration.",
       fullDescription: "TaskFlow-Pro is a comprehensive task and project management platform that helps teams collaborate effectively. It enables teams to organize, assign, and track work through a unified workspace, centralizing projects, tasks, and team communication in one place. Built with Angular 21 and Tailwind CSS on the frontend, NestJS with Prisma and PostgreSQL on the backend, and featuring real-time updates via WebSocket, JWT authentication, and Supabase integration for additional backend services.",
-      image: "/src/assets/taskflow1.png",
+      image: taskflow1Image,
       tags: ["Angular 21", "Tailwind CSS", "NestJS", "TypeScript", "PostgreSQL", "Supabase", "Prisma", "JWT", "WebSocket"],
-      screenshots: ["/src/assets/taskflow1.png"],
+      screenshots: [taskflow1Image],
       videoPath: "/src/assets/demotaskflow.mp4",
       features: [
         "Unified workspace for projects and tasks",

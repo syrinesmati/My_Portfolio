@@ -9,6 +9,15 @@ import farmlinkImage from "@/assets/farmlink.png";
 import recommenderImage from "@/assets/recommender.png";
 import autohavenImage from "@/assets/autohaven.png";
 import rescuelinkImage from "@/assets/rescuelink.png";
+import logoDinepilotImage from "@/assets/logo-dinepilot.png";
+import dinepilotImage from "@/assets/dinepilot.png";
+import dinepilotImage1 from "@/assets/dinepilot-1.png";
+import packageDeliveryImage from "@/assets/Package-delivery.png";
+import packageDeliveryImage2 from "@/assets/package-delivey2.png";
+import realestate1Image from "@/assets/realestate1.png";
+import realestate2Image from "@/assets/realestate2.png";
+import realestate4Image from "@/assets/realestate4.png";
+import taskflow1Image from "@/assets/taskflow1.png";
 
 type Category = "all" | "ai" | "fullstack";
 
@@ -38,7 +47,7 @@ const Projects = () => {
       id: "dinepilot",
       title: "DinePilot",
       description: "An AI-powered restaurant analytics platform providing real-time visibility into table occupancy, customer wait times, and floor activity using YOLOv11x for object detection and YOLOv8x-pose for pose estimation.",
-      image: "/src/assets/logo-dinepilot.png",
+      image: logoDinepilotImage,
       tags: ["React", "YOLOv11x", "YOLOv8x-pose", "Computer Vision", "Real-time Analytics"],
       award: "🥈 2nd Place - Smart Service Challenge (AI Camera)",
       featured: true,
@@ -57,7 +66,7 @@ const Projects = () => {
       id: "package-delivery",
       title: "Package Delivery System",
       description: "An AI-driven search system for optimizing package delivery in urban environments. Implements eight search strategies with a Java backend and React/Vite frontend for real-time visualization.",
-      image: "/src/assets/package-delivery.png",
+      image: packageDeliveryImage,
       tags: ["Java", "React", "Vite", "AI Search", "OOP Design Patterns", "Performance Analysis"],
       category: ["ai"] as Category[],
       githubUrl: "https://github.com/syrinesmati/ai-package-delivery",
@@ -82,7 +91,7 @@ const Projects = () => {
       id: "real-estate-prediction",
       title: "Tunisian Real Estate Price Prediction",
       description: "A machine learning-based platform for predicting real estate prices in Tunisia. Uses advanced ML algorithms trained on 12,000+ properties data to predict rental and sale prices with high accuracy (0.878 accuracy for rental models).",
-      image: "/src/assets/realestate1.png",
+      image: realestate1Image,
       tags: ["FastAPI", "Machine Learning", "MLflow", "Docker", "Predictive Analytics", "Data Engineering"],
       category: ["ai"] as Category[],
       githubUrl: "https://github.com/syrinesmati/Tunisan-Real-Estate-Price-Prediction-Platform",
@@ -91,7 +100,7 @@ const Projects = () => {
       id: "taskflow-pro",
       title: "TaskFlow-Pro",
       description: "A task and project management platform that helps teams collaborate effectively through a unified workspace, centralizing projects, tasks, and team communication.",
-      image: "/src/assets/taskflow1.png",
+      image: taskflow1Image,
       tags: ["Angular 21", "Tailwind CSS", "NestJS", "TypeScript", "PostgreSQL", "Supabase", "Prisma", "JWT", "WebSocket"],
       category: ["fullstack"] as Category[],
       githubUrl: "https://github.com/syrinesmati/AngularProject",

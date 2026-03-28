@@ -1,10 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import jei2025Image from "@/assets/jei2025.jpg";
+import ocvpImage from "@/assets/ocvp.jpg";
+import jei2024Image from "@/assets/jei2024.jpg";
 
 const Volunteering = () => {
   const volunteering = [
       {
-      image: "/src/assets/jei2025.JPG",
+      image: jei2025Image,
       title: "Project Department Member",
       organization: "Junior Enterprise INSAT",
       period: "Sept 2025 – Ongoing",
@@ -12,7 +15,7 @@ const Volunteering = () => {
         "Contributed to end-to-end applications (frontend and backend) and developed strong collaboration skills. Actively involved in delivering high-quality solutions for clients.",
     },
     {
-      image: "/src/assets/ocvp.jpg",
+      image: ocvpImage,
       title: "President of Organizing Committee",
       organization: "Forum INSAT Entreprise - Hackathon",
       period: "November 2025",
@@ -21,7 +24,7 @@ const Volunteering = () => {
     },
   
     {
-      image: "/src/assets/jei2024.jpg",
+      image: jei2024Image,
       title: "UI/UX Designer",
       organization: "Junior Entreprise Insat",
       period: "September 2024 - June 2025",
