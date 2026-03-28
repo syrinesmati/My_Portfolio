@@ -22,6 +22,13 @@ import realestate1Image from "@/assets/realestate1.png";
 import realestate2Image from "@/assets/realestate2.png";
 import realestate4Image from "@/assets/realestate4.png";
 import taskflow1Image from "@/assets/taskflow1.png";
+import farmlinkVideo from "@/assets/farmlink-demo.mp4";
+import dinepilotVideo from "@/assets/Dinepilot-demo.mp4";
+import packageDeliveryVideo from "@/assets/Package-delivery.mp4";
+import odooVideo from "@/assets/odoo-demo.mp4";
+import rescuelinkVideo from "@/assets/rescuelink-demo.mp4";
+import realestateVideo from "@/assets/demo.mp4";
+import taskflowVideo from "@/assets/demotaskflow.mp4";
 import {
   Carousel,
   CarouselContent,
@@ -46,7 +53,7 @@ const ProjectDetail = () => {
       image: farmlinkImage,
       tags: ["NestJS", "PostgreSQL", "React", "TailWind CSS", "Docker", "RAG", "PyTorch", "FlaskAPI"],
       screenshots: [farmlinkImage, farmlinkImage1],
-      videoPath: "/src/assets/farmlink-demo.mp4",
+      videoPath: farmlinkVideo,
       features: [
         "Direct farmer-to-market connections",
         "AI crop disease detection",
@@ -62,7 +69,7 @@ const ProjectDetail = () => {
       image: logoDinepilotImage,
       tags: ["React", "YOLOv11x", "YOLOv8x-pose", "Computer Vision", "Real-time Analytics"],
       screenshots: [logoDinepilotImage, dinepilotImage, dinepilotImage1],
-      videoPath: "/src/assets/Dinepilot-demo.mp4",
+      videoPath: dinepilotVideo,
       award: {
         title: "2nd Place - Smart Service Challenge",
         competition: "AI Camera Challenge",
@@ -83,7 +90,7 @@ const ProjectDetail = () => {
       image: packageDeliveryImage,
       tags: ["Java", "React", "Vite", "AI Search", "OOP Design Patterns", "Performance Analysis"],
       screenshots: [packageDeliveryImage, packageDeliveryImage2],
-      videoPath: "/src/assets/Package-delivery.mp4",
+      videoPath: packageDeliveryVideo,
       features: [
         "Eight search strategy implementations",
         "Real-time grid and truck visualization",
@@ -99,7 +106,7 @@ const ProjectDetail = () => {
       image: recommenderImage,
       tags: ["Odoo", "PostgreSQL", "Machine Learning", "Data Analysis"],
       screenshots: [recommenderImage, recommenderImage1, recommenderImage2, recommenderImage3],
-      videoPath: "/src/assets/odoo-demo.mp4",
+      videoPath: odooVideo,
       features: [
         "Collaborative filtering recommendations",
         "Real-time product suggestions",
@@ -115,7 +122,7 @@ const ProjectDetail = () => {
       image: rescuelinkImage,
       tags: ["React", "NestJS", "MySQL", "WebSockets", "GraphQL"],
       screenshots: [rescuelinkImage],
-      videoPath: "/src/assets/rescuelink-demo.mp4",
+      videoPath: rescuelinkVideo,
       features: [
         "Real-time emergency alerts",
         "GPS-based helper matching",
@@ -131,7 +138,7 @@ const ProjectDetail = () => {
       image: realestate1Image,
       tags: ["FastAPI", "Machine Learning", "MLflow", "Docker", "Predictive Analytics", "Data Engineering"],
       screenshots: [realestate1Image, realestate2Image, realestate4Image],
-      videoPath: "/src/assets/demo.mp4",
+      videoPath: realestateVideo,
       features: [
         "ML models trained on 12,000+ properties",
         "0.878 accuracy for rental price prediction",
@@ -148,7 +155,7 @@ const ProjectDetail = () => {
       image: taskflow1Image,
       tags: ["Angular 21", "Tailwind CSS", "NestJS", "TypeScript", "PostgreSQL", "Supabase", "Prisma", "JWT", "WebSocket"],
       screenshots: [taskflow1Image],
-      videoPath: "/src/assets/demotaskflow.mp4",
+      videoPath: taskflowVideo,
       features: [
         "Unified workspace for projects and tasks",
         "Real-time collaboration via WebSocket",

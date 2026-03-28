@@ -166,6 +166,11 @@ const Projects = () => {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  onError={(event) => {
+                    const target = event.currentTarget;
+                    target.src = "/placeholder.svg";
+                    target.className = "w-full h-full object-cover opacity-50";
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
               </div>
