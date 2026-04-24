@@ -187,7 +187,7 @@ const Skills = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
             My <span className="text-gradient">Skills</span>
           </h2>
-          <p className="text-muted-foreground text-lg font-light">
+          <p className="text-xl text-muted-foreground">
             Technologies and tools I work with
           </p>
         </motion.div>
@@ -213,21 +213,21 @@ const Skills = () => {
                   <div
                     className="flex-1 h-px"
                     style={{
-                      background:
-                        "linear-gradient(to right, hsl(330 81% 60% / 0.4), transparent)",
+                        background:
+                        "linear-gradient(to right, hsl(var(--primary) / 0.35), transparent)",
                     }}
                   />
                   <div
                     className="flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-semibold tracking-widest uppercase whitespace-nowrap"
                     style={{
-                      background: "hsl(330 81% 60% / 0.08)",
-                      borderColor: "hsl(330 81% 60% / 0.2)",
-                      color: "hsl(330 81% 60%)",
+                        background: "hsl(var(--primary) / 0.1)",
+                        borderColor: "hsl(var(--primary) / 0.2)",
+                        color: "hsl(var(--primary))",
                     }}
                   >
                     <span
                       className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                      style={{ background: "hsl(330 81% 60%)" }}
+                      style={{ background: "hsl(var(--primary))" }}
                     />
                     {section.title}
                   </div>
@@ -235,12 +235,12 @@ const Skills = () => {
                     className="flex-1 h-px"
                     style={{
                       background:
-                        "linear-gradient(to left, hsl(330 81% 60% / 0.15), transparent)",
+                        "linear-gradient(to left, hsl(var(--primary) / 0.15), transparent)",
                     }}
                   />
                 </div>
 
-                <p className="text-center text-sm text-muted-foreground">
+                <p className="text-center text-base text-muted-foreground">
                   {section.subtitle}
                 </p>
 
@@ -264,20 +264,20 @@ const Skills = () => {
                           }}
                         />
 
-                        <CardContent className="p-5">
+                        <CardContent className="p-6">
                           {/* Icon */}
                           <div
                             className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
                             style={{
-                              background: "hsl(330 81% 60% / 0.1)",
-                              border: "1px solid hsl(330 81% 60% / 0.2)",
+                              background: "hsl(var(--primary) / 0.1)",
+                              border: "1px solid hsl(var(--primary) / 0.2)",
                             }}
                           >
                             {category.emoji}
                           </div>
 
                           {/* Title */}
-                          <h4 className="text-sm font-semibold mb-3 text-foreground tracking-tight">
+                          <h4 className="text-lg font-semibold mb-3 text-foreground tracking-tight">
                             {category.title}
                           </h4>
 
@@ -286,11 +286,11 @@ const Skills = () => {
                             {category.skills.map((skill, i) => (
                               <span
                                 key={i}
-                                className="text-xs px-2.5 py-1 rounded-full transition-colors duration-200"
+                                className="text-sm px-3 py-1 rounded-full transition-colors duration-200"
                                 style={{
-                                  background: "hsl(330 81% 60% / 0.08)",
-                                  border: "1px solid hsl(330 81% 60% / 0.18)",
-                                  color: "hsl(330 81% 75%)",
+                                  background: "hsl(var(--primary) / 0.1)",
+                                  border: "1px solid hsl(var(--primary) / 0.2)",
+                                  color: "hsl(var(--primary))",
                                 }}
                               >
                                 {skill}
