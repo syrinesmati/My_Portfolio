@@ -14,7 +14,7 @@ import realestate2Image from "@/assets/projects/real-estate-prediction/screensho
 import taskflow1Image from "@/assets/projects/taskflow-pro/screenshot-1.png";
 import githubTrendsImage from "@/assets/projects/github-trends-analyzer/screenshot-1.png";
 
-type Category = "all" | "ai" | "fullstack";
+type Category = "all" | "ai" | "fullstack" | "data-engineering";
 
 const ExpandableDescription = ({ text }: { text: string }) => {
   const [expanded, setExpanded] = useState(false);
@@ -49,6 +49,33 @@ const Projects = () => {
       category: ["ai"] as Category[],
     },
     {
+      id: "github-trends-analyzer",
+      title: "GitHub Trends Analyzer – Big Data Project",
+      description:
+        "Designed and implemented an end-to-end big data pipeline to analyze and visualize GitHub activity trends. The system combines batch and real-time processing using Apache Airflow for workflow orchestration, Apache Spark (PySpark and Spark Streaming) for scalable processing, and Apache Kafka for real-time ingestion. Historical and streaming data are stored through HDFS and Apache HBase for efficient querying. The pipeline collects data from GitHub APIs, analyzes repository activity, and applies machine learning models to generate predictions on emerging technologies and trending programming languages. Insights are delivered through an interactive Streamlit dashboard for historical trends, live activity, and AI-driven analytics.",
+      image: githubTrendsImage,
+      tags: ["Apache Airflow", "Apache Spark", "PySpark", "Spark Streaming", "Apache Kafka", "HDFS", "Apache HBase", "Machine Learning", "Streamlit", "Big Data"],
+      category: ["ai", "fullstack", "data-engineering"] as Category[],
+      githubUrl: "https://github.com/syrinesmati/github-trends-analyzer",
+    },
+    {
+      id: "real-estate-prediction",
+      title: "Tunisian Real Estate Price Prediction",
+      description: "A machine learning-based platform for predicting real estate prices in Tunisia. Uses advanced ML algorithms trained on 12,000+ properties data to predict rental and sale prices with high accuracy (0.878 accuracy for rental models).",
+      image: realestate1Image,
+      tags: ["FastAPI", "Machine Learning", "MLflow", "Docker", "Predictive Analytics", "Data Engineering"],
+      category: ["ai"] as Category[],
+      githubUrl: "https://github.com/syrinesmati/Tunisan-Real-Estate-Price-Prediction-Platform",
+    },
+    {
+      id: "odoo-recommender",
+      title: "Odoo Recommender System",
+      description: "A recommendation engine that suggests the most relevant products to users based on their preferences and past interactions using machine learning and data analysis.",
+      image: recommenderImage,
+      tags: ["Odoo", "PostgreSQL", "Machine Learning", "Data Analysis"],
+      category: ["ai"] as Category[],
+    },
+    {
       id: "farmlink",
       title: "FarmLink",
       description: "An Agricultural platform with a RAG-based AI chatbot using Gemini LLM and a computer vision model for plant anomaly detection, built with NestJS, Docker and React.",
@@ -67,12 +94,13 @@ const Projects = () => {
       githubUrl: "https://github.com/syrinesmati/ai-package-delivery",
     },
     {
-      id: "odoo-recommender",
-      title: "Odoo Recommender System",
-      description: "A recommendation engine that suggests the most relevant products to users based on their preferences and past interactions using machine learning and data analysis.",
-      image: recommenderImage,
-      tags: ["Odoo", "PostgreSQL", "Machine Learning", "Data Analysis"],
-      category: ["ai"] as Category[],
+      id: "taskflow-pro",
+      title: "TaskFlow-Pro",
+      description: "A task and project management platform that helps teams collaborate effectively through a unified workspace, centralizing projects, tasks, and team communication.",
+      image: taskflow1Image,
+      tags: ["Angular 21", "Tailwind CSS", "NestJS", "PostgreSQL", "Supabase", "WebSocket"],
+      category: ["fullstack"] as Category[],
+      githubUrl: "https://github.com/syrinesmati/AngularProject",
     },
     {
       id: "rescuelink",
@@ -82,39 +110,12 @@ const Projects = () => {
       tags: ["React", "NestJS", "MySQL", "WebSockets", "GraphQL"],
       category: ["fullstack"] as Category[],
     },
-    {
-      id: "real-estate-prediction",
-      title: "Tunisian Real Estate Price Prediction",
-      description: "A machine learning-based platform for predicting real estate prices in Tunisia. Uses advanced ML algorithms trained on 12,000+ properties data to predict rental and sale prices with high accuracy (0.878 accuracy for rental models).",
-      image: realestate1Image,
-      tags: ["FastAPI", "Machine Learning", "MLflow", "Docker", "Predictive Analytics", "Data Engineering"],
-      category: ["ai"] as Category[],
-      githubUrl: "https://github.com/syrinesmati/Tunisan-Real-Estate-Price-Prediction-Platform",
-    },
-    {
-      id: "taskflow-pro",
-      title: "TaskFlow-Pro",
-      description: "A task and project management platform that helps teams collaborate effectively through a unified workspace, centralizing projects, tasks, and team communication.",
-      image: taskflow1Image,
-      tags: ["Angular 21", "Tailwind CSS", "NestJS", "TypeScript", "PostgreSQL", "Supabase", "Prisma", "JWT", "WebSocket"],
-      category: ["fullstack"] as Category[],
-      githubUrl: "https://github.com/syrinesmati/AngularProject",
-    },
-    {
-      id: "github-trends-analyzer",
-      title: "GitHub Trends Analyzer – Big Data Project",
-      description:
-        "Designed and implemented an end-to-end big data pipeline to analyze and visualize GitHub activity trends. The system combines batch and real-time processing using Apache Airflow for workflow orchestration, Apache Spark (PySpark and Spark Streaming) for scalable processing, and Apache Kafka for real-time ingestion. Historical and streaming data are stored through HDFS and Apache HBase for efficient querying. The pipeline collects data from GitHub APIs, analyzes repository activity, and applies machine learning models to generate predictions on emerging technologies and trending programming languages. Insights are delivered through an interactive Streamlit dashboard for historical trends, live activity, and AI-driven analytics.",
-      image: githubTrendsImage,
-      tags: ["Apache Airflow", "Apache Spark", "PySpark", "Spark Streaming", "Apache Kafka", "HDFS", "Apache HBase", "Machine Learning", "Streamlit", "Big Data"],
-      category: ["ai", "fullstack"] as Category[],
-      githubUrl: "https://github.com/syrinesmati/github-trends-analyzer",
-    },
   ];
 
   const filters: { label: string; value: Category }[] = [
     { label: "All", value: "all" },
     { label: "AI / Data Science", value: "ai" },
+    { label: "Data Engineering", value: "data-engineering" },
     { label: "Full Stack", value: "fullstack" },
   ];
 
@@ -163,7 +164,7 @@ const Projects = () => {
               >
               <div className="relative h-48 overflow-hidden">
                 {project.award && (
-                  <div className="absolute top-3 left-3 z-10 px-3 py-1.5 bg-gradient-to-r from-turquoise/90 to-code-accent/90 text-background text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
+                  <div className="absolute top-3 left-3 z-10 px-3 py-1.5 bg-gradient-to-r from-turquoise/90 to-code-accent/90 text-foreground dark:text-background text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
                     {project.award}
                   </div>
                 )}

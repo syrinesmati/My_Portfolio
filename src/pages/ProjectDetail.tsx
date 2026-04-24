@@ -151,17 +151,16 @@ const ProjectDetail = () => {
     "taskflow-pro": {
       title: "TaskFlow-Pro",
       description: "A task and project management platform for effective team collaboration.",
-      fullDescription: "TaskFlow-Pro is a comprehensive task and project management platform that helps teams collaborate effectively. It enables teams to organize, assign, and track work through a unified workspace, centralizing projects, tasks, and team communication in one place. Built with Angular 21 and Tailwind CSS on the frontend, NestJS with Prisma and PostgreSQL on the backend, and featuring real-time updates via WebSocket, JWT authentication, and Supabase integration for additional backend services.",
+      fullDescription: "TaskFlow-Pro is a comprehensive task and project management platform that helps teams collaborate effectively. It enables teams to organize, assign, and track work through a unified workspace, centralizing projects, tasks, and team communication in one place. Built with Angular 21 and Tailwind CSS on the frontend, NestJS with PostgreSQL on the backend, and featuring real-time updates via WebSocket and Supabase integration for additional backend services.",
       image: taskflow1Image,
-      tags: ["Angular 21", "Tailwind CSS", "NestJS", "TypeScript", "PostgreSQL", "Supabase", "Prisma", "JWT", "WebSocket"],
+      tags: ["Angular 21", "Tailwind CSS", "NestJS", "PostgreSQL", "Supabase", "WebSocket"],
       screenshots: [taskflow1Image],
       videoPath: taskflowVideo,
       features: [
         "Unified workspace for projects and tasks",
         "Real-time collaboration via WebSocket",
         "Team communication and task assignment",
-        "JWT-based authentication",
-        "Prisma ORM with PostgreSQL",
+        "Structured relational data with PostgreSQL",
         "Supabase integration"
       ]
     },
