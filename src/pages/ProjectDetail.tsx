@@ -5,30 +5,30 @@ import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
-import decoraImage from "@/assets/decora.png";
-import farmlinkImage from "@/assets/farmlink.png";
-import farmlinkImage1 from "@/assets/farmlink1.png";
-import recommenderImage1 from "@/assets/recommender1.png";
-import recommenderImage2 from "@/assets/recommender2.png";
-import recommenderImage3 from "@/assets/recommender3.png";
-import recommenderImage from "@/assets/recommender.png";
-import rescuelinkImage from "@/assets/rescuelink.png";
-import logoDinepilotImage from "@/assets/logo-dinepilot.png";
-import dinepilotImage from "@/assets/dinepilot.png";
-import dinepilotImage1 from "@/assets/dinepilot-1.png";
-import packageDeliveryImage from "@/assets/Package-delivery.png";
-import packageDeliveryImage2 from "@/assets/package-delivey2.png";
-import realestate1Image from "@/assets/realestate1.png";
-import realestate2Image from "@/assets/realestate2.png";
-import realestate4Image from "@/assets/realestate4.png";
-import taskflow1Image from "@/assets/taskflow1.png";
-import farmlinkVideo from "@/assets/farmlink-demo.mp4";
-import dinepilotVideo from "@/assets/Dinepilot-demo.mp4";
-import packageDeliveryVideo from "@/assets/Package-delivery.mp4";
-import odooVideo from "@/assets/odoo-demo.mp4";
-import rescuelinkVideo from "@/assets/rescuelink-demo.mp4";
-import realestateVideo from "@/assets/demo.mp4";
-import taskflowVideo from "@/assets/demotaskflow.mp4";
+import farmlinkImage from "@/assets/projects/farmlink/screenshot-1.png";
+import farmlinkImage1 from "@/assets/projects/farmlink/screenshot-2.png";
+import recommenderImage1 from "@/assets/projects/odoo-recommender/screenshot-2.png";
+import recommenderImage2 from "@/assets/projects/odoo-recommender/screenshot-3.png";
+import recommenderImage3 from "@/assets/projects/odoo-recommender/screenshot-4.png";
+import recommenderImage from "@/assets/projects/odoo-recommender/screenshot-1.png";
+import rescuelinkImage from "@/assets/projects/rescuelink/screenshot-1.png";
+import logoDinepilotImage from "@/assets/projects/dinepilot/cover-logo.png";
+import dinepilotImage from "@/assets/projects/dinepilot/screenshot-1.png";
+import dinepilotImage1 from "@/assets/projects/dinepilot/screenshot-2.png";
+import packageDeliveryImage from "@/assets/projects/package-delivery/screenshot-1.png";
+import packageDeliveryImage2 from "@/assets/projects/package-delivery/screenshot-2.png";
+import realestate1Image from "@/assets/projects/real-estate-prediction/screenshot-1.png";
+import realestate2Image from "@/assets/projects/real-estate-prediction/screenshot-2.png";
+import realestate4Image from "@/assets/projects/real-estate-prediction/screenshot-3.png";
+import taskflow1Image from "@/assets/projects/taskflow-pro/screenshot-1.png";
+import githubTrendsImage from "@/assets/projects/github-trends-analyzer/screenshot-1.png";
+import farmlinkVideo from "@/assets/projects/farmlink/demo.mp4";
+import dinepilotVideo from "@/assets/projects/dinepilot/demo.mp4";
+import packageDeliveryVideo from "@/assets/projects/package-delivery/demo.mp4";
+import odooVideo from "@/assets/projects/odoo-recommender/demo.mp4";
+import rescuelinkVideo from "@/assets/projects/rescuelink/demo.mp4";
+import realestateVideo from "@/assets/projects/real-estate-prediction/demo.mp4";
+import taskflowVideo from "@/assets/projects/taskflow-pro/demo.mp4";
 import {
   Carousel,
   CarouselContent,
@@ -163,6 +163,25 @@ const ProjectDetail = () => {
         "JWT-based authentication",
         "Prisma ORM with PostgreSQL",
         "Supabase integration"
+      ]
+    },
+    "github-trends-analyzer": {
+      title: "GitHub Trends Analyzer – Big Data Project",
+      description: "An end-to-end big data pipeline that analyzes and visualizes GitHub activity using both batch and real-time processing.",
+      fullDescription: "GitHub Trends Analyzer is a complete big data project designed to extract actionable insights from large-scale developer activity. The architecture combines batch and streaming workflows to deliver both historical and real-time trend analysis. Apache Airflow orchestrates scheduled jobs, while Apache Spark (PySpark and Spark Streaming) powers distributed data processing at scale. Real-time ingestion is handled through Apache Kafka, and storage is distributed across HDFS and Apache HBase to support efficient querying and analytics. The pipeline collects data from GitHub APIs, processes repository events, and applies machine learning models to identify emerging technologies and trending programming languages. Results are exposed through an interactive Streamlit dashboard, enabling users to explore historical patterns, monitor live activity, and consume AI-driven predictions.",
+      image: githubTrendsImage,
+      tags: ["Apache Airflow", "Apache Spark", "PySpark", "Spark Streaming", "Apache Kafka", "HDFS", "Apache HBase", "Machine Learning", "Streamlit", "Big Data"],
+      screenshots: [githubTrendsImage],
+      videoPath: realestateVideo,
+      features: [
+        "End-to-end batch and real-time data pipeline",
+        "Workflow orchestration with Apache Airflow",
+        "Distributed processing with PySpark and Spark Streaming",
+        "Real-time ingestion with Apache Kafka",
+        "Scalable storage using HDFS and Apache HBase",
+        "GitHub API data collection and repository activity analysis",
+        "Machine learning predictions for emerging technologies",
+        "Interactive Streamlit dashboard for trend exploration"
       ]
     }
   };

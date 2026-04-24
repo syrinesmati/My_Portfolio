@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import guepardLogo from "@/assets/guepard.png";
-import welyneLogo from "@/assets/WelyneLogo.png";
-import yonnovLogo from "@/assets/YonnovLogo.png";
+import guepardLogo from "@/assets/experience/guepard-logo.png";
+import welyneLogo from "@/assets/experience/welyne-logo.png";
+import yonnovLogo from "@/assets/experience/yonnov-logo.png";
 
 const Experience = () => {
   const experiences = [

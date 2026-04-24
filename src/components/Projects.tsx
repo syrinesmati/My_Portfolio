@@ -4,20 +4,15 @@ import { ExternalLink, Github } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import decoraImage from "@/assets/decora.png";
-import farmlinkImage from "@/assets/farmlink.png";
-import recommenderImage from "@/assets/recommender.png";
-import autohavenImage from "@/assets/autohaven.png";
-import rescuelinkImage from "@/assets/rescuelink.png";
-import logoDinepilotImage from "@/assets/logo-dinepilot.png";
-import dinepilotImage from "@/assets/dinepilot.png";
-import dinepilotImage1 from "@/assets/dinepilot-1.png";
-import packageDeliveryImage from "@/assets/Package-delivery.png";
-import packageDeliveryImage2 from "@/assets/package-delivey2.png";
-import realestate1Image from "@/assets/realestate1.png";
-import realestate2Image from "@/assets/realestate2.png";
-import realestate4Image from "@/assets/realestate4.png";
-import taskflow1Image from "@/assets/taskflow1.png";
+import farmlinkImage from "@/assets/projects/farmlink/screenshot-1.png";
+import recommenderImage from "@/assets/projects/odoo-recommender/screenshot-1.png";
+import rescuelinkImage from "@/assets/projects/rescuelink/screenshot-1.png";
+import logoDinepilotImage from "@/assets/projects/dinepilot/cover-logo.png";
+import packageDeliveryImage from "@/assets/projects/package-delivery/screenshot-1.png";
+import realestate1Image from "@/assets/projects/real-estate-prediction/screenshot-1.png";
+import realestate2Image from "@/assets/projects/real-estate-prediction/screenshot-2.png";
+import taskflow1Image from "@/assets/projects/taskflow-pro/screenshot-1.png";
+import githubTrendsImage from "@/assets/projects/github-trends-analyzer/screenshot-1.png";
 
 type Category = "all" | "ai" | "fullstack";
 
@@ -104,6 +99,16 @@ const Projects = () => {
       tags: ["Angular 21", "Tailwind CSS", "NestJS", "TypeScript", "PostgreSQL", "Supabase", "Prisma", "JWT", "WebSocket"],
       category: ["fullstack"] as Category[],
       githubUrl: "https://github.com/syrinesmati/AngularProject",
+    },
+    {
+      id: "github-trends-analyzer",
+      title: "GitHub Trends Analyzer – Big Data Project",
+      description:
+        "Designed and implemented an end-to-end big data pipeline to analyze and visualize GitHub activity trends. The system combines batch and real-time processing using Apache Airflow for workflow orchestration, Apache Spark (PySpark and Spark Streaming) for scalable processing, and Apache Kafka for real-time ingestion. Historical and streaming data are stored through HDFS and Apache HBase for efficient querying. The pipeline collects data from GitHub APIs, analyzes repository activity, and applies machine learning models to generate predictions on emerging technologies and trending programming languages. Insights are delivered through an interactive Streamlit dashboard for historical trends, live activity, and AI-driven analytics.",
+      image: githubTrendsImage,
+      tags: ["Apache Airflow", "Apache Spark", "PySpark", "Spark Streaming", "Apache Kafka", "HDFS", "Apache HBase", "Machine Learning", "Streamlit", "Big Data"],
+      category: ["ai", "fullstack"] as Category[],
+      githubUrl: "https://github.com/syrinesmati/github-trends-analyzer",
     },
   ];
 

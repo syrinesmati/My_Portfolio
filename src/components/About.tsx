@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Code2, Palette, Brain, Rocket, Download } from "lucide-react";
-import cvFile from "@/assets/CV_syrinesmati.pdf";
+import cvFile from "@/assets/documents/cv-syrine-smati.pdf";
 
 const About = () => {
   const highlights = [
@@ -46,7 +46,7 @@ const About = () => {
                     </a>
                   </Button>
                   <Button size="lg" variant="outline" asChild>
-                    <a href={cvFile} download="CV_syrinesmati.pdf">
+                    <a href={cvFile} download="cv-syrine-smati.pdf">
                       <Download className="mr-2 h-5 w-5" />
                       Resume
                     </a>

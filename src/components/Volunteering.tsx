@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import jei2025Image from "@/assets/jei2025.jpg";
-import ocvpImage from "@/assets/ocvp.jpg";
-import jei2024Image from "@/assets/jei2024.jpg";
+import jei2025Image from "@/assets/volunteering/jei-2025.jpg";
+import ocvpImage from "@/assets/volunteering/ocvp.jpg";
+import jei2024Image from "@/assets/volunteering/jei-2024.jpg";
 
 const Volunteering = () => {
   const volunteering = [

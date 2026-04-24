@@ -42,6 +42,19 @@ const Education = () => {
         "Preparation for Engineering Specialization",
       ],
     },
+    {
+      degree: "Baccalaureate – Mathematics Section",
+      institution: "Les Pères Blancs High School",
+      location: "Tunisia",
+      period: "2022",
+      description:
+        "Graduated with Highest Honors (average: 18.73/20) and ranked 1st in the Tunis 2 region. This achievement reflects strong analytical skills, rigorous mathematical training, and consistent academic excellence in a competitive environment.",
+      highlights: [
+        "Graduated with Highest Honors (18.73/20 average)",
+        "Ranked 1st in Tunis 2 Region",
+        "Strong Analytical and Mathematical Foundation",
+      ],
+    },
   ];
 
   return (
