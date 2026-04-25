@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-scroll";
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Sheet,
   SheetContent,
@@ -14,6 +15,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, isFrench } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,13 +30,13 @@ const Navigation = () => {
   }, [theme]);
 
   const navItems = [
-    { name: "Home", to: "home" },
-    { name: "About", to: "about" },
-    { name: "Skills", to: "skills" },
-    { name: "Education", to: "education" },
-    { name: "Experience", to: "experience" },
-    { name: "Projects", to: "projects" },
-    { name: "Contact", to: "contact" },
+    { name: isFrench ? "Accueil" : "Home", to: "home" },
+    { name: isFrench ? "A propos" : "About", to: "about" },
+    { name: isFrench ? "Competences" : "Skills", to: "skills" },
+    { name: isFrench ? "Education" : "Education", to: "education" },
+    { name: isFrench ? "Experience" : "Experience", to: "experience" },
+    { name: isFrench ? "Projets" : "Projects", to: "projects" },
+    { name: isFrench ? "Contact" : "Contact", to: "contact" },
   ];
 
   return (
@@ -65,6 +67,14 @@ const Navigation = () => {
               </Link>
             ))}
             <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setLanguage(language === "en" ? "fr" : "en")}
+              className="font-semibold"
+            >
+              {isFrench ? "FR | EN" : "EN | FR"}
+            </Button>
+            <Button
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -75,6 +85,15 @@ const Navigation = () => {
 
           {/* Mobile Navigation Toggle */}
           <div className="md:hidden flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setLanguage(language === "en" ? "fr" : "en")}
+              className="font-semibold px-3"
+              aria-label={isFrench ? "Passer en anglais" : "Switch to French"}
+            >
+              {isFrench ? "FR | EN" : "EN | FR"}
+            </Button>
             <Button
               variant="ghost"
               size="icon"
@@ -91,7 +110,7 @@ const Navigation = () => {
               </SheetTrigger>
               <SheetContent side="right" className="w-[85vw] max-w-[320px]">
                 <SheetHeader>
-                  <SheetTitle className="text-gradient text-2xl font-bold">Menu</SheetTitle>
+                  <SheetTitle className="text-gradient text-2xl font-bold">{isFrench ? "Menu" : "Menu"}</SheetTitle>
                 </SheetHeader>
                 <div className="mt-8 flex flex-col space-y-4">
                   {navItems.map((item) => (

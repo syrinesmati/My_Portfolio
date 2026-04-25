@@ -2,8 +2,11 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import profileImage from "@/assets/profile/profile-photo.png";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Hero = () => {
+  const { isFrench } = useLanguage();
+
   return (
     <section id="home" className="min-h-[calc(100svh-4rem)] md:min-h-screen flex items-center justify-center relative pt-16 overflow-hidden">
       <SectionGlowBackground />
@@ -16,21 +19,24 @@ const Hero = () => {
         >
           <div className="space-y-5 text-center md:text-left">
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight">
-              Hi, I'm <span className="text-gradient">Syrine Smati</span>
+              {isFrench ? "Bonjour, je suis " : "Hi, I'm "}
+              <span className="text-gradient">Syrine Smati</span>
             </h1>
             <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground">
-              Software Engineering Student
+              {isFrench ? "Etudiante en genie logiciel" : "Software Engineering Student"}
             </p>
             <p className="text-lg sm:text-xl md:text-2xl text-gradient font-semibold">
-              Bringing Ideas into Code
+              {isFrench ? "Transformer les idees en code" : "Bringing Ideas into Code"}
             </p>
             <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto md:mx-0">
-              Building intelligent applications and crafting end-to-end solutions.
+              {isFrench
+                ? "Je cree des applications intelligentes et des solutions de bout en bout."
+                : "Building intelligent applications and crafting end-to-end solutions."}
             </p>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
               <Button size="lg" className="glow">
                 <a href="#about">
-                  View More
+                  {isFrench ? "Voir plus" : "View More"}
                 </a>
               </Button>
             </div>

@@ -4,9 +4,39 @@ import jei2025Image from "@/assets/volunteering/jei-2025.jpg";
 import ocvpImage from "@/assets/volunteering/ocvp.jpg";
 import jei2024Image from "@/assets/volunteering/jei-2024.jpg";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Volunteering = () => {
-  const volunteering = [
+  const { isFrench } = useLanguage();
+
+  const volunteering = isFrench
+    ? [
+        {
+          image: jei2025Image,
+          title: "Membre du departement projets",
+          organization: "Junior Enterprise INSAT",
+          period: "Sep 2025 - En cours",
+          description:
+            "Contribution au developpement d'applications end-to-end (frontend et backend) et renforcement des competences de collaboration.",
+        },
+        {
+          image: ocvpImage,
+          title: "Presidente du comite d'organisation",
+          organization: "Forum INSAT Entreprise - Hackathon",
+          period: "Novembre 2025",
+          description:
+            "Pilotage de l'organisation d'un hackathon de deux semaines en partenariat avec Lloyd autour de projets IA pour la securite routiere.",
+        },
+        {
+          image: jei2024Image,
+          title: "Designer UI/UX",
+          organization: "Junior Entreprise Insat",
+          period: "Sep 2024 - Juin 2025",
+          description:
+            "Conception d'interfaces pour plusieurs projets innovants, avec un focus sur l'experience utilisateur et la qualite des livrables.",
+        },
+      ]
+    : [
       {
       image: jei2025Image,
       title: "Project Department Member",
@@ -41,10 +71,11 @@ const Volunteering = () => {
         {/* Title Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="text-gradient">Volunteering</span> & Leadership
+            <span className="text-gradient">{isFrench ? "Engagement" : "Volunteering"}</span>
+            {isFrench ? " & leadership" : " & Leadership"}
           </h2>
           <p className="text-xl text-muted-foreground">
-            Making an impact through community involvement
+            {isFrench ? "Avoir de l'impact grace a l'engagement associatif" : "Making an impact through community involvement"}
           </p>
         </div>
 

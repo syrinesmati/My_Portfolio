@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Github, Linkedin } from "lucide-react";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact = () => {
+  const { isFrench } = useLanguage();
 
   return (
     <section id="contact" className="py-20 relative overflow-hidden">
@@ -12,10 +14,11 @@ const Contact = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Get in <span className="text-gradient">Touch</span>
+            {isFrench ? "Restons en " : "Get in "}
+            <span className="text-gradient">{isFrench ? "contact" : "Touch"}</span>
           </h2>
           <p className="text-base sm:text-xl text-muted-foreground">
-            Let's create something amazing together
+            {isFrench ? "Creons quelque chose d'incroyable ensemble" : "Let's create something amazing together"}
           </p>
         </div>
 
@@ -29,7 +32,7 @@ const Contact = () => {
           >
             <Card className="card-gradient border-primary/20 card-interactive group cursor-pointer">
               <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
+                <CardTitle>{isFrench ? "Informations de contact" : "Contact Information"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3">
@@ -49,7 +52,7 @@ const Contact = () => {
 
             <Card className="card-gradient border-primary/20 card-interactive group cursor-pointer">
               <CardHeader>
-                <CardTitle>Connect with Me</CardTitle>
+                <CardTitle>{isFrench ? "Retrouvez-moi" : "Connect with Me"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button variant="outline" className="w-full justify-start" asChild>

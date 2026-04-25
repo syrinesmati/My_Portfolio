@@ -36,10 +36,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ProjectDetail = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
+  const { isFrench } = useLanguage();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -187,12 +189,139 @@ const ProjectDetail = () => {
 
   const project = projectId ? projects[projectId as keyof typeof projects] : null;
 
+  const projectTranslationsFr: Record<
+    string,
+    {
+      description: string;
+      fullDescription: string;
+      features: string[];
+      awardDescription?: string;
+      awardTitle?: string;
+      awardCompetition?: string;
+    }
+  > = {
+    farmlink: {
+      description:
+        "Plateforme agricole intelligente combinant IA conversationnelle et vision par ordinateur pour aider les agriculteurs.",
+      fullDescription:
+        "FarmLink est une plateforme intelligente developpee dans le cadre de notre PPP. Elle integre un chatbot IA base sur RAG pour repondre en temps reel, ainsi qu'un modele de vision par ordinateur pour detecter les maladies des plantes. Le projet propose aussi un tableau de bord personnalise avec meteo, conseils et suivi des ressources.",
+      features: [
+        "Mise en relation directe agriculteurs-marche",
+        "Detection IA des maladies des cultures",
+        "Integration de previsions meteo",
+        "Espace de partage de connaissances",
+        "Marketplace de ressources",
+      ],
+    },
+    dinepilot: {
+      description:
+        "Plateforme d'analyse de restaurant en temps reel pour suivre l'occupation des tables et l'activite de salle.",
+      fullDescription:
+        "DinePilot est un systeme intelligent de supervision de salle pour la restauration. Il utilise la vision par ordinateur pour detecter les objets, estimer l'occupation et produire des indicateurs en temps reel. Le dashboard React affiche des statuts visuels clairs et des rapports automatises avec des insights predictifs.",
+      features: [
+        "Detection en temps reel de l'occupation des tables",
+        "Detection d'objets avec YOLOv11x",
+        "Estimation de pose avec YOLOv8x-pose",
+        "Indicateurs visuels par code couleur",
+        "Rapports mensuels automatises et analytiques",
+      ],
+      awardTitle: "2e place - Smart Service Challenge",
+      awardCompetition: "AI Camera Challenge",
+      awardDescription:
+        "Recompensee pour une solution IA innovante qui optimise la gestion des salles de restaurant via des analyses visuelles en temps reel.",
+    },
+    "package-delivery": {
+      description:
+        "Systeme d'optimisation de livraison de colis base sur des strategies de recherche IA en milieu urbain.",
+      fullDescription:
+        "Cette plateforme calcule des routes optimales de livraison sous contraintes de trafic et de tunnels. Elle compare huit strategies de recherche avec des mesures de performance detaillees (temps, memoire, CPU, noeuds explores). Le backend Java est concu de facon modulaire avec des design patterns, et le frontend React/Vite visualise l'execution en temps reel.",
+      features: [
+        "Huit strategies de recherche implementees",
+        "Visualisation en temps reel de la grille et des camions",
+        "Modelisation du trafic et des contraintes",
+        "Tableau de bord de performance",
+        "Patterns Strategy et Template Method",
+      ],
+    },
+    "odoo-recommender": {
+      description:
+        "Moteur de recommandation integre a Odoo eCommerce pour proposer des produits personnalises.",
+      fullDescription:
+        "Le systeme analyse les comportements utilisateurs, l'historique d'achat et les interactions produits pour fournir des recommandations pertinentes. Il combine filtrage collaboratif et approche basee contenu afin d'augmenter la pertinence, la conversion et la satisfaction client.",
+      features: [
+        "Recommandations par filtrage collaboratif",
+        "Suggestions produits en temps reel",
+        "Analyse comportementale utilisateur",
+        "Analyse des patterns d'achat",
+        "Integration native avec Odoo",
+      ],
+    },
+    rescuelink: {
+      description:
+        "Application d'urgence qui connecte les personnes en detresse aux secours a proximite en temps reel.",
+      fullDescription:
+        "RescueLink exploite la geolocalisation temps reel pour orienter rapidement les demandes d'aide vers les bons intervenants. La plateforme permet des alertes immediates, le suivi GPS et des canaux de communication directs avec les secours.",
+      features: [
+        "Alertes d'urgence en temps reel",
+        "Mise en relation basee GPS",
+        "Connexion directe aux services d'urgence",
+        "Notifications des contacts d'urgence",
+        "Reseau d'intervenants verifies",
+      ],
+    },
+    "real-estate-prediction": {
+      description:
+        "Plateforme de prediction des prix immobiliers en Tunisie basee sur le machine learning.",
+      fullDescription:
+        "Plateforme ML complete entrainee sur plus de 12 000 biens immobiliers. Elle couvre ingestion, nettoyage, validation et entrainement des modeles, avec suivi des experiences via MLflow. Le service de prediction est expose via FastAPI, conteneurise avec Docker et deploye dans le cloud.",
+      features: [
+        "Modeles entraines sur 12 000+ biens",
+        "0.878 de precision pour les loyers",
+        "Pipeline data de bout en bout",
+        "Suivi des experiences avec MLflow",
+        "API FastAPI conteneurisee avec Docker",
+        "Service de prediction deploye dans le cloud",
+      ],
+    },
+    "taskflow-pro": {
+      description:
+        "Plateforme de gestion de projets et de taches pour une collaboration d'equipe efficace.",
+      fullDescription:
+        "TaskFlow-Pro centralise projets, taches et communication d'equipe dans un espace unique. Le frontend est base sur Angular 21, le backend sur NestJS/PostgreSQL, avec des mises a jour en temps reel via WebSocket et integration Supabase.",
+      features: [
+        "Espace unifie projets et taches",
+        "Collaboration en temps reel via WebSocket",
+        "Communication d'equipe et assignation",
+        "Stockage relationnel avec PostgreSQL",
+        "Integration Supabase",
+      ],
+    },
+    "github-trends-analyzer": {
+      description:
+        "Pipeline big data de bout en bout pour analyser les tendances d'activite GitHub en batch et en streaming.",
+      fullDescription:
+        "GitHub Trends Analyzer combine traitement batch et temps reel pour extraire des insights exploitables sur l'activite des developpeurs. Airflow orchestre les workflows, Spark traite les donnees, Kafka gere l'ingestion, et HDFS/HBase assurent le stockage analytique. Les resultats sont exposes dans un dashboard Streamlit interactif.",
+      features: [
+        "Pipeline data batch + temps reel",
+        "Orchestration des workflows avec Airflow",
+        "Traitement distribue avec Spark",
+        "Ingestion streaming avec Kafka",
+        "Stockage scalable HDFS/HBase",
+        "Analyse d'activite depuis les APIs GitHub",
+        "Predictions ML sur technologies emergentes",
+        "Dashboard Streamlit interactif",
+      ],
+    },
+  };
+
+  const selectedProjectFr = projectId ? projectTranslationsFr[projectId] : undefined;
+
   if (!project) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
-          <Button onClick={() => navigate("/")}>Go Back Home</Button>
+          <h1 className="text-4xl font-bold mb-4">{isFrench ? "Projet introuvable" : "Project Not Found"}</h1>
+          <Button onClick={() => navigate("/")}>{isFrench ? "Retour a l'accueil" : "Go Back Home"}</Button>
         </div>
       </div>
     );
@@ -215,7 +344,7 @@ const ProjectDetail = () => {
             className="mb-8"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Projects
+            {isFrench ? "Retour aux projets" : "Back to Projects"}
           </Button>
 
           <div className="space-y-12">
@@ -236,16 +365,28 @@ const ProjectDetail = () => {
                   <div className="flex items-center gap-4 mb-3">
                     <span className="text-4xl">🥈</span>
                     <div>
-                      <h3 className="text-2xl font-bold text-turquoise">{(project.award as { title: string; competition: string; description: string }).title}</h3>
-                      <p className="text-lg text-code-accent font-medium">{(project.award as { title: string; competition: string; description: string }).competition}</p>
+                      <h3 className="text-2xl font-bold text-turquoise">
+                        {isFrench
+                          ? selectedProjectFr?.awardTitle ?? (project.award as { title: string; competition: string; description: string }).title
+                          : (project.award as { title: string; competition: string; description: string }).title}
+                      </h3>
+                      <p className="text-lg text-code-accent font-medium">
+                        {isFrench
+                          ? selectedProjectFr?.awardCompetition ?? (project.award as { title: string; competition: string; description: string }).competition
+                          : (project.award as { title: string; competition: string; description: string }).competition}
+                      </p>
                     </div>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{(project.award as { title: string; competition: string; description: string }).description}</p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {isFrench
+                      ? selectedProjectFr?.awardDescription ?? (project.award as { title: string; competition: string; description: string }).description
+                      : (project.award as { title: string; competition: string; description: string }).description}
+                  </p>
                 </motion.div>
               )}
               
               <p className="text-xl text-muted-foreground max-w-3xl">
-                {project.description}
+                {isFrench ? selectedProjectFr?.description ?? project.description : project.description}
               </p>
               
               <div className="flex flex-wrap gap-2">
@@ -305,9 +446,9 @@ const ProjectDetail = () => {
               viewport={{ once: true }}
               className="space-y-4"
             >
-              <h2 className="text-3xl font-bold">About the Project</h2>
+              <h2 className="text-3xl font-bold">{isFrench ? "A propos du projet" : "About the Project"}</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                {project.fullDescription}
+                {isFrench ? selectedProjectFr?.fullDescription ?? project.fullDescription : project.fullDescription}
               </p>
             </motion.div>
 
@@ -319,9 +460,9 @@ const ProjectDetail = () => {
               viewport={{ once: true }}
               className="space-y-4"
             >
-              <h2 className="text-3xl font-bold">Key Features</h2>
+              <h2 className="text-3xl font-bold">{isFrench ? "Fonctionnalites cles" : "Key Features"}</h2>
               <ul className="grid md:grid-cols-2 gap-4">
-                {project.features.map((feature, index) => (
+                {(isFrench ? selectedProjectFr?.features ?? project.features : project.features).map((feature, index) => (
                   <li
                     key={index}
                     className="flex items-start gap-3 p-4 rounded-lg bg-card border border-primary/20"
@@ -341,7 +482,7 @@ const ProjectDetail = () => {
               viewport={{ once: true }}
               className="space-y-4"
             >
-              <h2 className="text-3xl font-bold">Video Demo</h2>
+              <h2 className="text-3xl font-bold">{isFrench ? "Demo video" : "Video Demo"}</h2>
               <div className="relative rounded-lg overflow-hidden shadow-2xl border border-primary/20">
                 <video
                   controls
@@ -349,7 +490,7 @@ const ProjectDetail = () => {
                   poster={project.image}
                 >
                   <source src={project.videoPath} type="video/mp4" />
-                  Your browser does not support the video tag.
+                  {isFrench ? "Votre navigateur ne supporte pas la lecture video." : "Your browser does not support the video tag."}
                 </video>
               </div>
             </motion.div>

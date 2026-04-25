@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { GraduationCap, Calendar, MapPin } from "lucide-react";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface EducationItem {
   degree: string;
@@ -15,7 +16,52 @@ interface EducationItem {
 }
 
 const Education = () => {
-  const education: EducationItem[] = [
+  const { isFrench } = useLanguage();
+
+  const education: EducationItem[] = isFrench
+    ? [
+        {
+          degree: "Cycle d'ingenieur en genie logiciel",
+          institution: "Institut National des Sciences Appliquees et de Technologie (INSAT)",
+          location: "Tunisie",
+          period: "Sep 2024 - Present",
+          expectedGraduation: "2027",
+          description:
+            "Programme avance en genie logiciel axe sur le developpement professionnel et les pratiques d'ingenierie modernes.",
+          highlights: [
+            "Specialisation Genie Logiciel",
+            "Architecture et conception de systemes",
+            "Formation orientee industrie",
+          ],
+        },
+        {
+          degree: "Cycle preparatoire en mathematiques, physique et informatique",
+          institution: "Institut National des Sciences Appliquees et de Technologie (INSAT)",
+          location: "Tunisie",
+          period: "Sep 2022 - Juin 2024",
+          description:
+            "Formation fondamentale en mathematiques, physique et informatique pour preparer le cycle d'ingenieur.",
+          highlights: [
+            "Base solide en maths, physique et informatique",
+            "Resolution de problemes et esprit critique",
+            "Preparation a la specialisation ingenieur",
+          ],
+        },
+        {
+          degree: "Baccalaureat - Section Mathematiques",
+          institution: "Lycee Les Peres Blancs",
+          location: "Tunisie",
+          period: "2022",
+          description:
+            "Baccalaureat mention Tres Bien (moyenne 18.73/20) et classee 1ere au niveau regional Tunis 2.",
+          highlights: [
+            "Mention Tres Bien (18.73/20)",
+            "1ere au niveau regional Tunis 2",
+            "Excellent niveau analytique et mathematique",
+          ],
+        },
+      ]
+    : [
     {
       degree: "Engineering Cycle in Software Engineering",
       institution: "National Institute of Applied Science and Technology (INSAT)",
@@ -65,10 +111,11 @@ const Education = () => {
         {/* Title Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            My <span className="text-gradient">Education</span>
+            {isFrench ? "Mon " : "My "}
+            <span className="text-gradient">{isFrench ? "parcours" : "Education"}</span>
           </h2>
           <p className="text-xl text-muted-foreground">
-            Building foundations for innovation and growth
+            {isFrench ? "Des bases solides pour innover et progresser" : "Building foundations for innovation and growth"}
           </p>
         </div>
 
@@ -131,7 +178,7 @@ const Education = () => {
                           {'expectedGraduation' in edu && (
                             <div className="flex items-center gap-2">
                               <span className="px-2 py-1 rounded-full bg-primary/10 text-primary font-semibold">
-                                Expected: {edu.expectedGraduation}
+                                {isFrench ? "Prevu : " : "Expected: "}{edu.expectedGraduation}
                               </span>
                             </div>
                           )}

@@ -4,9 +4,48 @@ import guepardLogo from "@/assets/experience/guepard-logo.png";
 import welyneLogo from "@/assets/experience/welyne-logo.png";
 import yonnovLogo from "@/assets/experience/yonnov-logo.png";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Experience = () => {
-  const experiences = [
+  const { isFrench } = useLanguage();
+
+  const experiences = isFrench
+    ? [
+        {
+          logo: guepardLogo,
+          title: "Stagiaire IA",
+          organization: "Guepard",
+          location: "Tunisie",
+          period: "Fev 2026 - Present",
+          description:
+            "Optimisation de la couche semantique de Qwery, une plateforme d'analyse NL-to-SQL. Conception de mecanismes de desambiguIsation semantique pour relier l'intention utilisateur aux concepts metier.",
+          technologies: ["NLP", "NL-to-SQL", "Semantic Layer", "AI Analytics"],
+          type: "work",
+        },
+        {
+          logo: welyneLogo,
+          title: "Stagiaire IA",
+          organization: "Welyne",
+          location: "Ariana, Tunisie",
+          period: "Juil 2025 - Sep 2025",
+          description:
+            "Amelioration d'un modele de deep learning qui predit la longueur du bras a partir de caracteristiques biometriques, en optimisant architecture, preprocessing et hyperparametres.",
+          technologies: ["Deep Learning"],
+          type: "work",
+        },
+        {
+          logo: yonnovLogo,
+          title: "Stagiaire IA",
+          organization: "Yonnov'IA",
+          location: "Marseille, France (Remote)",
+          period: "Juin 2025 - Aout 2025",
+          description:
+            "Conception d'un systeme de recommandation modulaire pour Odoo eCommerce, avec amelioration de la pertinence des recommandations (+30%) grace a une approche hybride.",
+          technologies: ["Odoo", "Recommender Systems", "Collaborative Filtering", "Content-based Filtering"],
+          type: "work",
+        },
+      ]
+    : [
     {
       logo: guepardLogo,
       title: "AI Intern",
@@ -48,10 +87,11 @@ const Experience = () => {
         {/* Title Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            My <span className="text-gradient">Experience</span>
+            {isFrench ? "Mon " : "My "}
+            <span className="text-gradient">{isFrench ? "experience" : "Experience"}</span>
           </h2>
           <p className="text-xl text-muted-foreground">
-            A journey of learning and growth
+            {isFrench ? "Un parcours d'apprentissage et de progression" : "A journey of learning and growth"}
           </p>
         </div>
 
