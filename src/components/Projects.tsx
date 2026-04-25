@@ -13,6 +13,7 @@ import realestate1Image from "@/assets/projects/real-estate-prediction/screensho
 import realestate2Image from "@/assets/projects/real-estate-prediction/screenshot-2.png";
 import taskflow1Image from "@/assets/projects/taskflow-pro/screenshot-1.png";
 import githubTrendsImage from "@/assets/projects/github-trends-analyzer/screenshot-1.png";
+import SectionGlowBackground from "@/components/SectionGlowBackground";
 
 type Category = "all" | "ai" | "fullstack" | "data-engineering";
 
@@ -124,23 +125,24 @@ const Projects = () => {
     : projects.filter((p) => p.category.includes(activeFilter));
 
   return (
-    <section id="projects" className="py-20 relative">
-      <div className="container mx-auto px-4">
+    <section id="projects" className="py-16 md:py-20 relative overflow-hidden">
+      <SectionGlowBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             Featured <span className="text-gradient">Projects</span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-base sm:text-xl text-muted-foreground mb-8">
             Some of my recent work and side projects
           </p>
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center flex-wrap gap-2 sm:gap-3 px-1">
             {filters.map((f) => (
               <Button
                 key={f.value}
                 variant={activeFilter === f.value ? "default" : "outline"}
                 size="sm"
                 onClick={() => setActiveFilter(f.value)}
-                className="rounded-full"
+                className="rounded-full text-xs sm:text-sm"
               >
                 {f.label}
               </Button>
@@ -148,7 +150,7 @@ const Projects = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-7xl mx-auto">
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -162,9 +164,9 @@ const Projects = () => {
                 className={`card-gradient border-primary/20 card-interactive overflow-hidden group cursor-pointer h-full flex flex-col ${project.featured ? 'ring-2 ring-turquoise/50 border-turquoise/30' : ''}`}
                 onClick={() => navigate(`/project/${project.id}`)}
               >
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-44 sm:h-48 overflow-hidden">
                 {project.award && (
-                  <div className="absolute top-3 left-3 z-10 px-3 py-1.5 bg-gradient-to-r from-turquoise/90 to-code-accent/90 text-foreground dark:text-background text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
+                  <div className="absolute top-3 left-3 z-10 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-turquoise/90 to-code-accent/90 text-foreground dark:text-background text-xs sm:text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
                     {project.award}
                   </div>
                 )}
@@ -181,7 +183,7 @@ const Projects = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
               </div>
               <CardHeader className="pb-2">
-                <CardTitle className="text-2xl">{project.title}</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl">{project.title}</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col flex-1">
                 <ExpandableDescription text={project.description} />

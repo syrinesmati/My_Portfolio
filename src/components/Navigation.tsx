@@ -43,9 +43,9 @@ const Navigation = () => {
         scrolled ? "border-border backdrop-blur-lg" : "border-transparent"
       }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 sm:px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="home" smooth duration={500} className="text-xl font-bold cursor-pointer">
+          <Link to="home" smooth duration={500} className="text-lg sm:text-xl font-bold cursor-pointer">
             <span className="text-gradient">Syrine Smati</span>
           </Link>
 
@@ -79,16 +79,17 @@ const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" aria-label="Open menu">
                   <Menu />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+              <SheetContent side="right" className="w-[85vw] max-w-[320px]">
                 <SheetHeader>
                   <SheetTitle className="text-gradient text-2xl font-bold">Menu</SheetTitle>
                 </SheetHeader>
@@ -101,7 +102,7 @@ const Navigation = () => {
                       duration={500}
                       spy
                       activeClass="text-primary font-semibold"
-                      className="text-lg py-3 px-4 rounded-lg cursor-pointer hover:text-primary hover:bg-primary/10 transition-all"
+                      className="text-base sm:text-lg py-3 px-4 rounded-lg cursor-pointer hover:text-primary hover:bg-primary/10 transition-all"
                       onClick={() => setIsOpen(false)}
                     >
                       {item.name}

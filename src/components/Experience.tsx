@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import guepardLogo from "@/assets/experience/guepard-logo.png";
 import welyneLogo from "@/assets/experience/welyne-logo.png";
 import yonnovLogo from "@/assets/experience/yonnov-logo.png";
+import SectionGlowBackground from "@/components/SectionGlowBackground";
 
 const Experience = () => {
   const experiences = [
@@ -41,8 +42,9 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 relative">
-      <div className="container mx-auto px-4">
+    <section id="experience" className="py-20 relative overflow-hidden">
+      <SectionGlowBackground />
+      <div className="container mx-auto px-4 relative z-10">
         {/* Title Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -55,9 +57,9 @@ const Experience = () => {
 
         <div className="relative max-w-5xl mx-auto">
           {/* Center Timeline */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary/80 via-primary/50 to-primary/20" />
+          <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary/80 via-primary/50 to-primary/20" />
 
-          <div className="space-y-24">
+          <div className="space-y-10 md:space-y-24">
             {experiences.map((exp, index) => {
               const isLeft = index % 2 === 0;
               return (
@@ -67,31 +69,31 @@ const Experience = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
-                  className={`relative flex flex-col md:flex-row items-center ${
+                  className={`relative flex flex-col md:flex-row items-start md:items-center ${
                     isLeft ? "md:justify-start" : "md:justify-end"
                   }`}
                 >
                   {/* Timeline Dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-6 h-6 bg-primary/80 rounded-full border-4 border-background z-10 shadow-md" />
+                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 -top-2 md:-top-4 w-4 h-4 md:w-6 md:h-6 bg-primary/80 rounded-full border-2 md:border-4 border-background z-10 shadow-md" />
 
                   {/* Experience Card */}
                   <div
-                    className={`mt-10 w-full md:w-[48%] ${
+                    className={`mt-4 md:mt-10 w-full pl-10 md:pl-0 md:w-[48%] ${
                       isLeft
                         ? "md:mr-auto md:pl-0 md:pr-10"
                         : "md:ml-auto md:pl-10 md:pr-0"
                     }`}
                   >
                     <Card className="card-gradient border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-500 p-2">
-                      <CardContent className="p-8 space-y-4">
+                      <CardContent className="p-5 sm:p-6 md:p-8 space-y-4">
                         {/* Header Row */}
-                        <div className="flex items-start gap-6">
+                        <div className="flex items-start gap-4 md:gap-6">
                           {/* Logo */}
-                          <div className="w-20 h-20 rounded-lg bg-muted flex items-center justify-center overflow-hidden border border-primary/30 shadow-md">
+                          <div className="w-14 h-14 md:w-20 md:h-20 rounded-lg bg-muted flex items-center justify-center overflow-hidden border border-primary/30 shadow-md flex-shrink-0">
                             <img
                               src={exp.logo}
                               alt={`${exp.organization} logo`}
-                              className="w-full h-full object-contain p-3"
+                              className="w-full h-full object-contain p-2 md:p-3"
                               onError={(e) => {
                                 e.currentTarget.style.display = "none";
                                 e.currentTarget.parentElement!.innerHTML =
@@ -104,11 +106,11 @@ const Experience = () => {
 
                           {/* Title and Date */}
                           <div className="flex-1">
-                            <div className="flex justify-between items-start mb-2">
-                              <h3 className="text-2xl font-semibold">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
+                              <h3 className="text-xl md:text-2xl font-semibold">
                                 {exp.title}
                               </h3>
-                              <span className="text-sm text-accent font-medium bg-accent/10 px-4 py-1 rounded-full border border-accent/20 shadow-sm">
+                              <span className="text-xs sm:text-sm text-accent font-medium bg-accent/10 px-3 sm:px-4 py-1 rounded-full border border-accent/20 shadow-sm w-fit">
                                 {exp.period}
                               </span>
                             </div>

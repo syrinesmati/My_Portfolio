@@ -10,6 +10,7 @@ import {
   Settings,
   MessageSquare,
 } from "lucide-react";
+import SectionGlowBackground from "@/components/SectionGlowBackground";
 
 type SkillGroup = "AI & Machine Learning" | "Data & MLOps" | "Software Engineering" | "Professional";
 
@@ -149,31 +150,7 @@ const groupedSections: { title: SkillGroup; subtitle: string }[] = [
 const Skills = () => {
   return (
     <section id="skills" className="py-20 relative overflow-hidden">
-      {/* Background glow orbs */}
-      <div
-        className="absolute pointer-events-none rounded-full"
-        style={{
-          width: 480,
-          height: 480,
-          top: -80,
-          right: -100,
-          background: "hsl(330 81% 60%)",
-          filter: "blur(120px)",
-          opacity: 0.07,
-        }}
-      />
-      <div
-        className="absolute pointer-events-none rounded-full"
-        style={{
-          width: 360,
-          height: 360,
-          bottom: "10%",
-          left: -80,
-          background: "hsl(280 70% 50%)",
-          filter: "blur(100px)",
-          opacity: 0.07,
-        }}
-      />
+      <SectionGlowBackground />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Code2, Palette, Brain, Rocket, Download } from "lucide-react";
 import cvFile from "@/assets/documents/cv-syrine-smati.pdf";
+import SectionGlowBackground from "@/components/SectionGlowBackground";
 
 const About = () => {
   const highlights = [
@@ -10,8 +11,9 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 relative">
-      <div className="container mx-auto px-4">
+    <section id="about" className="py-20 relative overflow-hidden">
+      <SectionGlowBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

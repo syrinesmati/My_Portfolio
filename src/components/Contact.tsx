@@ -2,17 +2,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Github, Linkedin } from "lucide-react";
+import SectionGlowBackground from "@/components/SectionGlowBackground";
 
 const Contact = () => {
 
   return (
-    <section id="contact" className="py-20 relative">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="py-20 relative overflow-hidden">
+      <SectionGlowBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             Get in <span className="text-gradient">Touch</span>
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-base sm:text-xl text-muted-foreground">
             Let's create something amazing together
           </p>
         </div>
@@ -32,7 +34,7 @@ const Contact = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
-                  <span>syrinesmati28@gmail.com</span>
+                  <span className="break-all">syrinesmati28@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />

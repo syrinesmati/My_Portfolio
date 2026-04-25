@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import jei2025Image from "@/assets/volunteering/jei-2025.jpg";
 import ocvpImage from "@/assets/volunteering/ocvp.jpg";
 import jei2024Image from "@/assets/volunteering/jei-2024.jpg";
+import SectionGlowBackground from "@/components/SectionGlowBackground";
 
 const Volunteering = () => {
   const volunteering = [
@@ -34,8 +35,9 @@ const Volunteering = () => {
   ];
 
   return (
-    <section id="volunteering" className="py-20 relative">
-      <div className="container mx-auto px-4">
+    <section id="volunteering" className="py-20 relative overflow-hidden">
+      <SectionGlowBackground />
+      <div className="container mx-auto px-4 relative z-10">
         {/* Title Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">

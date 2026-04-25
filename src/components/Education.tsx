@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { GraduationCap, Calendar, MapPin } from "lucide-react";
+import SectionGlowBackground from "@/components/SectionGlowBackground";
 
 interface EducationItem {
   degree: string;
@@ -58,8 +59,9 @@ const Education = () => {
   ];
 
   return (
-    <section id="education" className="py-20 relative">
-      <div className="container mx-auto px-4">
+    <section id="education" className="py-20 relative overflow-hidden">
+      <SectionGlowBackground />
+      <div className="container mx-auto px-4 relative z-10">
         {/* Title Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -72,9 +74,9 @@ const Education = () => {
 
         <div className="relative max-w-4xl mx-auto">
           {/* Center Timeline */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary/80 via-primary/50 to-primary/20" />
+          <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary/80 via-primary/50 to-primary/20" />
 
-          <div className="space-y-20">
+          <div className="space-y-10 md:space-y-20">
             {education.map((edu, index) => {
               const isLeft = index % 2 === 0;
               return (
@@ -84,40 +86,40 @@ const Education = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
-                  className={`relative flex flex-col md:flex-row items-center ${
+                  className={`relative flex flex-col md:flex-row items-start md:items-center ${
                     isLeft ? "md:justify-start" : "md:justify-end"
                   }`}
                 >
                   {/* Timeline Dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-6 h-6 bg-primary/80 rounded-full border-4 border-background z-10 shadow-md" />
+                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 -top-2 md:-top-4 w-4 h-4 md:w-6 md:h-6 bg-primary/80 rounded-full border-2 md:border-4 border-background z-10 shadow-md" />
 
                   {/* Education Card */}
                   <div
-                    className={`mt-10 w-full md:w-[48%] ${
+                    className={`mt-4 md:mt-10 w-full pl-10 md:pl-0 md:w-[48%] ${
                       isLeft
                         ? "md:mr-auto md:pl-0 md:pr-10"
                         : "md:ml-auto md:pl-10 md:pr-0"
                     }`}
                   >
                     <Card className="card-gradient border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-500">
-                      <CardContent className="p-8 space-y-4">
+                      <CardContent className="p-5 sm:p-6 md:p-8 space-y-4">
                         {/* Header */}
-                        <div className="flex items-start gap-4">
-                          <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                        <div className="flex items-start gap-3 md:gap-4">
+                          <div className="p-2.5 md:p-3 rounded-lg bg-primary/10 border border-primary/20">
                             <GraduationCap className="w-6 h-6 text-primary" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-2xl font-bold text-foreground">
+                            <h3 className="text-xl md:text-2xl font-bold text-foreground">
                               {edu.degree}
                             </h3>
-                            <p className="text-lg text-primary font-semibold mt-1">
+                            <p className="text-base md:text-lg text-primary font-semibold mt-1">
                               {edu.institution}
                             </p>
                           </div>
                         </div>
 
                         {/* Details Row */}
-                        <div className="flex flex-wrap gap-6 text-sm text-muted-foreground pt-2">
+                        <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-muted-foreground pt-2">
                           <div className="flex items-center gap-2">
                             <Calendar className="w-4 h-4 text-primary/60" />
                             <span>{edu.period}</span>

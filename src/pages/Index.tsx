@@ -13,11 +13,11 @@ import SocialSidebar from "@/components/SocialSidebar";
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
       <ParticlesBackground />
       <Navigation />
       <SocialSidebar />
-      <main className="max-w-7xl mx-auto px-6 md:px-16 lg:px-24">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20">
         <Hero />
         <About />
         <Skills />
