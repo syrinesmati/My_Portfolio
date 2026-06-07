@@ -13,6 +13,7 @@ import realestate1Image from "@/assets/projects/real-estate-prediction/screensho
 import realestate2Image from "@/assets/projects/real-estate-prediction/screenshot-2.png";
 import taskflow1Image from "@/assets/projects/taskflow-pro/screenshot-1.png";
 import githubTrendsImage from "@/assets/projects/github-trends-analyzer/screenshot-1.png";
+import tounsilmImage from "@/assets/projects/tounsilm/cover-logo.svg";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -41,6 +42,16 @@ const Projects = () => {
   const { isFrench } = useLanguage();
   
   const projects = [
+    {
+      id: "tounsilm",
+      title: "TounsiLM – Tunisian Arabic Dialogue System",
+      description: "An end-to-end spoken dialogue system for Tunisian Arabic (Derja), developed as End-of-Year Project (PFA) at INSAT. Integrates a fine-tuned ASR model (WER reduced from 68.4% to 37.6%), TounsiLM-8B adapted via QLoRA, and a hybrid BM25+semantic RAG pipeline — deployed as a full-stack React + FastAPI application with real-time SSE streaming.",
+      image: tounsilmImage,
+      tags: ["ASR", "LLM Fine-Tuning", "RAG", "QLoRA", "LoRA", "PyTorch", "FastAPI", "React", "ChromaDB", "Tunisian Arabic NLP"],
+      award: "🎓 End-of-Year Project (PFA) – INSAT 2025-2026",
+      featured: true,
+      category: ["ai"] as Category[],
+    },
     {
       id: "dinepilot",
       title: "DinePilot",
@@ -116,6 +127,8 @@ const Projects = () => {
   ];
 
   const projectDescriptionsFr: Record<string, string> = {
+    tounsilm:
+      "Systeme de dialogue vocal pour l'arabe tunisien (Derja) : ASR fine-tune (WER -53%), TounsiLM-8B (QLoRA) et RAG hybride BM25+semantique, avec interface React et backends FastAPI.",
     dinepilot:
       "Plateforme d'analyse pour restaurant propulsee par l'IA, avec vision en temps reel de l'occupation des tables et du flux client.",
     "github-trends-analyzer":
@@ -132,6 +145,11 @@ const Projects = () => {
       "Plateforme de gestion de projets et de taches pour centraliser la collaboration des equipes.",
     rescuelink:
       "Application de reponse d'urgence connectant les personnes en detresse aux secours proches en temps reel.",
+  };
+
+  const projectAwardsFr: Record<string, string> = {
+    tounsilm: "🎓 Projet de Fin d'Annee (PFA) – INSAT 2025-2026",
+    dinepilot: "🥈 2e place - Smart Service Challenge (IA Camera)",
   };
 
   const filters: { label: string; value: Category }[] = [
@@ -189,7 +207,7 @@ const Projects = () => {
               <div className="relative h-44 sm:h-48 overflow-hidden">
                 {project.award && (
                   <div className="absolute top-3 left-3 z-10 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-turquoise/90 to-code-accent/90 text-foreground dark:text-background text-xs sm:text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
-                    {isFrench ? "🥈 2e place - Smart Service Challenge (AI Camera)" : project.award}
+                    {isFrench ? (projectAwardsFr[project.id] ?? project.award) : project.award}
                   </div>
                 )}
                 <img

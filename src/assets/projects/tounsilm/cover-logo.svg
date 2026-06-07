@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0f9ff"/>
+      <stop offset="50%" stop-color="#faf5ff"/>
+      <stop offset="100%" stop-color="#ecfdf5"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0891b2"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#06b6d4"/>
+      <stop offset="70%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="30%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#a5f3fc" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#a5f3fc" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="70%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#ddd6fe" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ddd6fe" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Light background -->
+  <rect width="800" height="450" fill="url(#bgGrad)"/>
+
+  <!-- Subtle dot grid -->
+  <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="1.5" cy="1.5" r="1.5" fill="#cbd5e1" opacity="0.5"/>
+  </pattern>
+  <rect width="800" height="450" fill="url(#dots)"/>
+
+  <!-- Soft glow blobs -->
+  <ellipse cx="200" cy="225" rx="220" ry="200" fill="url(#glow1)"/>
+  <ellipse cx="600" cy="225" rx="220" ry="200" fill="url(#glow2)"/>
+
+  <!-- Waveform bars left -->
+  <g fill="#0891b2">
+    <rect x="60"  y="193" width="8" height="64"  rx="4" opacity="0.4"/>
+    <rect x="75"  y="178" width="8" height="94"  rx="4" opacity="0.55"/>
+    <rect x="90"  y="186" width="8" height="78"  rx="4" opacity="0.65"/>
+    <rect x="105" y="160" width="8" height="130" rx="4" opacity="0.75"/>
+    <rect x="120" y="174" width="8" height="102" rx="4" opacity="0.65"/>
+    <rect x="135" y="192" width="8" height="66"  rx="4" opacity="0.55"/>
+    <rect x="150" y="207" width="8" height="36"  rx="4" opacity="0.4"/>
+  </g>
+
+  <!-- Waveform bars right -->
+  <g fill="#7c3aed">
+    <rect x="642" y="207" width="8" height="36"  rx="4" opacity="0.4"/>
+    <rect x="657" y="192" width="8" height="66"  rx="4" opacity="0.55"/>
+    <rect x="672" y="174" width="8" height="102" rx="4" opacity="0.65"/>
+    <rect x="687" y="160" width="8" height="130" rx="4" opacity="0.75"/>
+    <rect x="702" y="186" width="8" height="78"  rx="4" opacity="0.65"/>
+    <rect x="717" y="178" width="8" height="94"  rx="4" opacity="0.55"/>
+    <rect x="732" y="193" width="8" height="64"  rx="4" opacity="0.4"/>
+  </g>
+
+  <!-- Accent line above title -->
+  <rect x="220" y="148" width="360" height="2" rx="1" fill="url(#lineGrad)"/>
+
+  <!-- INSAT badge -->
+  <rect x="296" y="55" width="208" height="32" rx="16" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="400" y="77" font-family="Arial, sans-serif" font-size="12" fill="#64748b" text-anchor="middle" letter-spacing="1">INSAT · PFA 2025-2026</text>
+
+  <!-- Main title -->
+  <text x="400" y="215" font-family="Arial Black, Arial, sans-serif" font-size="70" font-weight="900" fill="url(#titleGrad)" text-anchor="middle">TounsiLM</text>
+
+  <!-- Subtitle -->
+  <text x="400" y="258" font-family="Arial, sans-serif" font-size="15" fill="#64748b" text-anchor="middle" letter-spacing="3">TUNISIAN ARABIC DIALOGUE SYSTEM</text>
+
+  <!-- Accent line below subtitle -->
+  <rect x="220" y="274" width="360" height="2" rx="1" fill="url(#lineGrad)"/>
+
+  <!-- ASR badge -->
+  <rect x="162" y="300" width="138" height="50" rx="12" fill="white" stroke="#67e8f9" stroke-width="2"/>
+  <text x="231" y="321" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#0891b2" text-anchor="middle">ASR</text>
+  <text x="231" y="339" font-family="Arial, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Speech Recognition</text>
+
+  <!-- LLM badge -->
+  <rect x="331" y="300" width="138" height="50" rx="12" fill="white" stroke="#c4b5fd" stroke-width="2"/>
+  <text x="400" y="321" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#7c3aed" text-anchor="middle">LLM</text>
+  <text x="400" y="339" font-family="Arial, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">TounsiLM-8B · QLoRA</text>
+
+  <!-- RAG badge -->
+  <rect x="500" y="300" width="138" height="50" rx="12" fill="white" stroke="#6ee7b7" stroke-width="2"/>
+  <text x="569" y="321" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#059669" text-anchor="middle">RAG</text>
+  <text x="569" y="339" font-family="Arial, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">BM25 + Semantic</text>
+
+  <!-- Footer stat -->
+  <text x="400" y="415" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">WER: 68.4% → 37.6% · Tunisian Arabic (Derja) · Code-switching</text>
+</svg>

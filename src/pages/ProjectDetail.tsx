@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import farmlinkImage from "@/assets/projects/farmlink/screenshot-1.png";
 import farmlinkImage1 from "@/assets/projects/farmlink/screenshot-2.png";
 import recommenderImage1 from "@/assets/projects/odoo-recommender/screenshot-2.png";
@@ -22,6 +22,14 @@ import realestate2Image from "@/assets/projects/real-estate-prediction/screensho
 import realestate4Image from "@/assets/projects/real-estate-prediction/screenshot-3.png";
 import taskflow1Image from "@/assets/projects/taskflow-pro/screenshot-1.png";
 import githubTrendsImage from "@/assets/projects/github-trends-analyzer/screenshot-1.png";
+import tounsilmImage from "@/assets/projects/tounsilm/340edfc1-63eb-4e1a-9555-bbb176f61f6f.jpg";
+import tounsilmImage2 from "@/assets/projects/tounsilm/13191760-252c-404a-8e72-f89d8299aac5.jpg";
+import tounsilmImage3 from "@/assets/projects/tounsilm/154ec42c-a2dd-41ef-81bf-0361071991a2.jpg";
+import tounsilmImage4 from "@/assets/projects/tounsilm/6720d402-ea42-4db0-bec2-c57e92294248.jpg";
+import tounsilmImage5 from "@/assets/projects/tounsilm/d3649509-a893-431c-897f-00698572867b.jpg";
+import tounsilmImage6 from "@/assets/projects/tounsilm/image.png";
+import tounsilmHuggingface from "@/assets/projects/tounsilm/Screenshot_7-6-2026_15614_huggingface.co.jpeg";
+import tounsilmVideo from "@/assets/projects/tounsilm/demo.mp4";
 import farmlinkVideo from "@/assets/projects/farmlink/demo.mp4";
 import dinepilotVideo from "@/assets/projects/dinepilot/demo.mp4";
 import packageDeliveryVideo from "@/assets/projects/package-delivery/demo.mp4";
@@ -37,6 +45,65 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+const ScreenshotsCarousel = ({ screenshots, title }: { screenshots: string[]; title: string }) => {
+  const [api, setApi] = useState<any>(null);
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+    setCurrent(api.selectedScrollSnap());
+    api.on("select", () => setCurrent(api.selectedScrollSnap()));
+    return () => { api.off("select"); };
+  }, [api]);
+
+  return (
+    <div className="space-y-3">
+      <Carousel className="w-full max-w-5xl mx-auto" setApi={setApi}>
+        <CarouselContent>
+          {screenshots.map((screenshot, index) => (
+            <CarouselItem key={index}>
+              <div className="rounded-xl overflow-hidden border border-primary/20 bg-card shadow-xl">
+                <div className="h-[260px] sm:h-[400px] md:h-[520px] flex items-center justify-center bg-muted/20 p-4">
+                  <img
+                    src={screenshot}
+                    alt={`${title} screenshot ${index + 1}`}
+                    className="max-h-full max-w-full object-contain rounded-md"
+                  />
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-3 bg-background/90 backdrop-blur-sm border-primary/30 shadow-lg hover:bg-background" />
+        <CarouselNext className="right-3 bg-background/90 backdrop-blur-sm border-primary/30 shadow-lg hover:bg-background" />
+      </Carousel>
+
+      {screenshots.length > 1 && (
+        <>
+          <div className="flex gap-2 justify-center flex-wrap max-w-5xl mx-auto px-2">
+            {screenshots.map((thumb, index) => (
+              <button
+                key={index}
+                onClick={() => api?.scrollTo(index)}
+                className={`w-14 h-10 sm:w-16 sm:h-12 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                  current === index
+                    ? "border-primary scale-105 shadow-md"
+                    : "border-primary/20 opacity-50 hover:opacity-90 hover:border-primary/50"
+                }`}
+              >
+                <img src={thumb} alt="" className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+          <p className="text-center text-xs text-muted-foreground">
+            {current + 1} / {screenshots.length}
+          </p>
+        </>
+      )}
+    </div>
+  );
+};
 
 const ProjectDetail = () => {
   const { projectId } = useParams();
@@ -73,6 +140,7 @@ const ProjectDetail = () => {
       screenshots: [logoDinepilotImage, dinepilotImage, dinepilotImage1],
       videoPath: dinepilotVideo,
       award: {
+        emoji: "🥈",
         title: "2nd Place - Smart Service Challenge",
         competition: "AI Camera Challenge",
         description: "Awarded 2nd place in the Smart Service Challenge at the AI Camera Challenge competition for developing an innovative AI-powered solution that transforms restaurant floor management through real-time computer vision analytics."
@@ -166,6 +234,32 @@ const ProjectDetail = () => {
         "Supabase integration"
       ]
     },
+    tounsilm: {
+      title: "TounsiLM – Tunisian Arabic Dialogue System",
+      description: "An end-to-end spoken dialogue system for Tunisian Arabic (Derja), combining a fine-tuned ASR model, TounsiLM-8B (QLoRA-adapted LLM), and a hybrid RAG pipeline — developed as End-of-Year Project (PFA) at INSAT.",
+      fullDescription: "This End-of-Year Project (PFA) at INSAT tackles the challenge of building a fully functional spoken dialogue system for Tunisian Arabic (Derja), one of the world's most linguistically complex dialects, characterized by code-switching between Arabic, French, and English and written in both Arabic script and Latin-script Arabizi. The system is built around three tightly integrated components: (1) A fine-tuned Automatic Speech Recognition model based on OmniASR-LLM-3B, trained with LoRA adaptation to reduce WER from 68.42% to 37.61% — a 53.1% relative improvement on the Tunisian Arabic test set; (2) TounsiLM-8B, a Tunisian-Arabic-adapted LLM built on AYA Expanse 8B via QLoRA Continued Pre-Training (CPT) on a curated Tunisian corpus followed by Supervised Fine-Tuning (SFT) for task alignment; (3) A hybrid RAG module over a 1,647-entry knowledge base, combining BM25 sparse retrieval and dense semantic search with Reciprocal Rank Fusion (RRF), a confidence-gated context injection mechanism, and an Arabizi query rewriter for Latin-script inputs. The MVP is a full-stack application with React 18 + Vite + Tailwind CSS + shadcn/ui on the frontend, backed by two independent FastAPI services communicating via Server-Sent Events (SSE) for real-time streaming responses.",
+      image: tounsilmImage,
+      tags: ["ASR", "LLM Fine-Tuning", "RAG", "QLoRA", "LoRA", "PyTorch", "FastAPI", "React", "ChromaDB", "BM25", "Tunisian Arabic NLP"],
+      screenshots: [tounsilmImage, tounsilmImage2, tounsilmImage3, tounsilmImage4, tounsilmImage5, tounsilmImage6, tounsilmHuggingface],
+      videoPath: tounsilmVideo,
+      award: {
+        emoji: "🎓",
+        title: "End-of-Year Project (PFA)",
+        competition: "INSAT – Universite de Carthage, 2025-2026",
+        description: "Developed as the final-year project (Projet de Fin d'Annee) at the National Institute of Applied Sciences and Technology (INSAT), Universite de Carthage. The project addresses the under-resourced Tunisian Arabic dialect through the full-stack integration of speech recognition, language model adaptation, and retrieval-augmented generation."
+      },
+      features: [
+        "Fine-tuned OmniASR-LLM-3B: WER reduced from 68.42% to 37.61% (53.1% relative improvement)",
+        "TounsiLM-8B: AYA Expanse 8B adapted via QLoRA CPT + SFT for Tunisian Arabic",
+        "Hybrid RAG: BM25 + semantic retrieval with RRF fusion over 1,647-entry knowledge base",
+        "Arabizi query rewriting for Latin-script Tunisian dialect inputs",
+        "Confidence-gated context injection for RAG quality control",
+        "Real-time SSE streaming for LLM responses",
+        "Two-backend FastAPI architecture: dedicated ASR server + LLM server",
+        "React 18 + Vite + Tailwind CSS + shadcn/ui full-stack frontend",
+        "Handles code-switching across Arabic, French, and English"
+      ]
+    },
     "github-trends-analyzer": {
       title: "GitHub Trends Analyzer – Big Data Project",
       description: "An end-to-end big data pipeline that analyzes and visualizes GitHub activity using both batch and real-time processing.",
@@ -200,6 +294,27 @@ const ProjectDetail = () => {
       awardCompetition?: string;
     }
   > = {
+    tounsilm: {
+      description:
+        "Systeme de dialogue vocal pour l'arabe tunisien (Derja) : ASR fine-tune, TounsiLM-8B (QLoRA) et RAG hybride BM25+semantique — Projet de Fin d'Annee a l'INSAT.",
+      fullDescription:
+        "Ce Projet de Fin d'Annee (PFA) a l'INSAT releve le defi de construire un systeme de dialogue vocal complet pour l'arabe tunisien (Derja), l'une des variantes dialectales les plus complexes au monde, caracterisee par le code-switching entre l'arabe, le francais et l'anglais, et par l'ecriture en Arabizi (alphabet latin). Le systeme s'articule autour de trois composants integres : (1) Un modele ASR base sur OmniASR-LLM-3B, fine-tune par adaptation LoRA, reduisant le WER de 68,42 % a 37,61 % (amelioration relative de 53,1 %) ; (2) TounsiLM-8B, un LLM adapte via QLoRA CPT + SFT sur AYA Expanse 8B pour l'arabe tunisien ; (3) Un module RAG hybride sur une base de 1 647 entrees, combinant BM25 et recherche semantique dense avec fusion RRF, injection de contexte a seuil de confiance et reecriture de requetes Arabizi. La MVP est une application full-stack React 18 + Vite + Tailwind CSS cote frontend, avec deux services FastAPI independants communicant via SSE pour le streaming en temps reel.",
+      features: [
+        "OmniASR-LLM-3B fine-tune : WER reduit de 68,42 % a 37,61 % (amelioration de 53,1 %)",
+        "TounsiLM-8B : AYA Expanse 8B adapte via QLoRA CPT + SFT pour l'arabe tunisien",
+        "RAG hybride : BM25 + semantique avec fusion RRF sur 1 647 entrees",
+        "Reecriture de requetes Arabizi (dialecte en alphabet latin)",
+        "Injection de contexte a seuil de confiance pour le controle qualite du RAG",
+        "Streaming temps reel via SSE pour les reponses LLM",
+        "Architecture deux backends FastAPI : serveur ASR + serveur LLM",
+        "Frontend React 18 + Vite + Tailwind CSS + shadcn/ui",
+        "Gestion du code-switching arabe/francais/anglais",
+      ],
+      awardTitle: "Projet de Fin d'Annee (PFA)",
+      awardCompetition: "INSAT – Universite de Carthage, 2025-2026",
+      awardDescription:
+        "Developpe en tant que projet de fin d'annee (PFA) a l'Institut National des Sciences Appliquees et de la Technologie (INSAT), Universite de Carthage. Le projet s'attaque au dialecte arabe tunisien, sous-represente dans les ressources NLP, via l'integration complete de la reconnaissance vocale, l'adaptation d'un LLM et la generation augmentee par recuperation.",
+    },
     farmlink: {
       description:
         "Plateforme agricole intelligente combinant IA conversationnelle et vision par ordinateur pour aider les agriculteurs.",
@@ -363,7 +478,7 @@ const ProjectDetail = () => {
                   className="p-6 rounded-xl bg-gradient-to-r from-turquoise/10 to-code-accent/10 border-2 border-turquoise/30 shadow-turquoise"
                 >
                   <div className="flex items-center gap-4 mb-3">
-                    <span className="text-4xl">🥈</span>
+                    <span className="text-4xl">{(project.award as { emoji?: string; title: string; competition: string; description: string }).emoji ?? "🏆"}</span>
                     <div>
                       <h3 className="text-2xl font-bold text-turquoise">
                         {isFrench
@@ -409,33 +524,8 @@ const ProjectDetail = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="relative"
             >
-              <Carousel className="w-full max-w-5xl mx-auto">
-                <div className="relative">
-                  <CarouselContent>
-                    {project.screenshots.map((screenshot, index) => (
-                      <CarouselItem key={index}>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                          viewport={{ once: true }}
-                          className="rounded-lg overflow-hidden shadow-2xl border border-primary/20"
-                        >
-                          <img
-                            src={screenshot}
-                            alt={`${project.title} screenshot ${index + 1}`}
-                            className="w-full h-auto"
-                          />
-                        </motion.div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" />
-                  <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" />
-                </div>
-              </Carousel>
+              <ScreenshotsCarousel screenshots={project.screenshots} title={project.title} />
             </motion.div>
 
             {/* Full Description */}
@@ -475,6 +565,7 @@ const ProjectDetail = () => {
             </motion.div>
 
             {/* Video Demo */}
+            {'videoPath' in project && project.videoPath && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -489,11 +580,12 @@ const ProjectDetail = () => {
                   className="w-full h-auto"
                   poster={project.image}
                 >
-                  <source src={project.videoPath} type="video/mp4" />
+                  <source src={project.videoPath as string} type="video/mp4" />
                   {isFrench ? "Votre navigateur ne supporte pas la lecture video." : "Your browser does not support the video tag."}
                 </video>
               </div>
             </motion.div>
+            )}
           </div>
         </motion.div>
       </main>
