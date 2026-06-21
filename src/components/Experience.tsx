@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import techtrollLogo from "@/assets/experience/techtroll-logo.png";
 import guepardLogo from "@/assets/experience/guepard-logo.png";
 import welyneLogo from "@/assets/experience/welyne-logo.png";
 import yonnovLogo from "@/assets/experience/yonnov-logo.png";
@@ -11,6 +12,17 @@ const Experience = () => {
 
   const experiences = isFrench
     ? [
+        {
+          logo: techtrollLogo,
+          title: "Stagiaire IA",
+          organization: "TechTroll",
+          location: "New Cairo, Egypte",
+          period: "Juin 2026 - Present",
+          description:
+            "Travail sur Ossus.ai, une plateforme IA axee sur l'extraction de documents et le raisonnement de conformite. Developpement de pipelines intelligents pour extraire des informations structurees a partir de documents complexes et exploration d'approches basees sur les LLM pour l'analyse de conformite, le raisonnement et la comprehension automatique de documents.",
+          technologies: ["Python", "LLMs", "RAG", "Document AI", "NLP", "Machine Learning"],
+          type: "work",
+        },
         {
           logo: guepardLogo,
           title: "Stagiaire IA",
@@ -46,6 +58,17 @@ const Experience = () => {
         },
       ]
     : [
+    {
+      logo: techtrollLogo,
+      title: "AI Intern",
+      organization: "TechTroll",
+      location: "New Cairo, Egypt",
+      period: "June 2026 – Present",
+      description:
+        "Working on Ossus.ai, an AI platform focused on document extraction and compliance reasoning. Developing intelligent pipelines for extracting structured information from complex documents and exploring LLM-based approaches for compliance analysis, reasoning, and automated document understanding.",
+      technologies: ["Python", "LLMs", "RAG", "Document AI", "NLP", "Machine Learning"],
+      type: "work",
+    },
     {
       logo: guepardLogo,
       title: "AI Intern",
@@ -130,18 +153,24 @@ const Experience = () => {
                         <div className="flex items-start gap-4 md:gap-6">
                           {/* Logo */}
                           <div className="w-14 h-14 md:w-20 md:h-20 rounded-lg bg-muted flex items-center justify-center overflow-hidden border border-primary/30 shadow-md flex-shrink-0">
-                            <img
-                              src={exp.logo}
-                              alt={`${exp.organization} logo`}
-                              className="w-full h-full object-contain p-2 md:p-3"
-                              onError={(e) => {
-                                e.currentTarget.style.display = "none";
-                                e.currentTarget.parentElement!.innerHTML =
-                                  '<span class="text-2xl font-bold text-muted-foreground">' +
-                                  exp.organization.substring(0, 2).toUpperCase() +
-                                  "</span>";
-                              }}
-                            />
+                            {exp.logo ? (
+                              <img
+                                src={exp.logo}
+                                alt={`${exp.organization} logo`}
+                                className="w-full h-full object-contain p-2 md:p-3"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = "none";
+                                  e.currentTarget.parentElement!.innerHTML =
+                                    '<span class="text-2xl font-bold text-muted-foreground">' +
+                                    exp.organization.substring(0, 2).toUpperCase() +
+                                    "</span>";
+                                }}
+                              />
+                            ) : (
+                              <span className="text-2xl font-bold text-muted-foreground">
+                                {exp.organization.substring(0, 2).toUpperCase()}
+                              </span>
+                            )}
                           </div>
 
                           {/* Title and Date */}
