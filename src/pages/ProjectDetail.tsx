@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
@@ -173,6 +173,27 @@ const ProjectDetail = () => {
                   </span>
                 ))}
               </div>
+
+              {(project.githubUrl || (project.links && project.links.length > 0)) && (
+                <div className="flex flex-wrap gap-3">
+                  {project.githubUrl && (
+                    <Button variant="outline" asChild>
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Github className="mr-2 h-4 w-4" />
+                        {isFrench ? "Code source" : "Source Code"}
+                      </a>
+                    </Button>
+                  )}
+                  {project.links?.map((link, index) => (
+                    <Button key={index} variant="outline" asChild>
+                      <a href={link.url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        {link.name}
+                      </a>
+                    </Button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Screenshots Carousel */}
@@ -194,9 +215,26 @@ const ProjectDetail = () => {
               className="space-y-4"
             >
               <h2 className="text-3xl font-bold">{isFrench ? "À propos du projet" : "About the Project"}</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {isFrench ? fr.fullDescription : project.fullDescription}
-              </p>
+              {(() => {
+                const sections = isFrench ? fr.fullDescriptionSections : project.fullDescriptionSections;
+                if (sections && sections.length > 0) {
+                  return (
+                    <div className="space-y-6">
+                      {sections.map((section, index) => (
+                        <div key={index} className="space-y-2">
+                          <h3 className="text-xl font-semibold text-primary">{section.heading}</h3>
+                          <p className="text-lg text-muted-foreground leading-relaxed">{section.body}</p>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                return (
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {isFrench ? fr.fullDescription : project.fullDescription}
+                  </p>
+                );
+              })()}
             </motion.div>
 
             {/* Features */}
@@ -208,17 +246,44 @@ const ProjectDetail = () => {
               className="space-y-4"
             >
               <h2 className="text-3xl font-bold">{isFrench ? "Fonctionnalités clés" : "Key Features"}</h2>
-              <ul className="grid md:grid-cols-2 gap-4">
-                {(isFrench ? fr.features : project.features).map((feature, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 p-4 rounded-lg bg-card border border-primary/20"
-                  >
-                    <span className="text-primary text-xl">•</span>
-                    <span className="text-muted-foreground">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+              {(() => {
+                const groups = isFrench ? fr.featureGroups : project.featureGroups;
+                if (groups && groups.length > 0) {
+                  return (
+                    <div className="space-y-6">
+                      {groups.map((group, groupIndex) => (
+                        <div key={groupIndex} className="space-y-3">
+                          <h3 className="text-lg font-semibold text-primary">{group.heading}</h3>
+                          <ul className="grid md:grid-cols-2 gap-4">
+                            {group.items.map((feature, index) => (
+                              <li
+                                key={index}
+                                className="flex items-start gap-3 p-4 rounded-lg bg-card border border-primary/20"
+                              >
+                                <span className="text-primary text-xl">•</span>
+                                <span className="text-muted-foreground">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                return (
+                  <ul className="grid md:grid-cols-2 gap-4">
+                    {(isFrench ? fr.features : project.features).map((feature, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-3 p-4 rounded-lg bg-card border border-primary/20"
+                      >
+                        <span className="text-primary text-xl">•</span>
+                        <span className="text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                );
+              })()}
             </motion.div>
 
             {/* Video Demo */}

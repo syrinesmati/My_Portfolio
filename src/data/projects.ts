@@ -49,10 +49,28 @@ export interface ProjectAward {
   description: string;
 }
 
+export interface ProjectSection {
+  heading: string;
+  body: string;
+}
+
+export interface ProjectFeatureGroup {
+  heading: string;
+  items: string[];
+}
+
+export interface ProjectLink {
+  type: "huggingface-model" | "huggingface-dataset";
+  name: string;
+  url: string;
+}
+
 export interface ProjectTranslation {
   description: string;
   fullDescription: string;
+  fullDescriptionSections?: ProjectSection[];
   features: string[];
+  featureGroups?: ProjectFeatureGroup[];
   award?: {
     title: string;
     competition: string;
@@ -65,6 +83,7 @@ export interface Project {
   title: string;
   description: string;
   fullDescription: string;
+  fullDescriptionSections?: ProjectSection[];
   image: string;
   screenshots: string[];
   videoPath?: string;
@@ -72,8 +91,10 @@ export interface Project {
   category: ProjectCategory[];
   featured?: boolean;
   githubUrl?: string;
+  links?: ProjectLink[];
   award?: ProjectAward;
   features: string[];
+  featureGroups?: ProjectFeatureGroup[];
   fr: ProjectTranslation;
 }
 
@@ -82,9 +103,39 @@ export const projects: Project[] = [
     id: "tounsilm",
     title: "TounsiLM – Tunisian Arabic Dialogue System",
     description:
-      "An end-to-end spoken dialogue system for Tunisian Arabic (Derja), combining a fine-tuned ASR model, TounsiLM-8B (QLoRA-adapted LLM), and a hybrid RAG pipeline — developed as End-of-Year Project (PFA) at INSAT.",
+      "An end-to-end spoken dialogue system for Tunisian Arabic (Derja), pairing a fine-tuned ASR model with a QLoRA-adapted 8B LLM and a hybrid RAG knowledge base — developed as End-of-Year Project (PFA) at INSAT.",
     fullDescription:
-      "This End-of-Year Project (PFA) at INSAT tackles the challenge of building a fully functional spoken dialogue system for Tunisian Arabic (Derja), one of the world's most linguistically complex dialects, characterized by code-switching between Arabic, French, and English and written in both Arabic script and Latin-script Arabizi. The system is built around three tightly integrated components: (1) A fine-tuned Automatic Speech Recognition model based on OmniASR-LLM-3B, trained with LoRA adaptation to reduce WER from 68.42% to 37.61% — a 53.1% relative improvement on the Tunisian Arabic test set; (2) TounsiLM-8B, a Tunisian-Arabic-adapted LLM built on AYA Expanse 8B via QLoRA Continued Pre-Training (CPT) on a curated Tunisian corpus followed by Supervised Fine-Tuning (SFT) for task alignment; (3) A hybrid RAG module over a 1,647-entry knowledge base, combining BM25 sparse retrieval and dense semantic search with Reciprocal Rank Fusion (RRF), a confidence-gated context injection mechanism, and an Arabizi query rewriter for Latin-script inputs. The MVP is a full-stack application with React 18 + Vite + Tailwind CSS + shadcn/ui on the frontend, backed by two independent FastAPI services communicating via Server-Sent Events (SSE) for real-time streaming responses.",
+      "This End-of-Year Project (PFA) at INSAT tackles the challenge of building a fully functional spoken dialogue system for Tunisian Arabic (Derja), a dialect with no standardized orthography, heavy code-switching between Arabic, French, and English, and near-total absence from LLM training corpora.",
+    fullDescriptionSections: [
+      {
+        heading: "The Challenge",
+        body: "Tunisian Arabic (Derja) has no standardized orthography, mixes Arabic, French, and English within a single sentence, and is almost entirely absent from the data used to train large language models. This project builds a fully functional spoken dialogue system for Derja from the ground up: speech recognition, a dialect-adapted language model, and a retrieval layer to keep it factually grounded.",
+      },
+      {
+        heading: "Data Collection & Cleaning",
+        body: "A large share of the work was data engineering before any model training. The ASR corpus started from the ~400-hour LinTO Tunisian Arabic Speech Dataset, run through a cleaning pipeline (text normalization, arabization of code-switched tokens, silence/duration filtering) down to 344 validated hours across 37,400 utterances. The CPT text corpus was built by aggregating and cleaning nearly 2 million raw samples from 11 Tunisian NLP datasets into an 85-million-token corpus. The SFT dataset began as 12,572 instruction-response pairs, hand-written and validated by native Tunisian speakers, then expanded to 31,669 examples through controlled lexical augmentation covering 448 frequently code-switched terms.",
+      },
+      {
+        heading: "Speech Recognition",
+        body: "Eleven multilingual ASR models were benchmarked zero-shot on the cleaned corpus before fine-tuning Meta's OmniASR-LLM-3B, reducing word error rate from 68.42% to 37.61% — a 53.1% relative improvement.",
+      },
+      {
+        heading: "Language Model Adaptation",
+        body: "Five open-source LLMs (Llama, SILMA, Labess, Aya Expanse) were evaluated against a TounsiBench-inspired dialect-adherence protocol; Aya Expanse 8B emerged as the strongest base. It was adapted in two stages: continued pre-training via QLoRA on the 85M-token Derja corpus to internalize dialectal vocabulary and code-switching patterns, followed by supervised fine-tuning on the 31,669-example instruction dataset to teach conversational behavior under a consistent assistant persona.",
+      },
+      {
+        heading: "Retrieval-Augmented Generation",
+        body: "To ground responses in authentic Tunisian culture — proverbs, food, social rituals — rather than let the model hallucinate, a hybrid BM25 + semantic RAG layer was built over a 1,647-entry knowledge base, each entry drafted with LLM assistance and manually validated for cultural accuracy. An Arabizi-aware query rewriter normalizes Latin-script spelling variants, and confidence-gated retrieval only injects context when it's demonstrably relevant.",
+      },
+      {
+        heading: "Results",
+        body: "In a preliminary human evaluation, the RAG layer pushed in-domain response quality from 1.4 to 2.4 on a 0–3 scale, with no measurable regression on out-of-domain queries — confirming the confidence gating works as intended.",
+      },
+      {
+        heading: "Product",
+        body: "The resulting model is served through a full-stack MVP with two independent FastAPI backends and real-time SSE streaming, supporting voice recording, text chat, and podcast/video summarization — understood in Arabic, French, or English, and always answered in Derja.",
+      },
+    ],
     image: tounsilmCoverImage,
     screenshots: [
       tounsilmScreenshot1,
@@ -99,39 +150,160 @@ export const projects: Project[] = [
     tags: ["ASR", "LLM Fine-Tuning", "RAG", "QLoRA", "LoRA", "PyTorch", "FastAPI", "React", "ChromaDB", "BM25", "Tunisian Arabic NLP"],
     category: ["ai"],
     featured: true,
+    githubUrl: "https://github.com/syrinesmati/TunisianDialogSystem",
+    links: [
+      { type: "huggingface-model", name: "TounsiLM-8b", url: "https://huggingface.co/alabenayed/TounsiLM-8b" },
+      { type: "huggingface-model", name: "CPT Checkpoint", url: "https://huggingface.co/alabenayed/improved-aya-expanse-8b-cpt-tunisian" },
+      { type: "huggingface-dataset", name: "SFT Dataset", url: "https://huggingface.co/datasets/Syrinesmati/tunisian-question-response-dataset" },
+      { type: "huggingface-dataset", name: "CPT Corpus", url: "https://huggingface.co/datasets/Syrinesmati/tunisian-dialect-corpus" },
+    ],
     award: {
       emoji: "🎓",
       title: "End-of-Year Project (PFA)",
-      competition: "INSAT – Université de Carthage, 2025-2026",
+      competition: "INSAT – University of Carthage, 2025-2026",
       description:
-        "Developed as the final-year project (Projet de Fin d'Année) at the National Institute of Applied Sciences and Technology (INSAT), Université de Carthage. The project addresses the under-resourced Tunisian Arabic dialect through the full-stack integration of speech recognition, language model adaptation, and retrieval-augmented generation.",
+        "Developed as the final-year project (Projet de Fin d'Année) at the National Institute of Applied Sciences and Technology (INSAT), University of Carthage. The project addresses the under-resourced Tunisian Arabic dialect through the full-stack integration of speech recognition, language model adaptation, and retrieval-augmented generation.",
     },
     features: [
-      "Fine-tuned OmniASR-LLM-3B: WER reduced from 68.42% to 37.61% (53.1% relative improvement)",
-      "TounsiLM-8B: AYA Expanse 8B adapted via QLoRA CPT + SFT for Tunisian Arabic",
-      "Hybrid RAG: BM25 + semantic retrieval with RRF fusion over 1,647-entry knowledge base",
-      "Arabizi query rewriting for Latin-script Tunisian dialect inputs",
-      "Confidence-gated context injection for RAG quality control",
-      "Real-time SSE streaming for LLM responses",
-      "Two-backend FastAPI architecture: dedicated ASR server + LLM server",
-      "React 18 + Vite + Tailwind CSS + shadcn/ui full-stack frontend",
-      "Handles code-switching across Arabic, French, and English",
+      "Built and cleaned every training corpus from scratch: ~400h raw ASR speech filtered to 344h/37,400 utterances, ~2M raw text samples from 11 sources filtered to an 85M-token CPT corpus, and 12,572 hand-written instruction-response pairs",
+      "Data cleaning pipelines for normalization, code-switch arabization, script/noise filtering, and deduplication, applied separately to the ASR, CPT, and SFT corpora",
+      "SFT dataset expanded from 12,572 to 31,669 examples via controlled lexical augmentation (448 transliteration mappings) after native-speaker validation",
+      "Benchmarked 11 multilingual ASR models zero-shot before fine-tuning OmniASR-LLM-3B: WER reduced from 68.42% to 37.61% (53.1% relative improvement)",
+      "Benchmarked 5 open-source LLMs via a TounsiBench-inspired dialect-adherence protocol to select the strongest base model",
+      "TounsiLM-8B: Aya Expanse 8B adapted via QLoRA continued pre-training (~85M Derja tokens) + supervised fine-tuning (31k instruction-response examples)",
+      "Hybrid RAG: BM25 + multilingual-e5 semantic retrieval fused via Reciprocal Rank Fusion over a 1,647-entry Tunisian cultural knowledge base, LLM-drafted and human-validated",
+      "Arabizi-aware query rewriter (digit-to-letter normalization) and confidence-gated context injection to prevent hallucination",
+      "Preliminary evaluation: RAG lifted in-domain response quality from 1.4 to 2.4 (0–3 scale) with no degradation on out-of-domain queries",
+      "Full-stack MVP: React 18 + Vite frontend, two independent FastAPI backends (ASR + LLM), real-time SSE streaming",
+      "Three interaction modes: voice recording, multilingual text chat, and podcast/video upload with automatic transcription + summarization",
+      "Handles code-switching across Arabic, French, and English, always responding in authentic Tunisian dialect",
+    ],
+    featureGroups: [
+      {
+        heading: "Data Engineering",
+        items: [
+          "Built and cleaned every training corpus from scratch: ~400h raw ASR speech filtered to 344h/37,400 utterances, ~2M raw text samples from 11 sources filtered to an 85M-token CPT corpus, and 12,572 hand-written instruction-response pairs",
+          "Data cleaning pipelines for normalization, code-switch arabization, script/noise filtering, and deduplication, applied separately to the ASR, CPT, and SFT corpora",
+          "SFT dataset expanded from 12,572 to 31,669 examples via controlled lexical augmentation (448 transliteration mappings) after native-speaker validation",
+        ],
+      },
+      {
+        heading: "Speech Recognition",
+        items: [
+          "Benchmarked 11 multilingual ASR models zero-shot before fine-tuning OmniASR-LLM-3B: WER reduced from 68.42% to 37.61% (53.1% relative improvement)",
+        ],
+      },
+      {
+        heading: "Language Model",
+        items: [
+          "Benchmarked 5 open-source LLMs via a TounsiBench-inspired dialect-adherence protocol to select the strongest base model",
+          "TounsiLM-8B: Aya Expanse 8B adapted via QLoRA continued pre-training (~85M Derja tokens) + supervised fine-tuning (31k instruction-response examples)",
+        ],
+      },
+      {
+        heading: "Retrieval-Augmented Generation",
+        items: [
+          "Hybrid RAG: BM25 + multilingual-e5 semantic retrieval fused via Reciprocal Rank Fusion over a 1,647-entry Tunisian cultural knowledge base, LLM-drafted and human-validated",
+          "Arabizi-aware query rewriter (digit-to-letter normalization) and confidence-gated context injection to prevent hallucination",
+          "Preliminary evaluation: RAG lifted in-domain response quality from 1.4 to 2.4 (0–3 scale) with no degradation on out-of-domain queries",
+        ],
+      },
+      {
+        heading: "Product",
+        items: [
+          "Full-stack MVP: React 18 + Vite frontend, two independent FastAPI backends (ASR + LLM), real-time SSE streaming",
+          "Three interaction modes: voice recording, multilingual text chat, and podcast/video upload with automatic transcription + summarization",
+          "Handles code-switching across Arabic, French, and English, always responding in authentic Tunisian dialect",
+        ],
+      },
     ],
     fr: {
       description:
-        "Système de dialogue vocal pour l'arabe tunisien (Derja) : ASR fine-tuné, TounsiLM-8B (QLoRA) et RAG hybride BM25+sémantique — Projet de Fin d'Année à l'INSAT.",
+        "Système de dialogue vocal pour l'arabe tunisien (Derja) : ASR fine-tuné, LLM de 8B adapté via QLoRA et base de connaissances RAG hybride — Projet de Fin d'Année à l'INSAT.",
       fullDescription:
-        "Ce Projet de Fin d'Année (PFA) à l'INSAT relève le défi de construire un système de dialogue vocal complet pour l'arabe tunisien (Derja), l'une des variantes dialectales les plus complexes au monde, caractérisée par le code-switching entre l'arabe, le français et l'anglais, et par l'écriture en Arabizi (alphabet latin). Le système s'articule autour de trois composants intégrés : (1) Un modèle ASR basé sur OmniASR-LLM-3B, fine-tuné par adaptation LoRA, réduisant le WER de 68,42 % à 37,61 % (amélioration relative de 53,1 %) ; (2) TounsiLM-8B, un LLM adapté via QLoRA CPT + SFT sur AYA Expanse 8B pour l'arabe tunisien ; (3) Un module RAG hybride sur une base de 1 647 entrées, combinant BM25 et recherche sémantique dense avec fusion RRF, injection de contexte à seuil de confiance et réécriture de requêtes Arabizi. La MVP est une application full-stack React 18 + Vite + Tailwind CSS côté frontend, avec deux services FastAPI indépendants communiquant via SSE pour le streaming en temps réel.",
+        "Ce Projet de Fin d'Année (PFA) à l'INSAT relève le défi de construire un système de dialogue vocal complet pour l'arabe tunisien (Derja), un dialecte sans orthographe standardisée, marqué par un code-switching intense entre l'arabe, le français et l'anglais, et quasiment absent des corpus d'entraînement des LLM.",
+      fullDescriptionSections: [
+        {
+          heading: "Le défi",
+          body: "L'arabe tunisien (Derja) n'a pas d'orthographe standardisée, mélange arabe, français et anglais au sein d'une même phrase, et est quasiment absent des données utilisées pour entraîner les grands modèles de langage. Ce projet construit, de bout en bout, un système de dialogue vocal pour le Derja : reconnaissance vocale, modèle de langage adapté au dialecte, et une couche de récupération pour l'ancrer factuellement.",
+        },
+        {
+          heading: "Collecte et nettoyage des données",
+          body: "Une part importante du travail a consisté en ingénierie de données avant tout entraînement. Le corpus ASR est parti du LinTO Tunisian Arabic Speech Dataset (~400 heures brutes), nettoyé (normalisation du texte, arabisation du code-switching, filtrage par durée/silence) pour aboutir à 344 heures validées sur 37 400 énoncés. Le corpus texte pour le CPT a été construit en agrégeant et nettoyant près de 2 millions d'échantillons bruts issus de 11 jeux de données tunisiens, pour obtenir un corpus de 85 millions de tokens. Le dataset SFT a débuté avec 12 572 paires d'instructions rédigées et validées par des locuteurs natifs, puis étendu à 31 669 exemples via une augmentation lexicale contrôlée sur 448 termes fréquemment en code-switching.",
+        },
+        {
+          heading: "Reconnaissance vocale",
+          body: "Onze modèles ASR multilingues ont été évalués en zero-shot sur le corpus nettoyé avant le fine-tuning d'OmniASR-LLM-3B (Meta), réduisant le WER de 68,42 % à 37,61 % — une amélioration relative de 53,1 %.",
+        },
+        {
+          heading: "Adaptation du modèle de langage",
+          body: "Cinq LLM open-source (Llama, SILMA, Labess, Aya Expanse) ont été évalués selon un protocole d'adhérence dialectale inspiré de TounsiBench ; Aya Expanse 8B s'est révélé le plus solide. Il a été adapté en deux étapes : un pré-entraînement continu via QLoRA sur le corpus de 85M tokens en Derja pour intégrer vocabulaire dialectal et code-switching, puis un fine-tuning supervisé sur les 31 669 exemples d'instructions pour enseigner un comportement conversationnel cohérent.",
+        },
+        {
+          heading: "Génération augmentée par récupération (RAG)",
+          body: "Pour ancrer les réponses dans la culture tunisienne authentique — proverbes, cuisine, rituels sociaux — plutôt que de laisser le modèle halluciner, une couche RAG hybride BM25 + sémantique a été construite sur une base de connaissances de 1 647 entrées, rédigées avec l'assistance d'un LLM puis validées manuellement. Un réécrivain de requêtes conscient de l'Arabizi normalise les variantes orthographiques en alphabet latin, et l'injection de contexte est conditionnée par un score de confiance.",
+        },
+        {
+          heading: "Résultats",
+          body: "Lors d'une évaluation humaine préliminaire, la couche RAG a fait passer la qualité des réponses en domaine de 1,4 à 2,4 sur une échelle de 0 à 3, sans dégradation mesurable sur les requêtes hors domaine — confirmant que le filtrage par confiance fonctionne comme prévu.",
+        },
+        {
+          heading: "Produit",
+          body: "Le modèle final est servi via une MVP full-stack avec deux backends FastAPI indépendants et un streaming SSE en temps réel, prenant en charge l'enregistrement vocal, le chat textuel et le résumé de podcasts/vidéos — compris en arabe, français ou anglais, et toujours restitués en Derja.",
+        },
+      ],
       features: [
-        "OmniASR-LLM-3B fine-tuné : WER réduit de 68,42 % à 37,61 % (amélioration de 53,1 %)",
-        "TounsiLM-8B : AYA Expanse 8B adapté via QLoRA CPT + SFT pour l'arabe tunisien",
-        "RAG hybride : BM25 + sémantique avec fusion RRF sur 1 647 entrées",
-        "Réécriture de requêtes Arabizi (dialecte en alphabet latin)",
-        "Injection de contexte à seuil de confiance pour le contrôle qualité du RAG",
-        "Streaming temps réel via SSE pour les réponses LLM",
-        "Architecture deux backends FastAPI : serveur ASR + serveur LLM",
-        "Frontend React 18 + Vite + Tailwind CSS + shadcn/ui",
-        "Gestion du code-switching arabe/français/anglais",
+        "Corpus d'entraînement construits et nettoyés de zéro : ~400h de parole brute filtrées à 344h/37 400 énoncés, ~2M d'échantillons texte bruts filtrés en un corpus CPT de 85M tokens, et 12 572 paires d'instructions rédigées à la main",
+        "Pipelines de nettoyage (normalisation, arabisation du code-switching, filtrage script/bruit, déduplication) appliqués séparément aux corpus ASR, CPT et SFT",
+        "Dataset SFT étendu de 12 572 à 31 669 exemples via augmentation lexicale contrôlée (448 correspondances de translitération) après validation par des locuteurs natifs",
+        "Onze modèles ASR multilingues évalués en zero-shot avant le fine-tuning d'OmniASR-LLM-3B : WER réduit de 68,42 % à 37,61 % (amélioration de 53,1 %)",
+        "Cinq LLM open-source évalués selon un protocole d'adhérence dialectale inspiré de TounsiBench pour sélectionner le meilleur modèle de base",
+        "TounsiLM-8B : Aya Expanse 8B adapté via pré-entraînement continu QLoRA (~85M tokens en Derja) + fine-tuning supervisé (31k exemples d'instructions)",
+        "RAG hybride : BM25 + recherche sémantique multilingual-e5 fusionnées par Reciprocal Rank Fusion sur une base de connaissances culturelles de 1 647 entrées, rédigée par LLM et validée par des humains",
+        "Réécrivain de requêtes conscient de l'Arabizi (normalisation chiffres-lettres) et injection de contexte conditionnée par un score de confiance",
+        "Évaluation préliminaire : le RAG fait passer la qualité des réponses en domaine de 1,4 à 2,4 (échelle 0–3), sans dégradation hors domaine",
+        "MVP full-stack : frontend React 18 + Vite, deux backends FastAPI indépendants (ASR + LLM), streaming SSE en temps réel",
+        "Trois modes d'interaction : enregistrement vocal, chat textuel multilingue, et upload de podcasts/vidéos avec transcription et résumé automatiques",
+        "Gère le code-switching entre l'arabe, le français et l'anglais, en répondant toujours dans un dialecte tunisien authentique",
+      ],
+      featureGroups: [
+        {
+          heading: "Ingénierie des données",
+          items: [
+            "Corpus d'entraînement construits et nettoyés de zéro : ~400h de parole brute filtrées à 344h/37 400 énoncés, ~2M d'échantillons texte bruts filtrés en un corpus CPT de 85M tokens, et 12 572 paires d'instructions rédigées à la main",
+            "Pipelines de nettoyage (normalisation, arabisation du code-switching, filtrage script/bruit, déduplication) appliqués séparément aux corpus ASR, CPT et SFT",
+            "Dataset SFT étendu de 12 572 à 31 669 exemples via augmentation lexicale contrôlée (448 correspondances de translitération) après validation par des locuteurs natifs",
+          ],
+        },
+        {
+          heading: "Reconnaissance vocale",
+          items: [
+            "Onze modèles ASR multilingues évalués en zero-shot avant le fine-tuning d'OmniASR-LLM-3B : WER réduit de 68,42 % à 37,61 % (amélioration de 53,1 %)",
+          ],
+        },
+        {
+          heading: "Modèle de langage",
+          items: [
+            "Cinq LLM open-source évalués selon un protocole d'adhérence dialectale inspiré de TounsiBench pour sélectionner le meilleur modèle de base",
+            "TounsiLM-8B : Aya Expanse 8B adapté via pré-entraînement continu QLoRA (~85M tokens en Derja) + fine-tuning supervisé (31k exemples d'instructions)",
+          ],
+        },
+        {
+          heading: "Génération augmentée par récupération",
+          items: [
+            "RAG hybride : BM25 + recherche sémantique multilingual-e5 fusionnées par Reciprocal Rank Fusion sur une base de connaissances culturelles de 1 647 entrées, rédigée par LLM et validée par des humains",
+            "Réécrivain de requêtes conscient de l'Arabizi (normalisation chiffres-lettres) et injection de contexte conditionnée par un score de confiance",
+            "Évaluation préliminaire : le RAG fait passer la qualité des réponses en domaine de 1,4 à 2,4 (échelle 0–3), sans dégradation hors domaine",
+          ],
+        },
+        {
+          heading: "Produit",
+          items: [
+            "MVP full-stack : frontend React 18 + Vite, deux backends FastAPI indépendants (ASR + LLM), streaming SSE en temps réel",
+            "Trois modes d'interaction : enregistrement vocal, chat textuel multilingue, et upload de podcasts/vidéos avec transcription et résumé automatiques",
+            "Gère le code-switching entre l'arabe, le français et l'anglais, en répondant toujours dans un dialecte tunisien authentique",
+          ],
+        },
       ],
       award: {
         title: "Projet de Fin d'Année (PFA)",
