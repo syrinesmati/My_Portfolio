@@ -676,32 +676,124 @@ export const projects: Project[] = [
     id: "odoo-recommender",
     title: "Odoo Recommender System",
     description:
-      "A recommendation engine that suggests the most relevant products to users based on their preferences and past interactions.",
+      "A hybrid product recommendation engine — combining customer profiling, collaborative filtering, and item similarity — built during a software engineering internship and packaged as a custom Odoo 17 module.",
     fullDescription:
-      "The Odoo Recommender System intelligently analyzes user behavior, purchase history, and product interactions to provide personalized product recommendations. Built directly into the Odoo ecosystem, it seamlessly integrates with existing e-commerce workflows. The system uses collaborative filtering and content-based algorithms to suggest products that users are most likely to purchase, increasing conversion rates and customer satisfaction.",
+      "The Odoo Recommender System is a hybrid recommendation engine built during a software engineering internship and packaged as a custom Odoo 17 module.",
+    fullDescriptionSections: [
+      {
+        heading: "The Problem",
+        body: "Odoo's built-in product suggestions are limited to generic rules (similar products, generic history), with no real personalization by customer profile. The goal was to build a genuine recommendation engine that could personalize both the homepage and product pages using the customer and purchase data already sitting in the ERP.",
+      },
+      {
+        heading: "Two Recommendation Engines",
+        body: "A homepage engine personalizes the storefront as soon as a customer logs in, fusing two signals: explicit profiling (age, gender, and RFM-style purchase recency/frequency/monetary scores compared via cosine similarity) and latent profiling (Non-negative Matrix Factorization over the user-item interaction matrix). Recommendations are drawn from the products most purchased by the 10 most similar customers. A separate product-page engine suggests similar or complementary items on each product sheet, fusing content-based similarity (category, style, target gender — one-hot encoded), co-purchase frequency, and NMF-derived interaction similarity into a single ranked matrix.",
+      },
+      {
+        heading: "Synthetic Data",
+        body: "With no production data available, a synthetic dataset generator produced realistic customers, products, orders, and clickstream events — respecting plausible correlations (age and gender influencing style/category preferences) — mapped directly onto Odoo's own data models (res.partner, product.template, sale.order, website.track) so the engine could be trained and demoed end-to-end without touching real customer data.",
+      },
+      {
+        heading: "Odoo Integration",
+        body: "The engine is packaged as a custom Odoo 17 module (recommendation algorithms, controllers, and views) with an admin settings panel under Website → Settings that lets store admins independently enable each engine and tune how many recommendations are shown — no code changes required. Live recommendation carousels render directly on the homepage and product pages via Odoo's native QWeb views.",
+      },
+      {
+        heading: "Honest Limitations",
+        body: "Since the engine was trained and demoed exclusively on synthetic data, no formal quantitative metrics (precision, recall, click-through rate) were measured — only a qualitative review of recommendation diversity and coherence. Validating against real purchase and interaction data is the natural next step.",
+      },
+    ],
     image: recommenderImage,
     screenshots: [recommenderImage, recommenderImage1, recommenderImage2, recommenderImage3],
     videoPath: odooVideo,
-    tags: ["Odoo", "PostgreSQL", "Machine Learning", "Data Analysis"],
+    tags: ["Odoo", "Python", "Scikit-learn", "PostgreSQL", "Recommender Systems", "Machine Learning"],
     category: ["ai"],
     features: [
-      "Collaborative filtering recommendations",
-      "Real-time product suggestions",
-      "User behavior analytics",
-      "Purchase pattern analysis",
-      "Seamless Odoo integration",
+      "Hybrid homepage engine: fuses explicit profiling (age, gender, RFM cosine similarity) with latent NMF factorization of the user-item interaction matrix",
+      "Hybrid product-page engine: fuses content-based similarity (category/style/gender), co-purchase frequency, and NMF-derived interaction similarity into a single ranked matrix",
+      "Synthetic dataset generator producing customers, products, orders, and clickstream data mapped directly onto Odoo's res.partner / product.template / sale.order / website.track models",
+      "Packaged as a custom Odoo 17 module with an admin settings panel (Website → Settings) to toggle each engine and tune recommendation counts without code changes",
+      "Live recommendation carousels rendered on both the homepage and product pages via Odoo's native QWeb views",
+      "Evaluated qualitatively for coherence and diversity, since production click/purchase data wasn't available for formal precision/recall metrics",
+    ],
+    featureGroups: [
+      {
+        heading: "Recommendation Engines",
+        items: [
+          "Hybrid homepage engine: fuses explicit profiling (age, gender, RFM cosine similarity) with latent NMF factorization of the user-item interaction matrix",
+          "Hybrid product-page engine: fuses content-based similarity (category/style/gender), co-purchase frequency, and NMF-derived interaction similarity into a single ranked matrix",
+        ],
+      },
+      {
+        heading: "Data & Integration",
+        items: [
+          "Synthetic dataset generator producing customers, products, orders, and clickstream data mapped directly onto Odoo's res.partner / product.template / sale.order / website.track models",
+          "Packaged as a custom Odoo 17 module with an admin settings panel (Website → Settings) to toggle each engine and tune recommendation counts without code changes",
+          "Live recommendation carousels rendered on both the homepage and product pages via Odoo's native QWeb views",
+        ],
+      },
+      {
+        heading: "Evaluation",
+        items: [
+          "Evaluated qualitatively for coherence and diversity, since production click/purchase data wasn't available for formal precision/recall metrics",
+        ],
+      },
     ],
     fr: {
       description:
-        "Moteur de recommandation intégré à Odoo eCommerce pour proposer des produits personnalisés.",
+        "Moteur de recommandation hybride — combinant profilage client, filtrage collaboratif et similarité produit — développé durant un stage d'ingénierie logicielle et packagé en module Odoo 17.",
       fullDescription:
-        "Le système analyse les comportements utilisateurs, l'historique d'achat et les interactions produits pour fournir des recommandations pertinentes. Il combine filtrage collaboratif et approche basée contenu afin d'augmenter la pertinence, la conversion et la satisfaction client.",
+        "Le système de recommandation Odoo est un moteur hybride développé durant un stage d'ingénierie logicielle et packagé sous forme de module Odoo 17 personnalisé.",
+      fullDescriptionSections: [
+        {
+          heading: "Le problème",
+          body: "Les suggestions de produits natives d'Odoo restent limitées à des règles génériques (produits similaires, historique générique), sans réelle personnalisation par profil client. L'objectif était de construire un véritable moteur de recommandation exploitant les données clients et d'achat déjà présentes dans l'ERP, pour personnaliser à la fois la page d'accueil et les pages produits.",
+        },
+        {
+          heading: "Deux moteurs de recommandation",
+          body: "Un moteur d'accueil personnalise la page dès la connexion du client, en fusionnant deux signaux : un profilage explicite (âge, sexe, scores RFM comparés par cosine similarity) et un profilage latent (factorisation NMF de la matrice d'interactions utilisateur-produit). Les recommandations proviennent des produits les plus achetés par les 10 clients les plus similaires. Un second moteur, dédié à la fiche produit, suggère des articles similaires ou complémentaires en fusionnant similarité de contenu (catégorie, style, genre cible — encodés en one-hot), fréquence de co-achat, et similarité d'interaction dérivée par NMF, en une seule matrice classée.",
+        },
+        {
+          heading: "Données synthétiques",
+          body: "En l'absence de données de production, un générateur de données synthétiques a produit des clients, produits, commandes et événements de clic réalistes — respectant des corrélations plausibles (âge et sexe influençant les préférences de style/catégorie) — mappés directement sur les modèles Odoo (res.partner, product.template, sale.order, website.track), permettant d'entraîner et de démontrer le moteur de bout en bout sans toucher à de vraies données clients.",
+        },
+        {
+          heading: "Intégration Odoo",
+          body: "Le moteur est packagé en module Odoo 17 personnalisé (algorithmes, contrôleurs, vues) avec un panneau de configuration dans Website → Settings permettant aux administrateurs d'activer chaque moteur indépendamment et d'ajuster le nombre de recommandations affichées, sans toucher au code. Des carrousels de recommandations s'affichent en direct sur la page d'accueil et les fiches produits via les vues QWeb natives d'Odoo.",
+        },
+        {
+          heading: "Limites, en toute honnêteté",
+          body: "Le moteur ayant été entraîné et démontré exclusivement sur des données synthétiques, aucune métrique quantitative formelle (précision, rappel, taux de clic) n'a été mesurée — seulement une revue qualitative de la diversité et de la cohérence des recommandations. La validation sur de vraies données d'achat et d'interaction reste la prochaine étape naturelle.",
+        },
+      ],
       features: [
-        "Recommandations par filtrage collaboratif",
-        "Suggestions produits en temps réel",
-        "Analyse comportementale utilisateur",
-        "Analyse des patterns d'achat",
-        "Intégration native avec Odoo",
+        "Moteur d'accueil hybride : fusionne profilage explicite (âge, sexe, cosine similarity RFM) et factorisation NMF latente de la matrice utilisateur-produit",
+        "Moteur produit hybride : fusionne similarité de contenu (catégorie/style/genre), fréquence de co-achat et similarité d'interaction NMF en une matrice unique",
+        "Générateur de données synthétiques (clients, produits, commandes, clics) mappé directement sur les modèles Odoo res.partner / product.template / sale.order / website.track",
+        "Packagé en module Odoo 17 personnalisé avec panneau de configuration (Website → Settings) pour activer chaque moteur et ajuster le nombre de recommandations, sans code",
+        "Carrousels de recommandations affichés en direct sur la page d'accueil et les fiches produits via les vues QWeb natives d'Odoo",
+        "Évalué qualitativement pour sa cohérence et sa diversité, en l'absence de données de clic/achat réelles pour des métriques de précision/rappel formelles",
+      ],
+      featureGroups: [
+        {
+          heading: "Moteurs de recommandation",
+          items: [
+            "Moteur d'accueil hybride : fusionne profilage explicite (âge, sexe, cosine similarity RFM) et factorisation NMF latente de la matrice utilisateur-produit",
+            "Moteur produit hybride : fusionne similarité de contenu (catégorie/style/genre), fréquence de co-achat et similarité d'interaction NMF en une matrice unique",
+          ],
+        },
+        {
+          heading: "Données & intégration",
+          items: [
+            "Générateur de données synthétiques (clients, produits, commandes, clics) mappé directement sur les modèles Odoo res.partner / product.template / sale.order / website.track",
+            "Packagé en module Odoo 17 personnalisé avec panneau de configuration (Website → Settings) pour activer chaque moteur et ajuster le nombre de recommandations, sans code",
+            "Carrousels de recommandations affichés en direct sur la page d'accueil et les fiches produits via les vues QWeb natives d'Odoo",
+          ],
+        },
+        {
+          heading: "Évaluation",
+          items: [
+            "Évalué qualitativement pour sa cohérence et sa diversité, en l'absence de données de clic/achat réelles pour des métriques de précision/rappel formelles",
+          ],
+        },
       ],
     },
   },
