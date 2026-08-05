@@ -88,7 +88,7 @@ const Volunteering = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="card-gradient border border-primary/20 shadow-lg hover:shadow-xl hover:border-code-accent/40 transition-all duration-500 h-full overflow-hidden group">
+              <Card className="card-gradient border border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/50 transition-all duration-500 h-full overflow-hidden group">
                 {/* Large Image Area */}
                 <div className="relative h-48 overflow-hidden bg-muted">
                   <img
@@ -115,7 +115,7 @@ const Volunteering = () => {
                     <h3 className="text-lg font-semibold leading-tight mb-1">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-code-accent font-medium">
+                    <p className="text-sm text-primary font-medium">
                       {item.organization}
                     </p>
                   </div>

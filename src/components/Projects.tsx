@@ -79,12 +79,12 @@ const Projects = () => {
               layout
             >
               <Card
-                className={`card-gradient border-primary/20 card-interactive overflow-hidden group cursor-pointer h-full flex flex-col ${project.featured ? 'ring-2 ring-code-accent/50 border-code-accent/30' : ''}`}
+                className={`card-gradient border-primary/20 card-interactive overflow-hidden group cursor-pointer h-full flex flex-col ${project.featured ? 'ring-2 ring-primary/50 border-primary/30' : ''}`}
                 onClick={() => navigate(`/project/${project.id}`)}
               >
               <div className="relative h-44 sm:h-48 overflow-hidden">
                 {project.award && (
-                  <div className="absolute top-3 left-3 z-10 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-code-accent/90 to-primary/90 text-foreground dark:text-background text-xs sm:text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
+                  <div className="absolute top-3 left-3 z-10 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-primary/90 text-primary-foreground text-xs sm:text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
                     {project.award.emoji} {isFrench ? project.fr.award?.title ?? project.award.title : project.award.title}
                   </div>
                 )}

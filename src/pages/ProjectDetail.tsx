@@ -140,15 +140,15 @@ const ProjectDetail = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="p-6 rounded-xl bg-gradient-to-r from-code-accent/10 to-primary/10 border-2 border-code-accent/30"
+                  className="p-6 rounded-xl bg-primary/10 border-2 border-primary/30"
                 >
                   <div className="flex items-center gap-4 mb-3">
                     <span className="text-4xl">{project.award.emoji}</span>
                     <div>
-                      <h3 className="text-2xl font-bold text-code-accent">
+                      <h3 className="text-2xl font-bold text-primary">
                         {isFrench ? fr.award?.title ?? project.award.title : project.award.title}
                       </h3>
-                      <p className="text-lg text-code-accent font-medium">
+                      <p className="text-lg text-primary font-medium">
                         {isFrench ? fr.award?.competition ?? project.award.competition : project.award.competition}
                       </p>
                     </div>
