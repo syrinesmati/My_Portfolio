@@ -801,33 +801,135 @@ export const projects: Project[] = [
     id: "farmlink",
     title: "FarmLink",
     description:
-      "An intelligent agricultural platform featuring AI-powered chatbot and computer vision for plant disease detection, empowering farmers with smart collaboration and personalized insights.",
+      "An intelligent agricultural platform combining farm/task management, a community forum, a RAG chatbot (LangChain + Gemini 2.0), and a ResNet-based plant disease classifier (96.7% accuracy), built over 3 Scrum releases.",
     fullDescription:
-      "Farmlink is an intelligent agricultural platform developed as part of our Personal Professional Project (PPP), for which we received excellent marks. The platform empowers farmers through AI and smart collaboration, featuring an RAG-based AI chatbot using Gemini LLM to provide accurate, contextual answers in real time. It also includes a computer vision model (CNN + ResNet) trained on the PlantVillage dataset, achieving over 96% accuracy in detecting plant diseases from a simple photo. Additionally, Farmlink offers a personalized dashboard with weather insights, daily tips, and resource tracking to help optimize farm operations. Built with React (Vite, TypeScript, TailwindCSS) on the frontend, NestJS + Prisma + PostgreSQL on the backend, and PyTorch, TensorFlow, OpenCV, and Flask API for AI model deployment, it leverages Dockerized microservices for a modular, scalable, and secure infrastructure. The project was developed using an Agile/Scrum methodology, with iterative releases and effective collaboration across three major project phases.",
+      "FarmLink is an intelligent agricultural platform built as a Personal Professional Project (PPP), delivered across 3 Scrum releases with a modular NestJS backend and a React frontend.",
+    fullDescriptionSections: [
+      {
+        heading: "Farm & Community Management",
+        body: "Farmers can divide their land into zones (land divisions), each tied to a specific crop, for planning, crop rotation, and per-sector yield analysis. Tasks can be created and assigned to workers with status tracking, and a community forum lets farmers post, comment, like, and follow other members. A personalized dashboard surfaces localized weather (via the OpenWeather API) and an automatically generated daily tip based on crop type, season, and local conditions.",
+      },
+      {
+        heading: "Plant Disease Detection",
+        body: "A ResNet-34-inspired CNN was trained in PyTorch on the New Plant Diseases Dataset (87,000+ images across 38 classes of healthy/diseased leaves for crops like tomato, potato, corn, apple, and grape), using SGD with momentum and a step-decay learning rate schedule. On a held-out 20% test split, the model reached 96.7% accuracy, a 0.96 macro F1-score, and a 0.98 ROC-AUC. It's served through a Flask REST API that returns the detected disease, a confidence score, and treatment recommendations from a local knowledge base.",
+      },
+      {
+        heading: "AI Chatbot: From TF-IDF to RAG",
+        body: "The chatbot started as a lightweight NLP baseline using TF-IDF vectorization and cosine similarity to retrieve the closest matching passage from a document corpus — fast and interpretable, but limited to surface-level keyword matching. It was then upgraded to a full Retrieval-Augmented Generation pipeline: LangChain orchestrates the flow, SentenceTransformer (all-MiniLM-L6-v2) embeds both the knowledge base and the user's question, a ChromaDB vector store retrieves the most relevant agricultural documents, and Gemini 2.0 generates a contextual answer grounded in that retrieved content.",
+      },
+      {
+        heading: "Architecture",
+        body: "The frontend is built with React, Vite, TypeScript, and Tailwind CSS. The backend runs on NestJS with Prisma and PostgreSQL, split into focused modules — auth, users, posts, follow, farm, land-division, worker, tasks, weather, daily-tip, plant-health, chatbot, file-upload — each with its own services, controllers, and Prisma entities. Authentication uses JWT with bcrypt-hashed passwords, and the AI services (plant disease detection, chatbot) run as separate Flask microservices, all containerized with Docker.",
+      },
+    ],
     image: farmlinkImage,
     screenshots: [farmlinkImage, farmlinkImage1],
     videoPath: farmlinkVideo,
-    tags: ["NestJS", "PostgreSQL", "React", "TailWind CSS", "Docker", "TensorFlow", "PyTorch", "CNN", "ResNet", "RAG", "FlaskAPI"],
+    tags: ["NestJS", "Prisma", "PostgreSQL", "React", "PyTorch", "RAG", "LangChain", "Docker"],
     category: ["ai", "fullstack"],
     githubUrl: "https://github.com/orgs/FarmLink-ppp/repositories",
     features: [
-      "Direct farmer-to-market connections",
-      "AI crop disease detection",
-      "Weather forecasting integration",
-      "Knowledge sharing community",
-      "Resource marketplace",
+      "Land management: divide a farm into zones, each tied to a specific crop, for planning and per-sector yield tracking",
+      "Task and worker assignment with status tracking, plus a community forum (posts, comments, likes, follows)",
+      "ResNet-34-inspired CNN (PyTorch) trained on the New Plant Diseases Dataset (87,000+ images, 38 classes): 96.7% accuracy, 0.96 F1-score",
+      "Plant diagnosis served via a Flask REST API that returns the detected disease, a confidence score, and treatment recommendations",
+      "Chatbot evolved from a TF-IDF + cosine-similarity retrieval baseline to a full RAG pipeline (LangChain + Gemini 2.0)",
+      "SentenceTransformer embeddings + a ChromaDB vector store retrieve relevant agricultural documents before Gemini generates a contextual answer",
+      "React/Vite/TypeScript/Tailwind frontend with a modular NestJS + Prisma + PostgreSQL backend",
+      "Dockerized microservices with JWT + bcrypt authentication, delivered across 3 Scrum releases",
+    ],
+    featureGroups: [
+      {
+        heading: "Farm & Community Management",
+        items: [
+          "Land management: divide a farm into zones, each tied to a specific crop, for planning and per-sector yield tracking",
+          "Task and worker assignment with status tracking, plus a community forum (posts, comments, likes, follows)",
+        ],
+      },
+      {
+        heading: "Plant Disease Detection",
+        items: [
+          "ResNet-34-inspired CNN (PyTorch) trained on the New Plant Diseases Dataset (87,000+ images, 38 classes): 96.7% accuracy, 0.96 F1-score",
+          "Plant diagnosis served via a Flask REST API that returns the detected disease, a confidence score, and treatment recommendations",
+        ],
+      },
+      {
+        heading: "AI Chatbot",
+        items: [
+          "Chatbot evolved from a TF-IDF + cosine-similarity retrieval baseline to a full RAG pipeline (LangChain + Gemini 2.0)",
+          "SentenceTransformer embeddings + a ChromaDB vector store retrieve relevant agricultural documents before Gemini generates a contextual answer",
+        ],
+      },
+      {
+        heading: "Architecture",
+        items: [
+          "React/Vite/TypeScript/Tailwind frontend with a modular NestJS + Prisma + PostgreSQL backend",
+          "Dockerized microservices with JWT + bcrypt authentication, delivered across 3 Scrum releases",
+        ],
+      },
     ],
     fr: {
       description:
-        "Plateforme agricole intelligente combinant IA conversationnelle et vision par ordinateur pour aider les agriculteurs.",
+        "Une plateforme agricole intelligente combinant gestion de fermes/tâches, un forum communautaire, un chatbot RAG (LangChain + Gemini 2.0) et un classificateur de maladies des plantes basé sur ResNet (96,7% de précision), construite sur 3 releases Scrum.",
       fullDescription:
-        "FarmLink est une plateforme intelligente développée dans le cadre de notre PPP. Elle intègre un chatbot IA basé sur RAG pour répondre en temps réel, ainsi qu'un modèle de vision par ordinateur pour détecter les maladies des plantes. Le projet propose aussi un tableau de bord personnalisé avec météo, conseils et suivi des ressources.",
+        "FarmLink est une plateforme agricole intelligente développée comme Projet Personnel Professionnel (PPP), livrée sur 3 releases Scrum avec un backend NestJS modulaire et un frontend React.",
+      fullDescriptionSections: [
+        {
+          heading: "Gestion de ferme et communauté",
+          body: "Les agriculteurs peuvent diviser leur exploitation en zones (parcelles), chacune associée à une culture spécifique, pour la planification, la rotation des cultures et l'analyse des rendements par secteur. Les tâches peuvent être créées et assignées à des ouvriers avec suivi de statut, et un forum communautaire permet de publier, commenter, liker et suivre d'autres membres. Un tableau de bord personnalisé affiche la météo localisée (via l'API OpenWeather) et un conseil quotidien généré automatiquement selon le type de culture, la saison et les conditions locales.",
+        },
+        {
+          heading: "Détection de maladies des plantes",
+          body: "Un CNN inspiré de l'architecture ResNet-34 a été entraîné avec PyTorch sur le New Plant Diseases Dataset (plus de 87 000 images réparties en 38 classes de feuilles saines ou malades pour des cultures comme la tomate, la pomme de terre, le maïs, la pomme et le raisin), avec SGD à momentum et une décroissance progressive du taux d'apprentissage. Sur un jeu de test indépendant (20%), le modèle atteint 96,7% d'accuracy, un F1-score macro de 0,96 et une AUC-ROC de 0,98. Il est exposé via une API REST Flask qui renvoie la maladie détectée, un score de confiance et des recommandations de traitement issues d'une base de connaissances locale.",
+        },
+        {
+          heading: "Chatbot IA : du TF-IDF au RAG",
+          body: "Le chatbot a d'abord été construit avec une approche NLP légère basée sur la vectorisation TF-IDF et la similarité cosinus pour retrouver le passage le plus pertinent dans une base documentaire — rapide et interprétable, mais limitée à une correspondance de surface par mots-clés. Il a ensuite évolué vers un pipeline complet de Retrieval-Augmented Generation : LangChain orchestre le flux, SentenceTransformer (all-MiniLM-L6-v2) encode la base documentaire et la question de l'utilisateur, une base vectorielle ChromaDB retrouve les documents agricoles les plus pertinents, et Gemini 2.0 génère une réponse contextualisée à partir de ce contenu récupéré.",
+        },
+        {
+          heading: "Architecture",
+          body: "Le frontend est construit avec React, Vite, TypeScript et Tailwind CSS. Le backend repose sur NestJS avec Prisma et PostgreSQL, découpé en modules ciblés — auth, users, posts, follow, farm, land-division, worker, tasks, weather, daily-tip, plant-health, chatbot, file-upload — chacun avec ses propres services, contrôleurs et entités Prisma. L'authentification utilise des JWT avec des mots de passe hachés par bcrypt, et les services IA (détection de maladies, chatbot) tournent en microservices Flask distincts, le tout conteneurisé avec Docker.",
+        },
+      ],
       features: [
-        "Mise en relation directe agriculteurs-marché",
-        "Détection IA des maladies des cultures",
-        "Intégration de prévisions météo",
-        "Espace de partage de connaissances",
-        "Marketplace de ressources",
+        "Gestion des parcelles : diviser une ferme en zones associées à une culture spécifique, pour la planification et l'analyse des rendements par secteur",
+        "Assignation de tâches et d'ouvriers avec suivi de statut, ainsi qu'un forum communautaire (publications, commentaires, likes, abonnements)",
+        "CNN inspiré de ResNet-34 (PyTorch) entraîné sur le New Plant Diseases Dataset (87 000+ images, 38 classes) : 96,7% d'accuracy, F1-score de 0,96",
+        "Diagnostic des plantes exposé via une API REST Flask renvoyant la maladie détectée, un score de confiance et des recommandations de traitement",
+        "Chatbot ayant évolué d'une base TF-IDF + similarité cosinus vers un pipeline RAG complet (LangChain + Gemini 2.0)",
+        "Encodages SentenceTransformer + base vectorielle ChromaDB pour retrouver les documents agricoles pertinents avant la génération de réponse par Gemini",
+        "Frontend React/Vite/TypeScript/Tailwind avec un backend NestJS + Prisma + PostgreSQL modulaire",
+        "Microservices conteneurisés avec authentification JWT + bcrypt, livrés sur 3 releases Scrum",
+      ],
+      featureGroups: [
+        {
+          heading: "Gestion de ferme et communauté",
+          items: [
+            "Gestion des parcelles : diviser une ferme en zones associées à une culture spécifique, pour la planification et l'analyse des rendements par secteur",
+            "Assignation de tâches et d'ouvriers avec suivi de statut, ainsi qu'un forum communautaire (publications, commentaires, likes, abonnements)",
+          ],
+        },
+        {
+          heading: "Détection de maladies des plantes",
+          items: [
+            "CNN inspiré de ResNet-34 (PyTorch) entraîné sur le New Plant Diseases Dataset (87 000+ images, 38 classes) : 96,7% d'accuracy, F1-score de 0,96",
+            "Diagnostic des plantes exposé via une API REST Flask renvoyant la maladie détectée, un score de confiance et des recommandations de traitement",
+          ],
+        },
+        {
+          heading: "Chatbot IA",
+          items: [
+            "Chatbot ayant évolué d'une base TF-IDF + similarité cosinus vers un pipeline RAG complet (LangChain + Gemini 2.0)",
+            "Encodages SentenceTransformer + base vectorielle ChromaDB pour retrouver les documents agricoles pertinents avant la génération de réponse par Gemini",
+          ],
+        },
+        {
+          heading: "Architecture",
+          items: [
+            "Frontend React/Vite/TypeScript/Tailwind avec un backend NestJS + Prisma + PostgreSQL modulaire",
+            "Microservices conteneurisés avec authentification JWT + bcrypt, livrés sur 3 releases Scrum",
+          ],
+        },
       ],
     },
   },
@@ -835,33 +937,143 @@ export const projects: Project[] = [
     id: "package-delivery",
     title: "Package Delivery System",
     description:
-      "An AI-driven search system for optimizing package delivery in urban environments with multiple search strategies.",
+      "An AI search system comparing 8 classical search strategies and 2 proven-admissible heuristics for delivery routing, with a Spring Boot + React app benchmarking real time/memory/node-expansion trade-offs.",
     fullDescription:
-      "This Package Delivery System is a search-based optimization platform that computes optimal delivery routes under traffic constraints and tunnel shortcuts. The system implements and compares eight different search strategies, providing comprehensive performance analysis including execution time, memory usage, CPU utilization, and node expansion metrics. Built with a modular Java backend featuring Strategy & Template Method design patterns, and a React/Vite frontend for real-time visualization of grids, truck movements, traffic levels, and algorithm metrics.",
+      "This Package Delivery System formalizes urban delivery routing as a classical search problem and implements 8 search strategies with formally proven admissible heuristics, benchmarked end-to-end through a Spring Boot + React application.",
+    fullDescriptionSections: [
+      {
+        heading: "The Problem",
+        body: "The delivery problem is formalized as a search problem over grid positions (x, y): actions are {UP, DOWN, LEFT, RIGHT, TUNNEL}, path cost is the sum of traffic levels (0-4, where 0 means blocked) on traversed edges, and the goal is reaching a customer location. The grid supports up to 3 stores and 10 customers, plus bidirectional tunnel shortcuts costing the Manhattan distance between their entrances.",
+      },
+      {
+        heading: "Eight Search Strategies, Two Admissible Heuristics",
+        body: "All 8 classical strategies were implemented behind a shared search engine using the Strategy and Template Method design patterns: Breadth-First, Depth-First, Iterative Deepening, Uniform-Cost, two Greedy Best-First variants, and two A* variants. The informed strategies use two heuristics, each with a formal admissibility proof: H1 is pure Manhattan distance; H2 is a more informed traffic-aware heuristic that also evaluates single- and double-tunnel shortcut paths, proven to dominate H1 while remaining admissible.",
+      },
+      {
+        heading: "Architecture",
+        body: "DeliverySearch extends the generic search engine and implements the Problem interface, defining the state space, actions, and costs. DeliveryPlanner acts as a Facade over the search subsystem, greedily assigning customers to the nearest available truck via a computed cost matrix, backed by a path cache (keyed by truck→customer:strategy) that eliminates redundant searches when comparing multiple strategies on the same scenario.",
+      },
+      {
+        heading: "Benchmark Results",
+        body: "All 8 strategies were benchmarked on an identical 8×8 grid (3 stores, 5 customers, 4 tunnels). Only UCS and both A* variants found the true optimal cost of 52. A*(H1) delivered the best overall trade-off: optimal cost, 7ms runtime, 364KB memory, and only 54 nodes expanded. DFS returned a 168-cost path — 3.2x worse than optimal — and Iterative Deepening peaked at 1819KB of memory despite expanding fewer nodes than DFS, illustrating that node count alone doesn't predict memory footprint.",
+      },
+      {
+        heading: "Full-Stack App",
+        body: "A Spring Boot REST backend exposes grid-generation and strategy-execution endpoints, paired with a React 19.2 + Vite frontend built around 4 components (App, Controls, GridVisualization, Metrics). The grid renders as an animated SVG: color-coded traffic edges, trucks animating along their computed paths, tunnel connections, and a side-by-side comparison table across all 8 strategies.",
+      },
+    ],
     image: packageDeliveryImage,
     screenshots: [packageDeliveryImage, packageDeliveryImage2],
     videoPath: packageDeliveryVideo,
-    tags: ["Java", "React", "Vite", "AI Search", "OOP Design Patterns", "Performance Analysis"],
-    category: ["ai"],
+    tags: ["Java", "Spring Boot", "React", "Vite", "A* Search", "OOP Design Patterns"],
+    category: ["ai", "fullstack"],
     githubUrl: "https://github.com/syrinesmati/ai-package-delivery",
     features: [
-      "Eight search strategy implementations",
-      "Real-time grid and truck visualization",
-      "Traffic and tunnel constraint modeling",
-      "Performance metrics dashboard",
-      "Strategy & Template Method patterns",
+      "Implemented and compared 8 classical search strategies (BFS, DFS, Iterative Deepening, UCS, 2 Greedy variants, 2 A* variants) behind a shared Strategy/Template-Method search engine",
+      "Two proven-admissible heuristics: pure Manhattan distance (H1) and a traffic-aware heuristic (H2) that also evaluates single- and double-tunnel shortcuts, formally shown to dominate H1",
+      "DeliveryPlanner acts as a Facade over the search subsystem, greedily assigning customers to trucks via a computed cost matrix",
+      "Path-caching layer (keyed by truck→customer:strategy) eliminates redundant searches when comparing multiple strategies",
+      "Benchmarked all 8 strategies on an identical 8×8 grid (3 stores, 5 customers, 4 tunnels): only UCS and both A* variants found the true optimal cost of 52",
+      "A*(H1) delivered the best overall trade-off — optimal cost, 7ms runtime, 364KB memory, 54 nodes expanded — while DFS returned a 168-cost path (3.2x worse) and Iterative Deepening peaked at 1819KB memory",
+      "Spring Boot REST backend (grid generation + strategy execution endpoints) paired with a React 19.2 + Vite frontend",
+      "Animated SVG grid visualization: color-coded traffic edges, live truck movement along computed paths, and a side-by-side comparison table across all 8 strategies",
+    ],
+    featureGroups: [
+      {
+        heading: "Search & Heuristics",
+        items: [
+          "Implemented and compared 8 classical search strategies (BFS, DFS, Iterative Deepening, UCS, 2 Greedy variants, 2 A* variants) behind a shared Strategy/Template-Method search engine",
+          "Two proven-admissible heuristics: pure Manhattan distance (H1) and a traffic-aware heuristic (H2) that also evaluates single- and double-tunnel shortcuts, formally shown to dominate H1",
+        ],
+      },
+      {
+        heading: "Architecture",
+        items: [
+          "DeliveryPlanner acts as a Facade over the search subsystem, greedily assigning customers to trucks via a computed cost matrix",
+          "Path-caching layer (keyed by truck→customer:strategy) eliminates redundant searches when comparing multiple strategies",
+        ],
+      },
+      {
+        heading: "Benchmark Results",
+        items: [
+          "Benchmarked all 8 strategies on an identical 8×8 grid (3 stores, 5 customers, 4 tunnels): only UCS and both A* variants found the true optimal cost of 52",
+          "A*(H1) delivered the best overall trade-off — optimal cost, 7ms runtime, 364KB memory, 54 nodes expanded — while DFS returned a 168-cost path (3.2x worse) and Iterative Deepening peaked at 1819KB memory",
+        ],
+      },
+      {
+        heading: "Full-Stack App",
+        items: [
+          "Spring Boot REST backend (grid generation + strategy execution endpoints) paired with a React 19.2 + Vite frontend",
+          "Animated SVG grid visualization: color-coded traffic edges, live truck movement along computed paths, and a side-by-side comparison table across all 8 strategies",
+        ],
+      },
     ],
     fr: {
       description:
-        "Système d'optimisation de livraison de colis basé sur des stratégies de recherche IA en milieu urbain.",
+        "Un système de recherche IA comparant 8 stratégies de recherche classiques et 2 heuristiques admissibles pour le routage de livraison, avec une app Spring Boot + React mesurant les compromis réels temps/mémoire/nœuds explorés.",
       fullDescription:
-        "Cette plateforme calcule des routes optimales de livraison sous contraintes de trafic et de tunnels. Elle compare huit stratégies de recherche avec des mesures de performance détaillées (temps, mémoire, CPU, nœuds explorés). Le backend Java est conçu de façon modulaire avec des design patterns, et le frontend React/Vite visualise l'exécution en temps réel.",
+        "Ce système de livraison de colis formalise le routage urbain comme un problème de recherche classique et implémente 8 stratégies de recherche avec des heuristiques admissibles formellement prouvées, évaluées de bout en bout via une application Spring Boot + React.",
+      fullDescriptionSections: [
+        {
+          heading: "Le problème",
+          body: "Le problème de livraison est formalisé comme un problème de recherche sur des positions de grille (x, y) : les actions sont {UP, DOWN, LEFT, RIGHT, TUNNEL}, le coût de chemin est la somme des niveaux de trafic (0 à 4, où 0 signifie bloqué) sur les arêtes traversées, et le but est d'atteindre l'emplacement d'un client. La grille supporte jusqu'à 3 magasins et 10 clients, ainsi que des raccourcis bidirectionnels par tunnel dont le coût est la distance de Manhattan entre leurs entrées.",
+        },
+        {
+          heading: "Huit stratégies de recherche, deux heuristiques admissibles",
+          body: "Les 8 stratégies classiques ont été implémentées derrière un moteur de recherche partagé utilisant les patterns Strategy et Template Method : recherche en largeur, en profondeur, par approfondissement itératif, à coût uniforme, deux variantes de recherche gloutonne, et deux variantes A*. Les stratégies informées utilisent deux heuristiques, chacune avec une preuve d'admissibilité formelle : H1 est la distance de Manhattan pure ; H2 est une heuristique plus informée tenant compte du trafic, qui évalue aussi les raccourcis à un ou deux tunnels, prouvée dominer H1 tout en restant admissible.",
+        },
+        {
+          heading: "Architecture",
+          body: "DeliverySearch étend le moteur de recherche générique et implémente l'interface Problem, définissant l'espace d'états, les actions et les coûts. DeliveryPlanner agit comme une Facade sur le sous-système de recherche, assignant de façon gloutonne chaque client au camion le plus proche via une matrice de coûts calculée, appuyée par un cache de chemins (indexé par camion→client:stratégie) qui élimine les recherches redondantes lors de la comparaison de plusieurs stratégies sur le même scénario.",
+        },
+        {
+          heading: "Résultats de benchmark",
+          body: "Les 8 stratégies ont été évaluées sur une grille identique de 8×8 (3 magasins, 5 clients, 4 tunnels). Seules UCS et les deux variantes A* ont trouvé le coût optimal réel de 52. A*(H1) a offert le meilleur compromis global : coût optimal, 7ms d'exécution, 364KB de mémoire, et seulement 54 nœuds explorés. DFS a retourné un chemin de coût 168 — 3,2 fois pire que l'optimal — et l'approfondissement itératif a culminé à 1819KB de mémoire malgré moins de nœuds explorés que DFS, illustrant que le nombre de nœuds seul ne prédit pas l'empreinte mémoire.",
+        },
+        {
+          heading: "Application full-stack",
+          body: "Un backend REST Spring Boot expose des endpoints de génération de grille et d'exécution de stratégie, associé à un frontend React 19.2 + Vite construit autour de 4 composants (App, Controls, GridVisualization, Metrics). La grille se rend en SVG animé : arêtes de trafic colorées, camions animés le long de leurs chemins calculés, connexions de tunnels, et un tableau de comparaison côte à côte pour les 8 stratégies.",
+        },
+      ],
       features: [
-        "Huit stratégies de recherche implémentées",
-        "Visualisation en temps réel de la grille et des camions",
-        "Modélisation du trafic et des contraintes",
-        "Tableau de bord de performance",
-        "Patterns Strategy et Template Method",
+        "Implémentation et comparaison de 8 stratégies de recherche classiques (BFS, DFS, approfondissement itératif, UCS, 2 variantes gloutonnes, 2 variantes A*) derrière un moteur de recherche Strategy/Template Method partagé",
+        "Deux heuristiques admissibles prouvées : distance de Manhattan pure (H1) et heuristique consciente du trafic (H2) évaluant aussi les raccourcis à un ou deux tunnels, prouvée dominer H1",
+        "DeliveryPlanner agit comme une Facade sur le sous-système de recherche, assignant de façon gloutonne les clients aux camions via une matrice de coûts calculée",
+        "Couche de cache de chemins (indexée par camion→client:stratégie) éliminant les recherches redondantes lors de la comparaison de plusieurs stratégies",
+        "Évaluation des 8 stratégies sur une grille identique de 8×8 (3 magasins, 5 clients, 4 tunnels) : seules UCS et les deux variantes A* ont trouvé le coût optimal réel de 52",
+        "A*(H1) a offert le meilleur compromis global — coût optimal, 7ms, 364KB, 54 nœuds explorés — tandis que DFS a retourné un chemin 3,2 fois pire et l'approfondissement itératif a culminé à 1819KB",
+        "Backend REST Spring Boot (endpoints de génération de grille et d'exécution de stratégie) associé à un frontend React 19.2 + Vite",
+        "Visualisation de grille SVG animée : arêtes de trafic colorées, camions animés le long des chemins calculés, et tableau de comparaison côte à côte pour les 8 stratégies",
+      ],
+      featureGroups: [
+        {
+          heading: "Recherche & heuristiques",
+          items: [
+            "Implémentation et comparaison de 8 stratégies de recherche classiques (BFS, DFS, approfondissement itératif, UCS, 2 variantes gloutonnes, 2 variantes A*) derrière un moteur de recherche Strategy/Template Method partagé",
+            "Deux heuristiques admissibles prouvées : distance de Manhattan pure (H1) et heuristique consciente du trafic (H2) évaluant aussi les raccourcis à un ou deux tunnels, prouvée dominer H1",
+          ],
+        },
+        {
+          heading: "Architecture",
+          items: [
+            "DeliveryPlanner agit comme une Facade sur le sous-système de recherche, assignant de façon gloutonne les clients aux camions via une matrice de coûts calculée",
+            "Couche de cache de chemins (indexée par camion→client:stratégie) éliminant les recherches redondantes lors de la comparaison de plusieurs stratégies",
+          ],
+        },
+        {
+          heading: "Résultats de benchmark",
+          items: [
+            "Évaluation des 8 stratégies sur une grille identique de 8×8 (3 magasins, 5 clients, 4 tunnels) : seules UCS et les deux variantes A* ont trouvé le coût optimal réel de 52",
+            "A*(H1) a offert le meilleur compromis global — coût optimal, 7ms, 364KB, 54 nœuds explorés — tandis que DFS a retourné un chemin 3,2 fois pire et l'approfondissement itératif a culminé à 1819KB",
+          ],
+        },
+        {
+          heading: "Application full-stack",
+          items: [
+            "Backend REST Spring Boot (endpoints de génération de grille et d'exécution de stratégie) associé à un frontend React 19.2 + Vite",
+            "Visualisation de grille SVG animée : arêtes de trafic colorées, camions animés le long des chemins calculés, et tableau de comparaison côte à côte pour les 8 stratégies",
+          ],
+        },
       ],
     },
   },

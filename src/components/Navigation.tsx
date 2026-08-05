@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-scroll";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -17,6 +18,13 @@ const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const { language, setLanguage, isFrench } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
+  const goToSection = (to: string) => {
+    navigate("/", { state: { scrollTo: to } });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,10 +37,11 @@ const Navigation = () => {
   const navItems = [
     { name: isFrench ? "Accueil" : "Home", to: "home" },
     { name: isFrench ? "À propos" : "About", to: "about" },
+    { name: isFrench ? "Projets" : "Projects", to: "projects" },
+    { name: isFrench ? "Expérience" : "Experience", to: "experience" },
     { name: isFrench ? "Compétences" : "Skills", to: "skills" },
     { name: isFrench ? "Éducation" : "Education", to: "education" },
-    { name: isFrench ? "Expérience" : "Experience", to: "experience" },
-    { name: isFrench ? "Projets" : "Projects", to: "projects" },
+    { name: isFrench ? "Bénévolat" : "Volunteering", to: "volunteering" },
     { name: isFrench ? "Contact" : "Contact", to: "contact" },
   ];
 
@@ -44,25 +53,45 @@ const Navigation = () => {
     >
       <div className="container mx-auto px-3 sm:px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="home" smooth duration={500} className="text-lg sm:text-xl font-bold cursor-pointer">
-            <span className="text-gradient">Syrine Smati</span>
-          </Link>
+          {isHome ? (
+            <Link to="home" smooth duration={500} className="text-lg sm:text-xl font-bold cursor-pointer">
+              <span className="text-gradient">Syrine Smati</span>
+            </Link>
+          ) : (
+            <span
+              onClick={() => goToSection("home")}
+              className="text-lg sm:text-xl font-bold cursor-pointer"
+            >
+              <span className="text-gradient">Syrine Smati</span>
+            </span>
+          )}
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                smooth
-                duration={500}
-                spy
-                activeClass="text-primary"
-                className="cursor-pointer hover:text-primary transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              isHome ? (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  smooth
+                  duration={500}
+                  spy
+                  offset={-80}
+                  activeClass="text-primary"
+                  className="cursor-pointer hover:text-primary transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <span
+                  key={item.to}
+                  onClick={() => goToSection(item.to)}
+                  className="cursor-pointer hover:text-primary transition-colors"
+                >
+                  {item.name}
+                </span>
+              )
+            )}
             <Button
               variant="outline"
               size="sm"
@@ -111,20 +140,34 @@ const Navigation = () => {
                   <SheetTitle className="text-gradient text-2xl font-bold">{isFrench ? "Menu" : "Menu"}</SheetTitle>
                 </SheetHeader>
                 <div className="mt-8 flex flex-col space-y-4">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      smooth
-                      duration={500}
-                      spy
-                      activeClass="text-primary font-semibold"
-                      className="text-base sm:text-lg py-3 px-4 rounded-lg cursor-pointer hover:text-primary hover:bg-primary/10 transition-all"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                  {navItems.map((item) =>
+                    isHome ? (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        smooth
+                        duration={500}
+                        spy
+                        offset={-80}
+                        activeClass="text-primary font-semibold"
+                        className="text-base sm:text-lg py-3 px-4 rounded-lg cursor-pointer hover:text-primary hover:bg-primary/10 transition-all"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <span
+                        key={item.to}
+                        onClick={() => {
+                          setIsOpen(false);
+                          goToSection(item.to);
+                        }}
+                        className="text-base sm:text-lg py-3 px-4 rounded-lg cursor-pointer hover:text-primary hover:bg-primary/10 transition-all"
+                      >
+                        {item.name}
+                      </span>
+                    )
+                  )}
                 </div>
               </SheetContent>
             </Sheet>

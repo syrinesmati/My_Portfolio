@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import techtrollLogo from "@/assets/experience/techtroll-logo.png";
-import guepardLogo from "@/assets/experience/guepard-logo.png";
 import welyneLogo from "@/assets/experience/welyne-logo.png";
 import yonnovLogo from "@/assets/experience/yonnov-logo.png";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
@@ -21,17 +20,6 @@ const Experience = () => {
           description:
             "Travail sur Ossus.ai, une plateforme IA axee sur l'extraction de documents et le raisonnement de conformite. Developpement de pipelines intelligents pour extraire des informations structurees a partir de documents complexes et exploration d'approches basees sur les LLM pour l'analyse de conformite, le raisonnement et la comprehension automatique de documents.",
           technologies: ["Python", "LLMs", "RAG", "Document AI", "NLP", "Machine Learning"],
-          type: "work",
-        },
-        {
-          logo: guepardLogo,
-          title: "Stagiaire IA",
-          organization: "Guepard",
-          location: "Tunisie",
-          period: "Fev 2026 - Present",
-          description:
-            "Optimisation de la couche semantique de Qwery, une plateforme d'analyse NL-to-SQL. Conception de mecanismes de desambiguIsation semantique pour relier l'intention utilisateur aux concepts metier.",
-          technologies: ["NLP", "NL-to-SQL", "Semantic Layer", "AI Analytics"],
           type: "work",
         },
         {
@@ -67,17 +55,6 @@ const Experience = () => {
       description:
         "Working on Ossus.ai, an AI platform focused on document extraction and compliance reasoning. Developing intelligent pipelines for extracting structured information from complex documents and exploring LLM-based approaches for compliance analysis, reasoning, and automated document understanding.",
       technologies: ["Python", "LLMs", "RAG", "Document AI", "NLP", "Machine Learning"],
-      type: "work",
-    },
-    {
-      logo: guepardLogo,
-      title: "AI Intern",
-      organization: "Guepard",
-      location: "Tunisia",
-      period: "Feb 2026 – Present",
-      description:
-        "Working on the optimization of the semantic layer for Qwery, an AI-powered NL-to-SQL data analytics platform. Designing semantic disambiguation mechanisms to map user intents to business concepts and database schemas.",
-      technologies: ["NLP", "NL-to-SQL", "Semantic Layer", "AI Analytics"],
       type: "work",
     },
     {
