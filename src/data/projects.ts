@@ -28,7 +28,11 @@ import realestateVideo from "@/assets/projects/real-estate-prediction/demo.mp4";
 import taskflow1Image from "@/assets/projects/taskflow-pro/screenshot-1.png";
 import taskflowVideo from "@/assets/projects/taskflow-pro/demo.mp4";
 
-import githubTrendsImage from "@/assets/projects/github-trends-analyzer/screenshot-1.png";
+import githubTrendsDiagram from "@/assets/projects/github-trends-analyzer/diagram-export-05-08-2026-14_19_10.png";
+import githubTrendsDashboard1 from "@/assets/projects/github-trends-analyzer/Screenshot 2026-08-05 133252.png";
+import githubTrendsDashboard2 from "@/assets/projects/github-trends-analyzer/Screenshot 2026-08-05 133309.png";
+import githubTrendsDocker from "@/assets/projects/github-trends-analyzer/Screenshot 2026-08-05 142116.png";
+import githubTrendsVideo from "@/assets/projects/github-trends-analyzer/demo.mp4";
 
 import tounsilmCoverImage from "@/assets/projects/tounsilm/cover-logo.svg";
 import tounsilmScreenshot1 from "@/assets/projects/tounsilm/340edfc1-63eb-4e1a-9555-bbb176f61f6f.jpg";
@@ -364,39 +368,165 @@ export const projects: Project[] = [
     id: "github-trends-analyzer",
     title: "GitHub Trends Analyzer – Big Data Project",
     description:
-      "An end-to-end big data pipeline that analyzes and visualizes GitHub activity using both batch and real-time processing.",
+      "A real-time + batch pipeline that tracks GitHub trending activity (stars, forks) using Kafka, Spark, Airflow, HDFS, and HBase, visualized through a live Streamlit dashboard.",
     fullDescription:
-      "GitHub Trends Analyzer is a complete big data project designed to extract actionable insights from large-scale developer activity. The architecture combines batch and streaming workflows to deliver both historical and real-time trend analysis. Apache Airflow orchestrates scheduled jobs, while Apache Spark (PySpark and Spark Streaming) powers distributed data processing at scale. Real-time ingestion is handled through Apache Kafka, and storage is distributed across HDFS and Apache HBase to support efficient querying and analytics. The pipeline collects data from GitHub APIs, processes repository events, and applies machine learning models to identify emerging technologies and trending programming languages. Results are exposed through an interactive Streamlit dashboard, enabling users to explore historical patterns, monitor live activity, and consume AI-driven predictions.",
-    image: githubTrendsImage,
-    screenshots: [githubTrendsImage],
-    videoPath: realestateVideo,
-    tags: ["Apache Airflow", "Apache Spark", "PySpark", "Spark Streaming", "Apache Kafka", "HDFS", "Apache HBase", "Machine Learning", "Streamlit", "Big Data"],
-    category: ["ai", "fullstack", "data-engineering"],
-    githubUrl: "https://github.com/syrinesmati/github-trends-analyzer",
+      "GitHub Trends Analyzer tracks GitHub trending activity — stars and forks — through two independent data flows that converge on a shared HBase cluster: a real-time streaming path fed by the live GitHub Events API, and a daily batch path fed by historical GH Archive dumps.",
+    fullDescriptionSections: [
+      {
+        heading: "The Pipeline",
+        body: "This pipeline tracks GitHub trending activity — stars and forks — through two independent flows that converge on a shared HBase cluster: a real-time streaming path fed by the live GitHub Events API, and a daily batch path fed by historical GH Archive dumps.",
+      },
+      {
+        heading: "Real-Time Ingestion",
+        body: "A Python producer polls the public GitHub Events API every 5 seconds (up to 300 events per poll), filters to WatchEvent (stars) and ForkEvent (forks), resolves forked repos back to their canonical parent, and publishes to a Kafka topic. Spark Structured Streaming consumes the topic and writes to HBase in two parallel micro-batches — every 10 seconds for the raw live-activity feed, every 30 seconds for 10-minute-bucketed trend metrics — using HBase's own atomic counters instead of Spark's stateful window operator to keep per-batch overhead low.",
+      },
+      {
+        heading: "Daily Batch Processing",
+        body: "An Airflow DAG runs daily at 02:00 UTC: it downloads the previous day's GH Archive dump (falling back from a single bulk file to 24 hourly files when needed), validates and loads it into HDFS, then triggers a PySpark batch job. The job aggregates star/fork counts per repository per day, computes day-over-day 'velocity' via a Spark window function with lag, and enriches each repo's language through a three-tier fallback: an HBase cache, then batched GitHub GraphQL queries (50 repos/request), then a parallel REST fallback for stragglers. A metadata table tracks which days are already processed so re-runs stay idempotent, and old raw files are cleaned up after a 30-day retention window.",
+      },
+      {
+        heading: "Storage",
+        body: "HDFS holds the raw compressed GH Archive files and Spark Streaming's checkpoint state; Apache HBase holds six tables (live events, live metrics, a repo-language cache, daily aggregates, and processing metadata), accessed over Thrift from both Spark and the dashboard. Everything is containerized with Docker Compose alongside a Hadoop/Kafka/HBase cluster.",
+      },
+      {
+        heading: "Dashboard",
+        body: "A Streamlit dashboard polls HBase directly (refresh rate 5–60s, user-selectable) and renders five live/batch panels: a real-time trending-repos leaderboard, a raw live-activity feed, historical star trends by language, a day-over-day 'rising languages' comparison, and a top-10 leaderboard ranked by the batch-computed velocity score.",
+      },
+      {
+        heading: "Scale",
+        body: "In production runs, the pipeline has processed as much as 7.35 GiB across 384 files in HDFS and enriched 1,252 repositories in a single daily batch run, with roughly two weeks of continuous daily processing history.",
+      },
+    ],
+    image: githubTrendsDashboard1,
+    screenshots: [githubTrendsDiagram, githubTrendsDashboard1, githubTrendsDashboard2, githubTrendsDocker],
+    videoPath: githubTrendsVideo,
+    tags: ["Apache Airflow", "Apache Spark", "PySpark", "Spark Streaming", "Apache Kafka", "HDFS", "Apache HBase", "Streamlit", "Docker", "Big Data"],
+    category: ["data-engineering"],
+    githubUrl: "https://github.com/BenAyedMedAla/github-trends-analyzer",
     features: [
-      "End-to-end batch and real-time data pipeline",
-      "Workflow orchestration with Apache Airflow",
-      "Distributed processing with PySpark and Spark Streaming",
-      "Real-time ingestion with Apache Kafka",
-      "Scalable storage using HDFS and Apache HBase",
-      "GitHub API data collection and repository activity analysis",
-      "Machine learning predictions for emerging technologies",
-      "Interactive Streamlit dashboard for trend exploration",
+      "GitHub Events API polled every 5s, filtered to stars and forks, deduplicated and fork-resolved before publishing to Kafka",
+      "Spark Structured Streaming consumes Kafka and writes to HBase via two micro-batches: 10s for the live feed, 30s for 10-minute trend windows",
+      "Airflow DAG runs daily at 02:00 UTC, ingesting the previous day's GH Archive dump into HDFS with automatic bulk-file/hourly-file fallback",
+      "PySpark batch job computes day-over-day star/fork velocity via a window-lag function and enriches repo languages through a 3-tier cache/GraphQL/REST fallback",
+      "Idempotent re-runs via a processed-days metadata table, with 30-day HDFS retention and automatic cleanup",
+      "HDFS for raw GH Archive files and streaming checkpoint state; 6 HBase tables accessed over Thrift from Spark and the dashboard",
+      "Fully containerized with Docker Compose, orchestrating Kafka, Airflow, Spark, and Streamlit alongside a Hadoop/HBase cluster",
+      "Streamlit dashboard with 5 live/batch panels: trending repos, live activity feed, historical star trends, rising languages, and a velocity-ranked leaderboard",
+      "Processed 7.35 GiB across 384 files in HDFS and enriched 1,252 repositories in a single daily batch run",
+    ],
+    featureGroups: [
+      {
+        heading: "Real-Time Streaming",
+        items: [
+          "GitHub Events API polled every 5s, filtered to stars and forks, deduplicated and fork-resolved before publishing to Kafka",
+          "Spark Structured Streaming consumes Kafka and writes to HBase via two micro-batches: 10s for the live feed, 30s for 10-minute trend windows",
+        ],
+      },
+      {
+        heading: "Daily Batch Processing",
+        items: [
+          "Airflow DAG runs daily at 02:00 UTC, ingesting the previous day's GH Archive dump into HDFS with automatic bulk-file/hourly-file fallback",
+          "PySpark batch job computes day-over-day star/fork velocity via a window-lag function and enriches repo languages through a 3-tier cache/GraphQL/REST fallback",
+          "Idempotent re-runs via a processed-days metadata table, with 30-day HDFS retention and automatic cleanup",
+        ],
+      },
+      {
+        heading: "Storage & Infrastructure",
+        items: [
+          "HDFS for raw GH Archive files and streaming checkpoint state; 6 HBase tables accessed over Thrift from Spark and the dashboard",
+          "Fully containerized with Docker Compose, orchestrating Kafka, Airflow, Spark, and Streamlit alongside a Hadoop/HBase cluster",
+        ],
+      },
+      {
+        heading: "Dashboard",
+        items: [
+          "Streamlit dashboard with 5 live/batch panels: trending repos, live activity feed, historical star trends, rising languages, and a velocity-ranked leaderboard",
+        ],
+      },
+      {
+        heading: "Scale",
+        items: [
+          "Processed 7.35 GiB across 384 files in HDFS and enriched 1,252 repositories in a single daily batch run",
+        ],
+      },
     ],
     fr: {
       description:
-        "Pipeline big data de bout en bout pour analyser et visualiser les tendances GitHub en batch et en temps réel.",
+        "Pipeline temps réel + batch qui suit les tendances GitHub (stars, forks) avec Kafka, Spark, Airflow, HDFS et HBase, visualisé via un dashboard Streamlit en direct.",
       fullDescription:
-        "GitHub Trends Analyzer combine traitement batch et temps réel pour extraire des insights exploitables sur l'activité des développeurs. Airflow orchestre les workflows, Spark traite les données, Kafka gère l'ingestion, et HDFS/HBase assurent le stockage analytique. Les résultats sont exposés dans un dashboard Streamlit interactif.",
+        "GitHub Trends Analyzer suit les tendances GitHub — stars et forks — via deux flux de données indépendants qui convergent vers un cluster HBase partagé : un flux temps réel alimenté par l'API GitHub Events en direct, et un flux batch quotidien alimenté par les archives historiques GH Archive.",
+      fullDescriptionSections: [
+        {
+          heading: "Le pipeline",
+          body: "Ce pipeline suit les tendances GitHub — stars et forks — via deux flux indépendants qui convergent vers un cluster HBase partagé : un flux temps réel alimenté par l'API GitHub Events en direct, et un flux batch quotidien alimenté par les archives historiques GH Archive.",
+        },
+        {
+          heading: "Ingestion temps réel",
+          body: "Un producteur Python interroge l'API publique GitHub Events toutes les 5 secondes (jusqu'à 300 événements par appel), filtre les WatchEvent (stars) et ForkEvent (forks), résout les forks vers leur dépôt parent canonique, puis publie sur un topic Kafka. Spark Structured Streaming consomme ce topic et écrit dans HBase via deux micro-batchs parallèles — toutes les 10 secondes pour le flux d'activité brute, toutes les 30 secondes pour les métriques agrégées par fenêtres de 10 minutes — en utilisant les compteurs atomiques natifs de HBase plutôt que l'opérateur de fenêtrage à état de Spark, pour limiter la surcharge par micro-batch.",
+        },
+        {
+          heading: "Traitement batch quotidien",
+          body: "Un DAG Airflow s'exécute chaque jour à 2h00 UTC : il télécharge l'archive GH Archive de la veille (avec repli automatique du fichier unique vers 24 fichiers horaires si nécessaire), la valide et la charge dans HDFS, puis déclenche un job PySpark batch. Ce job agrège les compteurs de stars/forks par dépôt et par jour, calcule la 'vélocité' jour-sur-jour via une fonction de fenêtrage Spark avec lag, et enrichit le langage de chaque dépôt via un repli à trois niveaux : cache HBase, puis requêtes GraphQL GitHub par lots de 50 dépôts, puis repli REST parallèle pour les cas restants. Une table de métadonnées suit les jours déjà traités pour garantir l'idempotence, et les anciens fichiers bruts sont supprimés après une rétention de 30 jours.",
+        },
+        {
+          heading: "Stockage",
+          body: "HDFS conserve les fichiers bruts compressés de GH Archive ainsi que l'état de checkpoint de Spark Streaming ; Apache HBase héberge six tables (événements live, métriques live, cache de langages, agrégats quotidiens et métadonnées de traitement), accessibles via Thrift depuis Spark et le dashboard. L'ensemble est conteneurisé avec Docker Compose, aux côtés d'un cluster Hadoop/Kafka/HBase.",
+        },
+        {
+          heading: "Dashboard",
+          body: "Un dashboard Streamlit interroge directement HBase (fréquence de rafraîchissement 5–60s, réglable) et affiche cinq panneaux live/batch : un classement des dépôts tendance en temps réel, un flux d'activité brute, l'évolution historique des stars par langage, une comparaison jour-sur-jour des langages en progression, et un top 10 classé par score de vélocité calculé en batch.",
+        },
+        {
+          heading: "Échelle",
+          body: "En conditions réelles, le pipeline a traité jusqu'à 7,35 Gio répartis sur 384 fichiers dans HDFS et enrichi 1 252 dépôts lors d'une seule exécution batch quotidienne, avec environ deux semaines d'historique de traitement continu.",
+        },
+      ],
       features: [
-        "Pipeline data batch + temps réel",
-        "Orchestration des workflows avec Airflow",
-        "Traitement distribué avec Spark",
-        "Ingestion streaming avec Kafka",
-        "Stockage scalable HDFS/HBase",
-        "Analyse d'activité depuis les APIs GitHub",
-        "Prédictions ML sur technologies émergentes",
-        "Dashboard Streamlit interactif",
+        "API GitHub Events interrogée toutes les 5s, filtrée sur les stars et forks, dédupliquée et résolue vers le dépôt parent avant publication sur Kafka",
+        "Spark Structured Streaming consomme Kafka et écrit dans HBase via deux micro-batchs : 10s pour le flux live, 30s pour les fenêtres de tendance de 10 minutes",
+        "DAG Airflow exécuté chaque jour à 2h00 UTC, chargeant l'archive GH Archive de la veille dans HDFS avec repli automatique fichier unique/fichiers horaires",
+        "Job PySpark batch calculant la vélocité stars/forks jour-sur-jour via une fonction de fenêtrage avec lag, et enrichissant les langages via un repli cache/GraphQL/REST à 3 niveaux",
+        "Réexécutions idempotentes via une table de métadonnées des jours traités, avec rétention HDFS de 30 jours et nettoyage automatique",
+        "HDFS pour les fichiers bruts GH Archive et l'état de checkpoint du streaming ; 6 tables HBase accessibles via Thrift depuis Spark et le dashboard",
+        "Entièrement conteneurisé avec Docker Compose, orchestrant Kafka, Airflow, Spark et Streamlit aux côtés d'un cluster Hadoop/HBase",
+        "Dashboard Streamlit avec 5 panneaux live/batch : dépôts tendance, flux d'activité live, tendances historiques des stars, langages en progression, et classement par vélocité",
+        "Traitement de 7,35 Gio répartis sur 384 fichiers dans HDFS et enrichissement de 1 252 dépôts lors d'une seule exécution batch quotidienne",
+      ],
+      featureGroups: [
+        {
+          heading: "Streaming temps réel",
+          items: [
+            "API GitHub Events interrogée toutes les 5s, filtrée sur les stars et forks, dédupliquée et résolue vers le dépôt parent avant publication sur Kafka",
+            "Spark Structured Streaming consomme Kafka et écrit dans HBase via deux micro-batchs : 10s pour le flux live, 30s pour les fenêtres de tendance de 10 minutes",
+          ],
+        },
+        {
+          heading: "Traitement batch quotidien",
+          items: [
+            "DAG Airflow exécuté chaque jour à 2h00 UTC, chargeant l'archive GH Archive de la veille dans HDFS avec repli automatique fichier unique/fichiers horaires",
+            "Job PySpark batch calculant la vélocité stars/forks jour-sur-jour via une fonction de fenêtrage avec lag, et enrichissant les langages via un repli cache/GraphQL/REST à 3 niveaux",
+            "Réexécutions idempotentes via une table de métadonnées des jours traités, avec rétention HDFS de 30 jours et nettoyage automatique",
+          ],
+        },
+        {
+          heading: "Stockage & infrastructure",
+          items: [
+            "HDFS pour les fichiers bruts GH Archive et l'état de checkpoint du streaming ; 6 tables HBase accessibles via Thrift depuis Spark et le dashboard",
+            "Entièrement conteneurisé avec Docker Compose, orchestrant Kafka, Airflow, Spark et Streamlit aux côtés d'un cluster Hadoop/HBase",
+          ],
+        },
+        {
+          heading: "Dashboard",
+          items: [
+            "Dashboard Streamlit avec 5 panneaux live/batch : dépôts tendance, flux d'activité live, tendances historiques des stars, langages en progression, et classement par vélocité",
+          ],
+        },
+        {
+          heading: "Échelle",
+          items: [
+            "Traitement de 7,35 Gio répartis sur 384 fichiers dans HDFS et enrichissement de 1 252 dépôts lors d'une seule exécution batch quotidienne",
+          ],
+        },
       ],
     },
   },
@@ -404,35 +534,141 @@ export const projects: Project[] = [
     id: "real-estate-prediction",
     title: "Tunisian Real Estate Price Prediction",
     description:
-      "A machine learning-based platform for predicting real estate prices in Tunisia with high accuracy.",
+      "A CRISP-DM data mining platform predicting Tunisian real estate prices from 25,646 cleaned listings, served through a React + FastAPI app with a RandomForest model (R²=0.88 rental, 0.73 sale).",
     fullDescription:
-      "A comprehensive end-to-end ML platform for predicting real estate prices in Tunisia. The system was trained on 12,000+ properties data and achieves 0.878 accuracy for rental price models. The pipeline includes data ingestion, cleaning, and validation stages, with models trained and evaluated using MLflow for experiment tracking. The prediction service is exposed through a RESTful FastAPI backend, containerized with Docker, and deployed to the cloud. An intuitive full-stack web application allows users to input property details and receive instant price predictions for both rental and sale properties.",
+      "A CRISP-DM data mining platform predicting Tunisian real estate prices, built on 25,646 cleaned listings and served through a React + FastAPI web app backed by a RandomForest model.",
+    fullDescriptionSections: [
+      {
+        heading: "The Problem",
+        body: "Real estate makes up 60-70% of the average Tunisian household's wealth, yet the market is fragmented across platforms with no reliable price-estimation tools and a documented 5-15% gap between listed and real prices. The goal was a CRISP-DM-driven pipeline that predicts both rental and sale prices robustly enough to generalize across regions and property types.",
+      },
+      {
+        heading: "Data Collection",
+        body: "Listings were merged from three sources with very different quality levels: a public Kaggle dataset (9,296 listings, well-structured), a Tayara.tn scrape (~9,000 listings, noisy and dominated by out-of-scope property types, ultimately the weakest source), and a Mubawab.tn scrape (~15,000 listings — 8,000 sale + 7,000 rental — with GPS coordinates and structured fields, which became the backbone of the final dataset). Combined, this produced 31,169 raw listings across 24 governorates and 267 raw region spellings.",
+      },
+      {
+        heading: "Cleaning & Feature Engineering",
+        body: "A regex-based NLP layer recovers transaction type, surface, and room count from free-text descriptions when the structured fields are missing. Prices are cleaned with log-IQR outlier detection against business thresholds (200-20,000 TND/month for rentals, 40,000-5,000,000 TND for sales), and any remaining missing prices are imputed via Ward hierarchical clustering on the non-price features. Region spelling was collapsed from 300+ variants down to 239 canonical regions through string-similarity clustering, and 8 binary amenity flags (pool, garage, garden, terrace, elevator, furnished, heating, AC) were extracted from listing text. Six additional features were engineered — surface-per-room, bathroom ratio, room density, an amenity score, a luxury score, and a size category — before one-hot encoding and standard scaling. The final dataset: 25,646 listings (12,901 sale + 12,745 rental), 0% missing values, down from 31,169 raw (17.7% dropped during cleaning).",
+      },
+      {
+        heading: "Modeling & Results",
+        body: "Five algorithms (Ridge, RandomForest, GradientBoosting, XGBoost, LightGBM) were benchmarked as baselines separately for the rental and sale markets. RandomForest came out ahead on both: R²=0.88 on rentals (MAE 498 TND, ±0.001 across 3-fold CV — production-ready) and R²=0.73 on sales (MAE ~160,474 TND, MAPE 26.75% — narrowly short of the 0.75 target). Feature importance analysis showed surface alone accounts for 63.9% of the sale model's predictive power, pointing to missing variables (property age, condition, floor, view) as the main ceiling on sale-price accuracy rather than a modeling weakness.",
+      },
+      {
+        heading: "Platform",
+        body: "The trained models are served through a FastAPI backend (joblib-loaded RandomForest pipelines) behind REST endpoints for rent and sale prediction, plus a KNN-based 'similar properties' recommender. A React + Vite frontend provides a property form for instant price estimates. The whole stack — frontend, backend, PostgreSQL, and an MLflow tracking server — is containerized via Docker Compose.",
+      },
+    ],
     image: realestate1Image,
     screenshots: [realestate1Image, realestate2Image, realestate3Image],
     videoPath: realestateVideo,
-    tags: ["FastAPI", "Machine Learning", "MLflow", "Docker", "Predictive Analytics", "Data Engineering"],
-    category: ["ai"],
+    tags: ["FastAPI", "React", "Machine Learning", "MLflow", "Docker", "PostgreSQL", "Scikit-learn", "CRISP-DM"],
+    category: ["ai", "fullstack"],
     githubUrl: "https://github.com/syrinesmati/Tunisan-Real-Estate-Price-Prediction-Platform",
     features: [
-      "ML models trained on 12,000+ properties",
-      "0.878 accuracy for rental price prediction",
-      "End-to-end data pipeline with ingestion, cleaning, and validation",
-      "MLflow experiment tracking and model evaluation",
-      "RESTful FastAPI service containerized with Docker",
-      "Cloud-deployed prediction service",
+      "Merged 3 heterogeneous sources (Kaggle, Tayara.tn scrape, Mubawab.tn scrape) into 31,169 raw listings across 24 governorates",
+      "Regex-based NLP imputation recovers transaction type, surface, and room count from free-text descriptions",
+      "Region harmonization collapsed 300+ spelling variants into 239 canonical regions via string-similarity clustering",
+      "Ward hierarchical clustering imputes missing prices from surface/rooms/region/property type, without leaking price into the clustering itself",
+      "Benchmarked 5 algorithms (Ridge, RandomForest, GradientBoosting, XGBoost, LightGBM) separately for rental and sale markets",
+      "RandomForest selected: R²=0.88 on rentals (MAE 498 TND) and R²=0.73 on sales (MAE ~160k TND), validated via 3-fold cross-validation",
+      "Feature importance analysis identified surface as 63.9% of predictive power, flagging missing variables (age, condition, floor) as the main limiter on sale-price accuracy",
+      "FastAPI backend serves the trained models via REST endpoints, plus a KNN-based 'similar properties' recommender",
+      "React + Vite frontend with a property form for instant price estimates",
+      "Containerized 5-service stack (frontend, backend, PostgreSQL, MLflow tracking server) via Docker Compose",
+    ],
+    featureGroups: [
+      {
+        heading: "Data Engineering",
+        items: [
+          "Merged 3 heterogeneous sources (Kaggle, Tayara.tn scrape, Mubawab.tn scrape) into 31,169 raw listings across 24 governorates",
+          "Regex-based NLP imputation recovers transaction type, surface, and room count from free-text descriptions",
+          "Region harmonization collapsed 300+ spelling variants into 239 canonical regions via string-similarity clustering",
+          "Ward hierarchical clustering imputes missing prices from surface/rooms/region/property type, without leaking price into the clustering itself",
+        ],
+      },
+      {
+        heading: "Modeling",
+        items: [
+          "Benchmarked 5 algorithms (Ridge, RandomForest, GradientBoosting, XGBoost, LightGBM) separately for rental and sale markets",
+          "RandomForest selected: R²=0.88 on rentals (MAE 498 TND) and R²=0.73 on sales (MAE ~160k TND), validated via 3-fold cross-validation",
+          "Feature importance analysis identified surface as 63.9% of predictive power, flagging missing variables (age, condition, floor) as the main limiter on sale-price accuracy",
+        ],
+      },
+      {
+        heading: "Platform",
+        items: [
+          "FastAPI backend serves the trained models via REST endpoints, plus a KNN-based 'similar properties' recommender",
+          "React + Vite frontend with a property form for instant price estimates",
+          "Containerized 5-service stack (frontend, backend, PostgreSQL, MLflow tracking server) via Docker Compose",
+        ],
+      },
     ],
     fr: {
       description:
-        "Plateforme de prédiction des prix immobiliers en Tunisie basée sur le machine learning.",
+        "Plateforme de data mining CRISP-DM prédisant les prix immobiliers tunisiens à partir de 25 646 annonces nettoyées, servie via une app React + FastAPI avec un modèle RandomForest (R²=0,88 location, 0,73 vente).",
       fullDescription:
-        "Plateforme ML complète entraînée sur plus de 12 000 biens immobiliers. Elle couvre ingestion, nettoyage, validation et entraînement des modèles, avec suivi des expériences via MLflow. Le service de prédiction est exposé via FastAPI, conteneurisé avec Docker et déployé dans le cloud.",
+        "Une plateforme de data mining CRISP-DM prédisant les prix immobiliers tunisiens, construite sur 25 646 annonces nettoyées et servie via une application React + FastAPI adossée à un modèle RandomForest.",
+      fullDescriptionSections: [
+        {
+          heading: "Le problème",
+          body: "L'immobilier représente 60 à 70 % du patrimoine moyen des ménages tunisiens, mais le marché est fragmenté entre plateformes, sans outil d'estimation fiable, avec un écart documenté de 5 à 15 % entre prix affiché et prix réel. L'objectif était un pipeline piloté par la méthodologie CRISP-DM, capable de prédire les prix de location et de vente de façon robuste, en généralisant à travers les régions et les types de biens.",
+        },
+        {
+          heading: "Collecte des données",
+          body: "Les annonces ont été fusionnées depuis trois sources de qualité très différente : un dataset public Kaggle (9 296 annonces, bien structuré), un scraping de Tayara.tn (~9 000 annonces, bruitées et dominées par des types de biens hors périmètre, la source la plus faible), et un scraping de Mubawab.tn (~15 000 annonces — 8 000 ventes + 7 000 locations — avec coordonnées GPS et champs structurés, devenu l'ossature du dataset final). Au total, 31 169 annonces brutes réparties sur 24 gouvernorats et 267 orthographes de régions différentes.",
+        },
+        {
+          heading: "Nettoyage et feature engineering",
+          body: "Une couche NLP basée sur des règles (regex) récupère le type de transaction, la surface et le nombre de pièces depuis le texte libre lorsque les champs structurés sont absents. Les prix sont nettoyés par détection d'outliers log-IQR selon des seuils métier (200 à 20 000 TND/mois pour la location, 40 000 à 5 000 000 TND pour la vente), et les prix manquants restants sont imputés via un clustering hiérarchique de Ward sur les variables hors prix. L'orthographe des régions a été ramenée de plus de 300 variantes à 239 régions canoniques via un clustering par similarité de chaînes, et 8 indicateurs binaires d'équipements (piscine, garage, jardin, terrasse, ascenseur, meublé, chauffage, climatisation) ont été extraits du texte des annonces. Six features supplémentaires ont été créées — surface par pièce, ratio de salles de bain, densité de pièces, score d'équipements, score de luxe et catégorie de taille — avant encodage one-hot et standardisation. Dataset final : 25 646 annonces (12 901 ventes + 12 745 locations), 0 % de valeurs manquantes, contre 31 169 annonces brutes (17,7 % écartées lors du nettoyage).",
+        },
+        {
+          heading: "Modélisation et résultats",
+          body: "Cinq algorithmes (Ridge, RandomForest, GradientBoosting, XGBoost, LightGBM) ont été comparés en baseline, séparément pour les marchés de location et de vente. RandomForest s'est imposé sur les deux : R²=0,88 en location (MAE 498 TND, ±0,001 en validation croisée 3-fold — prêt pour la production) et R²=0,73 en vente (MAE ~160 474 TND, MAPE 26,75 % — légèrement sous l'objectif de 0,75). L'analyse de feature importance montre que la surface représente seule 63,9 % du pouvoir prédictif du modèle de vente, ce qui pointe vers des variables manquantes (âge du bien, état, étage, vue) comme principale limite, plutôt qu'une faiblesse de modélisation.",
+        },
+        {
+          heading: "Plateforme",
+          body: "Les modèles entraînés sont servis par un backend FastAPI (pipelines RandomForest chargés via joblib) exposant des endpoints REST de prédiction location/vente, ainsi qu'un recommandeur de « biens similaires » basé sur KNN. Un frontend React + Vite propose un formulaire de saisie pour obtenir une estimation instantanée. L'ensemble — frontend, backend, PostgreSQL et un serveur de suivi MLflow — est conteneurisé via Docker Compose.",
+        },
+      ],
       features: [
-        "Modèles entraînés sur 12 000+ biens",
-        "0.878 de précision pour les loyers",
-        "Pipeline data de bout en bout",
-        "Suivi des expériences avec MLflow",
-        "API FastAPI conteneurisée avec Docker",
-        "Service de prédiction déployé dans le cloud",
+        "Fusion de 3 sources hétérogènes (Kaggle, scraping Tayara.tn, scraping Mubawab.tn) en 31 169 annonces brutes sur 24 gouvernorats",
+        "Imputation NLP par regex récupérant le type de transaction, la surface et le nombre de pièces depuis les descriptions en texte libre",
+        "Harmonisation des régions : plus de 300 variantes orthographiques ramenées à 239 régions canoniques via clustering par similarité de chaînes",
+        "Clustering hiérarchique de Ward pour imputer les prix manquants à partir de la surface/pièces/région/type de bien, sans fuite du prix dans le clustering",
+        "Comparaison de 5 algorithmes (Ridge, RandomForest, GradientBoosting, XGBoost, LightGBM) séparément pour les marchés location et vente",
+        "RandomForest retenu : R²=0,88 en location (MAE 498 TND) et R²=0,73 en vente (MAE ~160k TND), validé par validation croisée 3-fold",
+        "Analyse de feature importance : la surface représente 63,9 % du pouvoir prédictif, désignant les variables manquantes (âge, état, étage) comme principale limite en vente",
+        "Backend FastAPI exposant les modèles entraînés via des endpoints REST, avec un recommandeur de biens similaires basé sur KNN",
+        "Frontend React + Vite avec un formulaire de saisie pour une estimation de prix instantanée",
+        "Stack conteneurisée en 5 services (frontend, backend, PostgreSQL, serveur de suivi MLflow) via Docker Compose",
+      ],
+      featureGroups: [
+        {
+          heading: "Ingénierie des données",
+          items: [
+            "Fusion de 3 sources hétérogènes (Kaggle, scraping Tayara.tn, scraping Mubawab.tn) en 31 169 annonces brutes sur 24 gouvernorats",
+            "Imputation NLP par regex récupérant le type de transaction, la surface et le nombre de pièces depuis les descriptions en texte libre",
+            "Harmonisation des régions : plus de 300 variantes orthographiques ramenées à 239 régions canoniques via clustering par similarité de chaînes",
+            "Clustering hiérarchique de Ward pour imputer les prix manquants à partir de la surface/pièces/région/type de bien, sans fuite du prix dans le clustering",
+          ],
+        },
+        {
+          heading: "Modélisation",
+          items: [
+            "Comparaison de 5 algorithmes (Ridge, RandomForest, GradientBoosting, XGBoost, LightGBM) séparément pour les marchés location et vente",
+            "RandomForest retenu : R²=0,88 en location (MAE 498 TND) et R²=0,73 en vente (MAE ~160k TND), validé par validation croisée 3-fold",
+            "Analyse de feature importance : la surface représente 63,9 % du pouvoir prédictif, désignant les variables manquantes (âge, état, étage) comme principale limite en vente",
+          ],
+        },
+        {
+          heading: "Plateforme",
+          items: [
+            "Backend FastAPI exposant les modèles entraînés via des endpoints REST, avec un recommandeur de biens similaires basé sur KNN",
+            "Frontend React + Vite avec un formulaire de saisie pour une estimation de prix instantanée",
+            "Stack conteneurisée en 5 services (frontend, backend, PostgreSQL, serveur de suivi MLflow) via Docker Compose",
+          ],
+        },
       ],
     },
   },
