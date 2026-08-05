@@ -200,7 +200,7 @@ const Skills = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
             {isFrench ? "Mes " : "My "}
             <span className="text-gradient">{isFrench ? "compétences" : "Skills"}</span>
           </h2>

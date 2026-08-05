@@ -18,7 +18,7 @@ const Hero = () => {
           className="grid md:grid-cols-2 gap-8 md:gap-12 items-center"
         >
           <div className="space-y-5 text-center md:text-left">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
               {isFrench ? "Bonjour, je suis " : "Hi, I'm "}
               <span className="text-gradient">Syrine Smati</span>
             </h1>
@@ -47,12 +47,12 @@ const Hero = () => {
               <img
                 src={profileImage}
                 alt="Syrine Smati"
-                width={384}
-                height={384}
+                width={448}
+                height={448}
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
-                className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 rounded-full object-cover border-4 border-primary glow animate-float"
+                className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-full object-cover border-4 border-primary glow animate-float"
               />
             </div>
           </div>

@@ -13,7 +13,7 @@ const Contact = () => {
       <SectionGlowBackground />
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             {isFrench ? "Restons en " : "Get in "}
             <span className="text-gradient">{isFrench ? "contact" : "Touch"}</span>
           </h2>
@@ -22,15 +22,14 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-1 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="space-y-6"
           >
-            <Card className="card-gradient border-primary/20 card-interactive group cursor-pointer">
+            <Card className="card-gradient border-primary/20 card-interactive group cursor-pointer h-full">
               <CardHeader>
                 <CardTitle>{isFrench ? "Informations de contact" : "Contact Information"}</CardTitle>
               </CardHeader>
@@ -53,8 +52,15 @@ const Contact = () => {
                 </div>
               </CardContent>
             </Card>
+          </motion.div>
 
-            <Card className="card-gradient border-primary/20 card-interactive group cursor-pointer">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Card className="card-gradient border-primary/20 card-interactive group cursor-pointer h-full">
               <CardHeader>
                 <CardTitle>{isFrench ? "Retrouvez-moi" : "Connect with Me"}</CardTitle>
               </CardHeader>

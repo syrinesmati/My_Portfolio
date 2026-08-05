@@ -110,7 +110,7 @@ const Education = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Title Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             {isFrench ? "Mon " : "My "}
             <span className="text-gradient">{isFrench ? "Parcours" : "Education"}</span>
           </h2>

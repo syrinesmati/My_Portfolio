@@ -54,7 +54,7 @@ const About = () => {
           viewport={{ once: true }}
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               {isFrench ? "À propos de " : "About "}
               <span className="text-gradient">{isFrench ? "moi" : "Me"}</span>
             </h2>
