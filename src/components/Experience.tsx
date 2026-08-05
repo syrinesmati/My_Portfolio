@@ -111,7 +111,7 @@ const Experience = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             {isFrench ? "Mon " : "My "}
-            <span className="text-gradient">{isFrench ? "experience" : "Experience"}</span>
+            <span className="text-gradient">{isFrench ? "expérience" : "Experience"}</span>
           </h2>
           <p className="text-xl text-muted-foreground">
             {isFrench ? "Un parcours d'apprentissage et de progression" : "A journey of learning and growth"}
@@ -157,6 +157,8 @@ const Experience = () => {
                               <img
                                 src={exp.logo}
                                 alt={`${exp.organization} logo`}
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-contain p-2 md:p-3"
                                 onError={(e) => {
                                   e.currentTarget.style.display = "none";
@@ -202,7 +204,7 @@ const Experience = () => {
                             {exp.technologies.map((tech, techIndex) => (
                               <span
                                 key={techIndex}
-                                className="text-xs font-medium px-3 py-1 rounded-full bg-turquoise/10 text-turquoise border border-turquoise/20"
+                                className="text-xs font-medium px-3 py-1 rounded-full bg-code-accent/10 text-code-accent border border-code-accent/20"
                               >
                                 {tech}
                               </span>

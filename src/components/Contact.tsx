@@ -18,7 +18,7 @@ const Contact = () => {
             <span className="text-gradient">{isFrench ? "contact" : "Touch"}</span>
           </h2>
           <p className="text-base sm:text-xl text-muted-foreground">
-            {isFrench ? "Creons quelque chose d'incroyable ensemble" : "Let's create something amazing together"}
+            {isFrench ? "Créons quelque chose d'incroyable ensemble" : "Let's create something amazing together"}
           </p>
         </div>
 
@@ -37,11 +37,15 @@ const Contact = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
-                  <span className="break-all">syrinesmati28@gmail.com</span>
+                  <a href="mailto:syrinesmati28@gmail.com" className="break-all hover:text-primary transition-colors">
+                    syrinesmati28@gmail.com
+                  </a>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
-                  <span>+216 51 054 359</span>
+                  <a href="tel:+21651054359" className="hover:text-primary transition-colors">
+                    +216 51 054 359
+                  </a>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />

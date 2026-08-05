@@ -3,6 +3,7 @@ import { Link } from "react-scroll";
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import {
   Sheet,
   SheetContent,
@@ -13,9 +14,9 @@ import {
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [scrolled, setScrolled] = useState(false);
   const { language, setLanguage, isFrench } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,16 +26,12 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
-
   const navItems = [
     { name: isFrench ? "Accueil" : "Home", to: "home" },
-    { name: isFrench ? "A propos" : "About", to: "about" },
-    { name: isFrench ? "Competences" : "Skills", to: "skills" },
-    { name: isFrench ? "Education" : "Education", to: "education" },
-    { name: isFrench ? "Experience" : "Experience", to: "experience" },
+    { name: isFrench ? "À propos" : "About", to: "about" },
+    { name: isFrench ? "Compétences" : "Skills", to: "skills" },
+    { name: isFrench ? "Éducation" : "Education", to: "education" },
+    { name: isFrench ? "Expérience" : "Experience", to: "experience" },
     { name: isFrench ? "Projets" : "Projects", to: "projects" },
     { name: isFrench ? "Contact" : "Contact", to: "contact" },
   ];
@@ -77,7 +74,8 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
@@ -97,7 +95,7 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={toggleTheme}
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}

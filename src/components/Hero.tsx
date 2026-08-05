@@ -23,14 +23,14 @@ const Hero = () => {
               <span className="text-gradient">Syrine Smati</span>
             </h1>
             <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground">
-              {isFrench ? "Etudiante en genie logiciel" : "Software Engineering Student"}
+              {isFrench ? "Étudiante en génie logiciel" : "Software Engineering Student"}
             </p>
             <p className="text-lg sm:text-xl md:text-2xl text-gradient font-semibold">
-              {isFrench ? "Transformer les idees en code" : "Bringing Ideas into Code"}
+              {isFrench ? "Transformer les idées en code" : "Bringing Ideas into Code"}
             </p>
             <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto md:mx-0">
               {isFrench
-                ? "Je cree des applications intelligentes et des solutions de bout en bout."
+                ? "Je crée des applications intelligentes et des solutions de bout en bout."
                 : "Building intelligent applications and crafting end-to-end solutions."}
             </p>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
@@ -47,6 +47,11 @@ const Hero = () => {
               <img
                 src={profileImage}
                 alt="Syrine Smati"
+                width={384}
+                height={384}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 rounded-full object-cover border-4 border-primary glow animate-float"
               />
             </div>

@@ -1,73 +1,38 @@
-# Welcome to your Lovable project
+# Syrine Smati — Portfolio
 
-## Project info
+Personal portfolio site showcasing projects, skills, education, and experience. Built with React, TypeScript, Vite, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/c1f68f99-a09d-457a-9c26-980be670e1c6
+Live at [syrinesmati-portfolio.vercel.app](https://syrinesmati-portfolio.vercel.app/).
 
-## How can I edit this code?
+## Stack
 
-There are several ways of editing your application.
+- [Vite](https://vitejs.dev/) + [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) (Radix primitives)
+- [React Router](https://reactrouter.com/) for client-side routing
+- [Framer Motion](https://www.framer.com/motion/) for animations
+- English/French language toggle and light/dark theme toggle, both persisted to `localStorage`
 
-**Use Lovable**
+## Getting started
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c1f68f99-a09d-457a-9c26-980be670e1c6) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Requires Node.js and npm.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `npm run dev` — start the Vite dev server
+- `npm run build` — production build
+- `npm run build:dev` — development-mode build
+- `npm run preview` — preview the production build locally
+- `npm run lint` — run ESLint
 
-**Use GitHub Codespaces**
+## Project structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/c1f68f99-a09d-457a-9c26-980be670e1c6) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- `src/components` — page sections (Hero, About, Skills, Experience, Projects, Contact, etc.)
+- `src/pages` — routed pages (`Index`, `ProjectDetail`, `NotFound`)
+- `src/data/projects.ts` — single source of truth for project content (EN/FR) shared by the projects grid and project detail pages
+- `src/contexts` — `LanguageContext` and `ThemeContext` providers
+- `src/assets` — images, videos, and documents (CVs) used across the site

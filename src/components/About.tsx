@@ -13,7 +13,34 @@ const About = () => {
   const cvDownloadName = isFrench ? "cv-syrine-smati-fr.pdf" : "cv-syrine-smati-eng.pdf";
 
   const highlights = [
-  
+    {
+      icon: Code2,
+      title: isFrench ? "Code propre" : "Clean Code",
+      description: isFrench
+        ? "J'écris un code lisible, maintenable et bien structuré."
+        : "I write readable, maintainable, and well-structured code.",
+    },
+    {
+      icon: Brain,
+      title: isFrench ? "Esprit analytique" : "Problem Solver",
+      description: isFrench
+        ? "J'aime décomposer des problèmes complexes en solutions simples."
+        : "I enjoy breaking down complex problems into simple solutions.",
+    },
+    {
+      icon: Rocket,
+      title: isFrench ? "Apprentissage rapide" : "Fast Learner",
+      description: isFrench
+        ? "Je m'adapte rapidement aux nouvelles technologies et outils."
+        : "I quickly adapt to new technologies and tools.",
+    },
+    {
+      icon: Palette,
+      title: isFrench ? "Sens du design" : "Design-Minded",
+      description: isFrench
+        ? "Je porte une attention particulière à l'expérience utilisateur."
+        : "I care deeply about crafting a great user experience.",
+    },
   ];
 
   return (
@@ -28,12 +55,12 @@ const About = () => {
         >
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              {isFrench ? "A propos de " : "About "}
+              {isFrench ? "À propos de " : "About "}
               <span className="text-gradient">{isFrench ? "moi" : "Me"}</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               {isFrench
-                ? "Etudiante passionnee en genie logiciel, dediee a la creation de solutions innovantes."
+                ? "Étudiante passionnée en génie logiciel, dédiée à la création de solutions innovantes."
                 : "A passionate software engineering student dedicated to creating innovative solutions and bringing ideas to life through code."}
             </p>
           </div>
@@ -43,17 +70,17 @@ const About = () => {
               <CardContent className="p-8">
                 <p className="text-lg leading-relaxed mb-4">
                   {isFrench
-                    ? "Bonjour ! Je suis Syrine Smati, etudiante en genie logiciel, passionnee par la transformation d'idees en applications utiles et impactantes. Je me specialise en IA et en developpement full-stack."
+                    ? "Bonjour ! Je suis Syrine Smati, étudiante en génie logiciel, passionnée par la transformation d'idées en applications utiles et impactantes. Je me spécialise en IA et en développement full-stack."
                     : "Hi! I'm Syrine Smati, a passionate software engineering student who loves turning ideas into real, impactful applications. I specialize in AI development and full-stack web applications combining creativity with technical expertise to deliver seamless solutions."}
                 </p>
                 <p className="text-lg leading-relaxed mb-4">
                   {isFrench
-                    ? "J'aime explorer de nouvelles technologies, construire des projets innovants et apprendre en continu pour rester a la pointe."
+                    ? "J'aime explorer de nouvelles technologies, construire des projets innovants et apprendre en continu pour rester à la pointe."
                     : "I enjoy exploring new technologies, building innovative projects, and continuously learning to stay at the forefront of the software world. When I'm not coding, you can find me exploring ways technology can make life easier."}
                 </p>
-                <p className="text-lg leading-relaxed">                
+                <p className="text-lg leading-relaxed">
                   {isFrench
-                    ? "J'aime resoudre des problemes complexes, collaborer avec les autres et creer des experiences numeriques utiles et memorables."
+                    ? "J'aime résoudre des problèmes complexes, collaborer avec les autres et créer des expériences numériques utiles et mémorables."
                     : "I thrive on solving challenging problems, collaborating with others, and creating digital experiences that are not just functional but also meaningful."}
                 </p>
                 <div className="flex flex-wrap gap-4 mt-6 justify-center">

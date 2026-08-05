@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 export type Language = "fr" | "en";
 
@@ -23,19 +23,19 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const setLanguage = (nextLanguage: Language) => {
+  const setLanguage = useCallback((nextLanguage: Language) => {
     setLanguageState(nextLanguage);
     localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage);
     document.documentElement.lang = nextLanguage;
-  };
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = language;
   }, [language]);
 
-  const toggleLanguage = () => {
+  const toggleLanguage = useCallback(() => {
     setLanguage(language === "en" ? "fr" : "en");
-  };
+  }, [language, setLanguage]);
 
   const value = useMemo(
     () => ({
@@ -44,7 +44,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
       toggleLanguage,
       isFrench: language === "fr",
     }),
-    [language]
+    [language, setLanguage, toggleLanguage]
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

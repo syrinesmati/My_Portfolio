@@ -8,7 +8,6 @@ import {
   Brain,
   BarChart3,
   Settings,
-  MessageSquare,
 } from "lucide-react";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -154,7 +153,7 @@ const Skills = () => {
   const groupLabels: Record<SkillGroup, string> = {
     "AI & Machine Learning": isFrench ? "IA & Machine Learning" : "AI & Machine Learning",
     "Data & MLOps": isFrench ? "Data & MLOps" : "Data & MLOps",
-    "Software Engineering": isFrench ? "Genie logiciel" : "Software Engineering",
+    "Software Engineering": isFrench ? "Génie logiciel" : "Software Engineering",
     Professional: isFrench ? "Professionnel" : "Professional",
   };
 
@@ -164,24 +163,24 @@ const Skills = () => {
     "Deep Learning": "Deep Learning",
     NLP: "NLP",
     "Computer Vision": "Vision par ordinateur",
-    "Data Engineering": "Ingenierie des donnees",
-    "MLOps & Deployment": "MLOps & Deploiement",
-    "Data Visualization": "Visualisation de donnees",
-    "Fullstack Development": "Developpement full-stack",
-    Databases: "Bases de donnees",
+    "Data Engineering": "Ingénierie des données",
+    "MLOps & Deployment": "MLOps & Déploiement",
+    "Data Visualization": "Visualisation de données",
+    "Fullstack Development": "Développement full-stack",
+    Databases: "Bases de données",
     "Dev Tools & Design": "Outils dev & design",
-    "Soft Skills": "Competences humaines",
+    "Soft Skills": "Compétences humaines",
   };
 
   const sectionSubtitles: Record<SkillGroup, string> = {
     "AI & Machine Learning": isFrench
-      ? "Modelisation, deep learning, NLP et vision par ordinateur"
+      ? "Modélisation, deep learning, NLP et vision par ordinateur"
       : "Core modeling, deep learning, NLP and computer vision",
     "Data & MLOps": isFrench
-      ? "Pipelines de production, deploiement et monitoring"
+      ? "Pipelines de production, déploiement et monitoring"
       : "Production pipelines, deployment and monitoring",
     "Software Engineering": isFrench
-      ? "Developpement applicatif, bases de donnees et design"
+      ? "Développement applicatif, bases de données et design"
       : "Application development, databases and design",
     Professional: isFrench
       ? "Forces de communication et collaboration"
@@ -203,7 +202,7 @@ const Skills = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
             {isFrench ? "Mes " : "My "}
-            <span className="text-gradient">{isFrench ? "competences" : "Skills"}</span>
+            <span className="text-gradient">{isFrench ? "compétences" : "Skills"}</span>
           </h2>
           <p className="text-xl text-muted-foreground">
             {isFrench ? "Technologies et outils que j'utilise" : "Technologies and tools I work with"}
