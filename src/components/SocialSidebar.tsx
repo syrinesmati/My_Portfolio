@@ -4,7 +4,7 @@ const SocialSidebar = () => {
   return (
     <>
       {/* Left Sidebar - Social Icons */}
-      <div className="fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-center gap-6">
+      <div className="fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden 2xl:flex flex-col items-center gap-6">
         <a
           href="https://github.com/syrinesmati"
           target="_blank"
@@ -25,7 +25,7 @@ const SocialSidebar = () => {
       </div>
 
       {/* Right Sidebar - Email */}
-      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-center gap-6">
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden 2xl:flex flex-col items-center gap-6">
         <div className="w-px h-24 bg-gradient-to-t from-primary/50 to-transparent mb-4" />
         <a
           href="mailto:syrinesmati28@gmail.com"
