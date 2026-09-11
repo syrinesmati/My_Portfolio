@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import jei2025Image from "@/assets/volunteering/jei-2025.jpg";
 import ocvpImage from "@/assets/volunteering/ocvp.jpg";
 import jei2024Image from "@/assets/volunteering/jei-2024.jpg";
+import aiesecImage from "@/assets/volunteering/aiesec.jpeg";
 import SectionGlowBackground from "@/components/SectionGlowBackground";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -11,6 +12,14 @@ const Volunteering = () => {
 
   const volunteering = isFrench
     ? [
+        {
+          image: aiesecImage,
+          title: "Leadership Development Experience",
+          organization: "AIESEC",
+          period: "Mai 2026 - Aout 2026",
+          description:
+            "Experience de volontariat international a travers une opportunite Global Talent au Caire. Certifiee le 23 aout 2026 pour avoir complete avec succes une Leadership Development Experience axee sur le leadership, l'adaptabilite et la communication interculturelle.",
+        },
         {
           image: jei2025Image,
           title: "Membre du departement projets",
@@ -38,6 +47,14 @@ const Volunteering = () => {
       ]
     : [
       {
+      image: aiesecImage,
+      title: "Leadership Development Experience",
+      organization: "AIESEC",
+      period: "May 2026 – August 2026",
+      description:
+        "Completed an international volunteering experience through an AIESEC Global Talent opportunity in Cairo. Certified on August 23rd 2026 for successfully completing a Leadership Development Experience focused on leadership, adaptability, and cross-cultural communication.",
+    },
+    {
       image: jei2025Image,
       title: "Project Department Member",
       organization: "Junior Enterprise INSAT",
@@ -91,16 +108,24 @@ const Volunteering = () => {
               <Card className="card-gradient border border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/50 transition-all duration-500 h-full overflow-hidden group">
                 {/* Large Image Area */}
                 <div className="relative h-48 overflow-hidden bg-muted">
-                  <img
-                    src={item.image}
-                    alt={`${item.title}`}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
-                  />
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={`${item.title}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-3xl font-bold text-muted-foreground">
+                        {item.organization.substring(0, 2).toUpperCase()}
+                      </span>
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
                   
                   {/* Period Badge Overlay */}

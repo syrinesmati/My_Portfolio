@@ -10,7 +10,7 @@ const Hero = () => {
   return (
     <section id="home" className="min-h-[calc(100svh-4rem)] md:min-h-screen flex items-center justify-center relative pt-16 overflow-hidden">
       <SectionGlowBackground />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
