@@ -4,7 +4,6 @@ import { Github } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import SectionGlowBackground from "@/components/SectionGlowBackground";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { projects, ProjectCategory } from "@/data/projects";
 
@@ -42,15 +41,15 @@ const Projects = () => {
     : projects.filter((p) => p.category.includes(activeFilter));
 
   return (
-    <section id="projects" className="py-16 md:py-20 relative overflow-hidden">
-      <SectionGlowBackground />
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="projects" className="py-20 md:py-28">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            {isFrench ? "Mes " : "Featured "}
-            <span className="text-gradient">{isFrench ? "Projets" : "Projects"}</span>
+          <p className="eyebrow mb-3">{isFrench ? "Travaux sélectionnés" : "Selected work"}</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+            {isFrench ? "Du code qui " : "Projects that "}
+            <span className="font-accent-italic text-warm">{isFrench ? "fonctionne." : "ship."}</span>
           </h2>
-          <p className="text-base sm:text-xl text-muted-foreground mb-8">
+          <p className="text-base sm:text-lg text-muted-foreground mb-8">
             {isFrench ? "Quelques réalisations récentes et projets personnels" : "Some of my recent work and side projects"}
           </p>
           <div className="flex justify-center flex-wrap gap-2 sm:gap-3 px-1">
@@ -79,12 +78,12 @@ const Projects = () => {
               layout
             >
               <Card
-                className={`card-gradient border-primary/20 card-interactive overflow-hidden group cursor-pointer h-full flex flex-col ${project.featured ? 'ring-2 ring-primary/50 border-primary/30' : ''}`}
+                className={`card-soft card-interactive overflow-hidden group cursor-pointer h-full flex flex-col ${project.featured ? 'ring-1 ring-primary/30' : ''}`}
                 onClick={() => navigate(`/project/${project.id}`)}
               >
-              <div className="relative h-44 sm:h-48 overflow-hidden">
+              <div className="relative h-44 sm:h-48 overflow-hidden bg-muted">
                 {project.award && (
-                  <div className="absolute top-3 left-3 z-10 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-primary/90 text-primary-foreground text-xs sm:text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm">
+                  <div className="absolute top-3 left-3 z-10 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-primary text-primary-foreground text-xs sm:text-sm font-semibold rounded-full shadow-sm">
                     {project.award.emoji} {isFrench ? project.fr.award?.title ?? project.award.title : project.award.title}
                   </div>
                 )}
@@ -93,14 +92,13 @@ const Projects = () => {
                   alt={project.title}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   onError={(event) => {
                     const target = event.currentTarget;
                     target.src = "/placeholder.svg";
                     target.className = "w-full h-full object-cover opacity-50";
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
               </div>
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl sm:text-2xl">{project.title}</CardTitle>
@@ -114,7 +112,7 @@ const Projects = () => {
                   {project.tags.map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
-                      className="px-3 py-1 text-sm bg-primary/10 text-primary rounded-full border border-primary/20"
+                      className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full"
                     >
                       {tag}
                     </span>

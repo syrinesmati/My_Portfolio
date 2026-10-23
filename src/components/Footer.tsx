@@ -1,21 +1,22 @@
-import { Heart } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
   const { isFrench } = useLanguage();
 
   return (
-    <footer className="py-8 border-t border-border">
+    <footer className="py-8 border-t border-border/60">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground text-center md:text-left">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-sm text-muted-foreground">
+          <span className="font-semibold text-foreground">Syrine Smati</span>
+          <p>
             {isFrench ? "© 2025 Syrine Smati. Tous droits réservés." : "© 2025 Syrine Smati. All rights reserved."}
           </p>
-          <p className="flex items-center gap-2 text-muted-foreground">
-            {isFrench ? "Fait avec " : "Made with "}
-            <Heart className="w-4 h-4 text-primary fill-primary" />
-            {isFrench ? " et beaucoup de café" : " and lots of coffee"}
-          </p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="hover:text-primary transition-colors"
+          >
+            {isFrench ? "Haut de page ↑" : "Back to top ↑"}
+          </button>
         </div>
       </div>
     </footer>

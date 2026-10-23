@@ -33,7 +33,7 @@ const ScreenshotsCarousel = ({ screenshots, title }: { screenshots: string[]; ti
         <CarouselContent>
           {screenshots.map((screenshot, index) => (
             <CarouselItem key={index}>
-              <div className="rounded-xl overflow-hidden border border-primary/20 bg-card shadow-xl">
+              <div className="rounded-2xl overflow-hidden card-soft">
                 <div className="h-[260px] sm:h-[400px] md:h-[520px] flex items-center justify-center bg-muted/20 p-4">
                   <img
                     src={screenshot}
@@ -47,8 +47,8 @@ const ScreenshotsCarousel = ({ screenshots, title }: { screenshots: string[]; ti
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-3 bg-background/90 backdrop-blur-sm border-primary/30 shadow-lg hover:bg-background" />
-        <CarouselNext className="right-3 bg-background/90 backdrop-blur-sm border-primary/30 shadow-lg hover:bg-background" />
+        <CarouselPrevious className="left-3 bg-background/90 backdrop-blur-sm border-border shadow-sm hover:bg-background" />
+        <CarouselNext className="right-3 bg-background/90 backdrop-blur-sm border-border shadow-sm hover:bg-background" />
       </Carousel>
 
       {screenshots.length > 1 && (
@@ -60,8 +60,8 @@ const ScreenshotsCarousel = ({ screenshots, title }: { screenshots: string[]; ti
                 onClick={() => api?.scrollTo(index)}
                 className={`w-14 h-10 sm:w-16 sm:h-12 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                   current === index
-                    ? "border-primary scale-105 shadow-md"
-                    : "border-primary/20 opacity-50 hover:opacity-90 hover:border-primary/50"
+                    ? "border-primary"
+                    : "border-border opacity-50 hover:opacity-90 hover:border-primary/50"
                 }`}
               >
                 <img
@@ -108,7 +108,7 @@ const ProjectDetail = () => {
   const fr = project.fr;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
 
       <main className="max-w-7xl mx-auto px-6 md:px-16 lg:px-24 py-24">
@@ -130,6 +130,7 @@ const ProjectDetail = () => {
           <div className="space-y-12">
             {/* Hero Section */}
             <div className="space-y-6">
+              <p className="eyebrow">{isFrench ? "Étude de projet" : "Project case study"}</p>
               <h1 className="text-5xl md:text-6xl font-bold">
                 {project.title}
               </h1>
@@ -140,15 +141,15 @@ const ProjectDetail = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="p-6 rounded-xl bg-primary/10 border-2 border-primary/30"
+                  className="p-6 rounded-2xl tint-warm"
                 >
                   <div className="flex items-center gap-4 mb-3">
                     <span className="text-4xl">{project.award.emoji}</span>
                     <div>
-                      <h3 className="text-2xl font-bold text-primary">
+                      <h3 className="text-2xl font-bold text-warm">
                         {isFrench ? fr.award?.title ?? project.award.title : project.award.title}
                       </h3>
-                      <p className="text-lg text-primary font-medium">
+                      <p className="text-lg text-warm font-medium">
                         {isFrench ? fr.award?.competition ?? project.award.competition : project.award.competition}
                       </p>
                     </div>
@@ -167,7 +168,7 @@ const ProjectDetail = () => {
                 {project.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 bg-primary/10 text-primary rounded-full border border-primary/20"
+                    className="px-4 py-2 bg-secondary text-secondary-foreground text-sm font-medium rounded-full"
                   >
                     {tag}
                   </span>
@@ -222,7 +223,7 @@ const ProjectDetail = () => {
                     <div className="space-y-6">
                       {sections.map((section, index) => (
                         <div key={index} className="space-y-2">
-                          <h3 className="text-xl font-semibold text-primary">{section.heading}</h3>
+                          <h3 className="text-xl font-semibold text-warm">{section.heading}</h3>
                           <p className="text-lg text-muted-foreground leading-relaxed">{section.body}</p>
                         </div>
                       ))}
@@ -253,14 +254,14 @@ const ProjectDetail = () => {
                     <div className="space-y-6">
                       {groups.map((group, groupIndex) => (
                         <div key={groupIndex} className="space-y-3">
-                          <h3 className="text-lg font-semibold text-primary">{group.heading}</h3>
+                          <h3 className="text-lg font-semibold text-warm">{group.heading}</h3>
                           <ul className="grid md:grid-cols-2 gap-4">
                             {group.items.map((feature, index) => (
                               <li
                                 key={index}
-                                className="flex items-start gap-3 p-4 rounded-lg bg-card border border-primary/20"
+                                className="flex items-start gap-3 p-4 rounded-xl card-soft"
                               >
-                                <span className="text-primary text-xl">•</span>
+                                <span className="text-warm text-xl">•</span>
                                 <span className="text-muted-foreground">{feature}</span>
                               </li>
                             ))}
@@ -275,9 +276,9 @@ const ProjectDetail = () => {
                     {(isFrench ? fr.features : project.features).map((feature, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-3 p-4 rounded-lg bg-card border border-primary/20"
+                        className="flex items-start gap-3 p-4 rounded-xl card-soft"
                       >
-                        <span className="text-primary text-xl">•</span>
+                        <span className="text-warm text-xl">•</span>
                         <span className="text-muted-foreground">{feature}</span>
                       </li>
                     ))}
@@ -296,7 +297,7 @@ const ProjectDetail = () => {
               className="space-y-4"
             >
               <h2 className="text-3xl font-bold">{isFrench ? "Démo vidéo" : "Video Demo"}</h2>
-              <div className="relative rounded-lg overflow-hidden shadow-2xl border border-primary/20">
+              <div className="relative rounded-2xl overflow-hidden card-soft">
                 <video
                   controls
                   className="w-full h-auto"

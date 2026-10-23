@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-scroll";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Menu, Moon, Sun } from "lucide-react";
+import { motion } from "framer-motion";
+import { Menu, Moon, Sun, Github, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -15,7 +16,7 @@ import {
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const { language, setLanguage, isFrench } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -27,12 +28,8 @@ const Navigation = () => {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (!isHome) setActiveSection("");
+  }, [isHome]);
 
   const navItems = [
     { name: isFrench ? "Accueil" : "Home", to: "home" },
@@ -46,80 +43,97 @@ const Navigation = () => {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background border-b ${
-        scrolled ? "border-border backdrop-blur-lg" : "border-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-3 sm:px-4">
-        <div className="flex items-center justify-between h-16">
+    <nav className="fixed top-0 left-0 right-0 z-50 py-4">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between gap-3">
           {isHome ? (
-            <Link to="home" smooth duration={500} className="text-lg sm:text-xl font-bold cursor-pointer">
-              <span className="text-gradient">Syrine Smati</span>
+            <Link to="home" smooth duration={500} className="text-lg font-semibold tracking-tight cursor-pointer shrink-0">
+              Syrine Smati
             </Link>
           ) : (
             <span
               onClick={() => goToSection("home")}
-              className="text-lg sm:text-xl font-bold cursor-pointer"
+              className="text-lg font-semibold tracking-tight cursor-pointer shrink-0"
             >
-              <span className="text-gradient">Syrine Smati</span>
+              Syrine Smati
             </span>
           )}
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) =>
-              isHome ? (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  smooth
-                  duration={500}
-                  spy
-                  offset={-80}
-                  activeClass="text-primary"
-                  className="cursor-pointer hover:text-primary transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ) : (
-                <span
-                  key={item.to}
-                  onClick={() => goToSection(item.to)}
-                  className="cursor-pointer hover:text-primary transition-colors"
-                >
-                  {item.name}
-                </span>
-              )
-            )}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setLanguage(language === "en" ? "fr" : "en")}
-              className="font-semibold"
-            >
-              {isFrench ? "FR | EN" : "EN | FR"}
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
+          {/* Desktop pill nav */}
+          <div className="hidden lg:flex items-center gap-0.5 bg-card/90 backdrop-blur-md rounded-full px-1.5 py-1.5 shadow-[0_2px_16px_-4px_hsl(var(--foreground)/0.1)] border border-border/60">
+            {navItems.map((item) => {
+              const isActive = isHome && activeSection === item.to;
+              return (
+                <div key={item.to} className="relative">
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 bg-primary rounded-full"
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                  {isHome ? (
+                    <Link
+                      to={item.to}
+                      smooth
+                      duration={500}
+                      spy
+                      offset={-80}
+                      onSetActive={() => setActiveSection(item.to)}
+                      className={`relative z-10 block px-4 py-1.5 text-sm rounded-full cursor-pointer transition-colors whitespace-nowrap ${
+                        isActive ? "text-primary-foreground" : "hover:text-primary"
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  ) : (
+                    <span
+                      onClick={() => goToSection(item.to)}
+                      className="relative z-10 block px-4 py-1.5 text-sm rounded-full cursor-pointer hover:text-primary transition-colors whitespace-nowrap"
+                    >
+                      {item.name}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
-          {/* Mobile Navigation Toggle */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="flex items-center gap-1.5 shrink-0">
+            <a
+              href="https://github.com/syrinesmati"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:text-primary hover:bg-secondary transition-colors"
+              aria-label="GitHub"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/syrine-smati-a613702b4/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground hover:text-primary hover:bg-secondary transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setLanguage(language === "en" ? "fr" : "en")}
-              className="font-semibold px-3"
-              aria-label={isFrench ? "Passer en anglais" : "Switch to French"}
+              className="font-semibold hidden sm:inline-flex"
             >
               {isFrench ? "FR | EN" : "EN | FR"}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setLanguage(language === "en" ? "fr" : "en")}
+              className="font-semibold px-3 sm:hidden"
+              aria-label={isFrench ? "Passer en anglais" : "Switch to French"}
+            >
+              {isFrench ? "FR" : "EN"}
             </Button>
             <Button
               variant="ghost"
@@ -129,17 +143,19 @@ const Navigation = () => {
             >
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
+
+            {/* Mobile menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" aria-label="Open menu">
+                <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
                   <Menu />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[85vw] max-w-[320px]">
                 <SheetHeader>
-                  <SheetTitle className="text-gradient text-2xl font-bold">{isFrench ? "Menu" : "Menu"}</SheetTitle>
+                  <SheetTitle className="text-2xl font-semibold">{isFrench ? "Menu" : "Menu"}</SheetTitle>
                 </SheetHeader>
-                <div className="mt-8 flex flex-col space-y-4">
+                <div className="mt-8 flex flex-col space-y-2">
                   {navItems.map((item) =>
                     isHome ? (
                       <Link
@@ -149,8 +165,8 @@ const Navigation = () => {
                         duration={500}
                         spy
                         offset={-80}
-                        activeClass="text-primary font-semibold"
-                        className="text-base sm:text-lg py-3 px-4 rounded-lg cursor-pointer hover:text-primary hover:bg-primary/10 transition-all"
+                        activeClass="text-primary font-semibold bg-secondary"
+                        className="text-base py-3 px-4 rounded-full cursor-pointer hover:text-primary hover:bg-secondary transition-all"
                         onClick={() => setIsOpen(false)}
                       >
                         {item.name}
@@ -162,12 +178,20 @@ const Navigation = () => {
                           setIsOpen(false);
                           goToSection(item.to);
                         }}
-                        className="text-base sm:text-lg py-3 px-4 rounded-lg cursor-pointer hover:text-primary hover:bg-primary/10 transition-all"
+                        className="text-base py-3 px-4 rounded-full cursor-pointer hover:text-primary hover:bg-secondary transition-all"
                       >
                         {item.name}
                       </span>
                     )
                   )}
+                  <div className="flex items-center gap-4 pt-4 px-4">
+                    <a href="https://github.com/syrinesmati" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-muted-foreground hover:text-primary">
+                      <Github className="h-5 w-5" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/syrine-smati-a613702b4/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary">
+                      <Linkedin className="h-5 w-5" />
+                    </a>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>

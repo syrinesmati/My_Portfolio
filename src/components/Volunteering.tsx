@@ -4,7 +4,6 @@ import jei2025Image from "@/assets/volunteering/jei-2025.jpg";
 import ocvpImage from "@/assets/volunteering/ocvp.jpg";
 import jei2024Image from "@/assets/volunteering/jei-2024.jpg";
 import aiesecImage from "@/assets/volunteering/aiesec.jpeg";
-import SectionGlowBackground from "@/components/SectionGlowBackground";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Volunteering = () => {
@@ -82,16 +81,16 @@ const Volunteering = () => {
   ];
 
   return (
-    <section id="volunteering" className="py-20 relative overflow-hidden">
-      <SectionGlowBackground />
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="volunteering" className="py-20 md:py-28">
+      <div className="container mx-auto px-4">
         {/* Title Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            <span className="text-gradient">{isFrench ? "Engagement" : "Volunteering"}</span>
-            {isFrench ? " & leadership" : " & Leadership"}
+          <p className="eyebrow mb-3">{isFrench ? "Au-delà du code" : "Beyond the code"}</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            {isFrench ? "Engagement & " : "Volunteering & "}
+            <span className="font-accent-italic text-warm">{isFrench ? "leadership." : "leadership."}</span>
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-lg text-muted-foreground">
             {isFrench ? "Avoir de l'impact grâce à l'engagement associatif" : "Making an impact through community involvement"}
           </p>
         </div>
@@ -105,7 +104,7 @@ const Volunteering = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="card-gradient border border-primary/20 shadow-lg hover:shadow-xl hover:border-primary/50 transition-all duration-500 h-full overflow-hidden group">
+              <Card className="card-soft card-interactive h-full overflow-hidden group">
                 {/* Large Image Area */}
                 <div className="relative h-48 overflow-hidden bg-muted">
                   {item.image ? (
@@ -126,10 +125,9 @@ const Volunteering = () => {
                       </span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
-                  
+
                   {/* Period Badge Overlay */}
-                  <span className="absolute top-3 right-3 text-xs text-accent font-medium bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full border border-accent/20">
+                  <span className="absolute top-3 right-3 text-xs font-medium bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full border border-border">
                     {item.period}
                   </span>
                 </div>

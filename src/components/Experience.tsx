@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import techtrollLogo from "@/assets/experience/techtroll-logo.png";
 import welyneLogo from "@/assets/experience/welyne-logo.png";
 import yonnovLogo from "@/assets/experience/yonnov-logo.png";
-import SectionGlowBackground from "@/components/SectionGlowBackground";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Experience = () => {
@@ -81,23 +80,23 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 relative overflow-hidden">
-      <SectionGlowBackground />
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="experience" className="py-20 md:py-28">
+      <div className="container mx-auto px-4">
         {/* Title Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            {isFrench ? "Mon " : "My "}
-            <span className="text-gradient">{isFrench ? "expérience" : "Experience"}</span>
+          <p className="eyebrow mb-3">{isFrench ? "Parcours professionnel" : "Where I've worked"}</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            {isFrench ? "Apprendre en " : "Learning by "}
+            <span className="font-accent-italic text-warm">{isFrench ? "pratiquant." : "doing."}</span>
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-lg text-muted-foreground">
             {isFrench ? "Un parcours d'apprentissage et de progression" : "A journey of learning and growth"}
           </p>
         </div>
 
         <div className="relative max-w-5xl mx-auto">
           {/* Center Timeline */}
-          <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary/80 via-primary/50 to-primary/20" />
+          <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-px bg-border" />
 
           <div className="space-y-10 md:space-y-24">
             {experiences.map((exp, index) => {
@@ -114,7 +113,7 @@ const Experience = () => {
                   }`}
                 >
                   {/* Timeline Dot */}
-                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 -top-2 md:-top-4 w-4 h-4 md:w-6 md:h-6 bg-primary/80 rounded-full border-2 md:border-4 border-background z-10 shadow-md" />
+                  <div className={`absolute left-4 md:left-1/2 md:-translate-x-1/2 -top-2 md:-top-4 w-3.5 h-3.5 md:w-4 md:h-4 rounded-full border-2 md:border-[3px] border-background z-10 ${isLeft ? "bg-warm" : "bg-primary"}`} />
 
                   {/* Experience Card */}
                   <div
@@ -124,12 +123,12 @@ const Experience = () => {
                         : "md:ml-auto md:pl-10 md:pr-0"
                     }`}
                   >
-                    <Card className="card-gradient border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-500 p-2">
+                    <Card className={`card-soft card-interactive ${isLeft ? "tint-warm" : "tint-cool"}`}>
                       <CardContent className="p-5 sm:p-6 md:p-8 space-y-4">
                         {/* Header Row */}
                         <div className="flex items-start gap-4 md:gap-6">
                           {/* Logo */}
-                          <div className="w-14 h-14 md:w-20 md:h-20 rounded-lg bg-muted flex items-center justify-center overflow-hidden border border-primary/30 shadow-md flex-shrink-0">
+                          <div className="w-14 h-14 md:w-20 md:h-20 rounded-xl bg-background/70 flex items-center justify-center overflow-hidden flex-shrink-0">
                             {exp.logo ? (
                               <img
                                 src={exp.logo}
@@ -158,11 +157,11 @@ const Experience = () => {
                               <h3 className="text-xl md:text-2xl font-semibold">
                                 {exp.title}
                               </h3>
-                              <span className="text-xs sm:text-sm text-accent font-medium bg-accent/10 px-3 sm:px-4 py-1 rounded-full border border-accent/20 shadow-sm w-fit">
+                              <span className="text-xs sm:text-sm text-foreground/80 font-medium bg-background/70 px-3 sm:px-4 py-1 rounded-full w-fit">
                                 {exp.period}
                               </span>
                             </div>
-                            <p className="text-muted-foreground font-medium">
+                            <p className={`font-semibold ${isLeft ? "text-warm" : "text-primary"}`}>
                               {exp.organization}
                             </p>
                           </div>
@@ -181,7 +180,7 @@ const Experience = () => {
                             {exp.technologies.map((tech, techIndex) => (
                               <span
                                 key={techIndex}
-                                className="text-xs font-medium px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
+                                className="text-xs font-medium px-3 py-1 rounded-full bg-background/70 text-foreground/80"
                               >
                                 {tech}
                               </span>

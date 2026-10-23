@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { GraduationCap, Calendar, MapPin } from "lucide-react";
-import SectionGlowBackground from "@/components/SectionGlowBackground";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface EducationItem {
@@ -105,23 +104,23 @@ const Education = () => {
   ];
 
   return (
-    <section id="education" className="py-20 relative overflow-hidden">
-      <SectionGlowBackground />
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="education" className="py-20 md:py-28">
+      <div className="container mx-auto px-4">
         {/* Title Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            {isFrench ? "Mon " : "My "}
-            <span className="text-gradient">{isFrench ? "Parcours" : "Education"}</span>
+          <p className="eyebrow mb-3">{isFrench ? "Formation" : "Academic background"}</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            {isFrench ? "Des bases " : "Foundations "}
+            <span className="font-accent-italic text-warm">{isFrench ? "solides." : "built to last."}</span>
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-lg text-muted-foreground">
             {isFrench ? "Des bases solides pour innover et progresser" : "Building foundations for innovation and growth"}
           </p>
         </div>
 
         <div className="relative max-w-4xl mx-auto">
           {/* Center Timeline */}
-          <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-primary/80 via-primary/50 to-primary/20" />
+          <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-px bg-border" />
 
           <div className="space-y-10 md:space-y-20">
             {education.map((edu, index) => {
@@ -138,7 +137,7 @@ const Education = () => {
                   }`}
                 >
                   {/* Timeline Dot */}
-                  <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 -top-2 md:-top-4 w-4 h-4 md:w-6 md:h-6 bg-primary/80 rounded-full border-2 md:border-4 border-background z-10 shadow-md" />
+                  <div className={`absolute left-4 md:left-1/2 md:-translate-x-1/2 -top-2 md:-top-4 w-3.5 h-3.5 md:w-4 md:h-4 rounded-full border-2 md:border-[3px] border-background z-10 ${isLeft ? "bg-warm" : "bg-primary"}`} />
 
                   {/* Education Card */}
                   <div
@@ -148,18 +147,18 @@ const Education = () => {
                         : "md:ml-auto md:pl-10 md:pr-0"
                     }`}
                   >
-                    <Card className="card-gradient border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-500">
+                    <Card className={`card-soft card-interactive ${isLeft ? "tint-warm" : "tint-cool"}`}>
                       <CardContent className="p-5 sm:p-6 md:p-8 space-y-4">
                         {/* Header */}
                         <div className="flex items-start gap-3 md:gap-4">
-                          <div className="p-2.5 md:p-3 rounded-lg bg-primary/10 border border-primary/20">
-                            <GraduationCap className="w-6 h-6 text-primary" />
+                          <div className="p-2.5 md:p-3 rounded-xl bg-background/70">
+                            <GraduationCap className={`w-6 h-6 ${isLeft ? "text-warm" : "text-primary"}`} />
                           </div>
                           <div className="flex-1">
                             <h3 className="text-xl md:text-2xl font-bold text-foreground">
                               {edu.degree}
                             </h3>
-                            <p className="text-base md:text-lg text-primary font-semibold mt-1">
+                            <p className={`text-base md:text-lg font-semibold mt-1 ${isLeft ? "text-warm" : "text-primary"}`}>
                               {edu.institution}
                             </p>
                           </div>
@@ -168,23 +167,23 @@ const Education = () => {
                         {/* Details Row */}
                         <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-muted-foreground pt-2">
                           <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-primary/60" />
+                            <Calendar className="w-4 h-4" />
                             <span>{edu.period}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-primary/60" />
+                            <MapPin className="w-4 h-4" />
                             <span>{edu.location}</span>
                           </div>
                           {'expectedGraduation' in edu && (
                             <div className="flex items-center gap-2">
-                              <span className="px-2 py-1 rounded-full bg-primary/10 text-primary font-semibold">
+                              <span className="px-2 py-1 rounded-full bg-background/70 text-foreground/80 font-semibold">
                                 {isFrench ? "Prévu : " : "Expected: "}{edu.expectedGraduation}
                               </span>
                             </div>
                           )}
                           {'gpa' in edu && (
                             <div className="flex items-center gap-2">
-                              <span className="px-2 py-1 rounded-full bg-primary/10 text-primary font-semibold">
+                              <span className="px-2 py-1 rounded-full bg-background/70 text-foreground/80 font-semibold">
                                 GPA: {edu.gpa}
                               </span>
                             </div>
@@ -203,7 +202,7 @@ const Education = () => {
                               key={idx}
                               className="flex items-center gap-3 text-sm"
                             >
-                              <span className="w-2 h-2 rounded-full bg-primary/60" />
+                              <span className={`w-1.5 h-1.5 rounded-full ${isLeft ? "bg-warm" : "bg-primary"}`} />
                               <span className="text-muted-foreground">
                                 {highlight}
                               </span>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Code2, Palette, Brain, Rocket, Download } from "lucide-react";
 import cvFrFile from "@/assets/documents/cv-syrine-smati-fr.pdf";
 import cvEnFile from "@/assets/documents/cv-syrine-smati-eng.pdf";
-import SectionGlowBackground from "@/components/SectionGlowBackground";
+import DevIdCard from "@/components/DevIdCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const About = () => {
@@ -44,50 +44,45 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 relative overflow-hidden">
-      <SectionGlowBackground />
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="about" className="py-20 md:py-28">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              {isFrench ? "À propos de " : "About "}
-              <span className="text-gradient">{isFrench ? "moi" : "Me"}</span>
+          <div className="text-center mb-12 max-w-2xl mx-auto">
+            <p className="eyebrow mb-3">{isFrench ? "À propos de Syrine" : "About Syrine"}</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              {isFrench ? "Concevoir l’intelligence, " : "Building Intelligent Things "}
+              <span className="font-accent-italic text-warm">
+                {isFrench ? "créer de l’impact." : "that matter."}
+              </span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground">
               {isFrench
-                ? "Étudiante passionnée en génie logiciel, dédiée à la création de solutions innovantes."
-                : "A passionate software engineering student dedicated to creating innovative solutions and bringing ideas to life through code."}
+                ? "Élève ingénieure en informatique spécialisée en intelligence artificielle, je conçois des systèmes intelligents pour transformer des problèmes complexes en solutions concrètes."
+                : "AI-focused software engineering student passionate about building intelligent systems that turn complex problems into practical solutions."}
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto mb-12">
-            <Card className="card-gradient border-primary/20">
-              <CardContent className="p-8">
-                <p className="text-lg leading-relaxed mb-4">
+          <div className="grid md:grid-cols-[1fr_300px] gap-8 max-w-5xl mx-auto mb-14 items-center">
+            <Card className="card-soft">
+              <CardContent className="p-8 space-y-4">
+                <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
                   {isFrench
-                    ? "Bonjour ! Je suis Syrine Smati, étudiante en génie logiciel, passionnée par la transformation d'idées en applications utiles et impactantes. Je me spécialise en IA et en développement full-stack."
-                    : "Hi! I'm Syrine Smati, a passionate software engineering student who loves turning ideas into real, impactful applications. I specialize in AI development and full-stack web applications combining creativity with technical expertise to deliver seamless solutions."}
+                    ? "Bonjour, je suis Syrine, élève ingénieure en informatique passionnée par la conception de systèmes d’IA capables de résoudre des problèmes concrets. Je travaille sur les LLM, les workflows agentiques, le RAG, la vision par ordinateur et le machine learning. Du développement de workflows d’IA en production à la création d’applications intelligentes de bout en bout, j’aime transformer des idées complexes en solutions fiables et utiles. "
+                    : "Hi, I'm Syrine — a software engineering student passionate about building AI systems that solve real-world problems. My work spans LLMs, agentic workflows, retrieval-augmented generation (RAG), computer vision, and machine learning. From developing production AI workflows to building end-to-end intelligent applications, I enjoy turning complex ideas into reliable, practical solutions. "}
                 </p>
-                <p className="text-lg leading-relaxed mb-4">
+                <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
                   {isFrench
-                    ? "J'aime explorer de nouvelles technologies, construire des projets innovants et apprendre en continu pour rester à la pointe."
-                    : "I enjoy exploring new technologies, building innovative projects, and continuously learning to stay at the forefront of the software world. When I'm not coding, you can find me exploring ways technology can make life easier."}
+                    ? "Toujours curieuse d’explorer de nouvelles technologies, j’aime expérimenter, apprendre et concevoir des systèmes qui ont un impact réel."
+                    : "I'm always exploring new technologies, experimenting with ideas, and pushing myself to build systems that make a difference."}
                 </p>
-                <p className="text-lg leading-relaxed">
-                  {isFrench
-                    ? "J'aime résoudre des problèmes complexes, collaborer avec les autres et créer des expériences numériques utiles et mémorables."
-                    : "I thrive on solving challenging problems, collaborating with others, and creating digital experiences that are not just functional but also meaningful."}
-                </p>
-                <div className="flex flex-wrap gap-4 mt-6 justify-center">
-                  <Button size="lg" className="glow">
-                    <a href="#contact" className="flex items-center gap-2">
-                      {isFrench ? "Me contacter" : "Get in Touch"}
-                    </a>
+                <div className="flex flex-wrap gap-4 pt-2">
+                  <Button size="lg" asChild>
+                    <a href="#contact">{isFrench ? "Me contacter" : "Get in Touch"}</a>
                   </Button>
                   <Button size="lg" variant="outline" asChild>
                     <a href={cvFile} download={cvDownloadName}>
@@ -98,22 +93,23 @@ const About = () => {
                 </div>
               </CardContent>
             </Card>
+            <DevIdCard />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
             {highlights.map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
                 viewport={{ once: true }}
               >
-                <Card className="card-gradient border-primary/20 card-interactive group cursor-pointer h-full">
+                <Card className="card-soft card-interactive h-full">
                   <CardContent className="p-6 text-center">
-                    <item.icon className="w-12 h-12 mx-auto mb-4 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
-                    <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.description}</p>
+                    <item.icon className="w-9 h-9 mx-auto mb-4 text-primary" />
+                    <h3 className="text-base font-semibold mb-1.5">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>
