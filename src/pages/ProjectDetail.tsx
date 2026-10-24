@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Github, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Github, ExternalLink, CheckCircle2 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
@@ -14,7 +14,14 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getProjectById } from "@/data/projects";
+import { getProjectById, projects, ProjectCategory } from "@/data/projects";
+
+const categoryLabels: Record<ProjectCategory, { en: string; fr: string }> = {
+  all: { en: "All", fr: "Tous" },
+  ai: { en: "AI / Data Science", fr: "IA / Data Science" },
+  "data-engineering": { en: "Data Engineering", fr: "Ingénierie des données" },
+  fullstack: { en: "Full Stack", fr: "Full Stack" },
+};
 
 const ScreenshotsCarousel = ({ screenshots, title }: { screenshots: string[]; title: string }) => {
   const [api, setApi] = useState<CarouselApi | null>(null);
@@ -83,6 +90,15 @@ const ScreenshotsCarousel = ({ screenshots, title }: { screenshots: string[]; ti
   );
 };
 
+const SectionHeading = ({ eyebrow, title, accent }: { eyebrow: string; title: string; accent: string }) => (
+  <div>
+    <p className="eyebrow mb-2">{eyebrow}</p>
+    <h2 className="text-3xl md:text-4xl font-bold">
+      {title} <span className="font-accent-italic text-warm">{accent}</span>
+    </h2>
+  </div>
+);
+
 const ProjectDetail = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
@@ -106,6 +122,8 @@ const ProjectDetail = () => {
   }
 
   const fr = project.fr;
+  const currentIndex = projects.findIndex((p) => p.id === project.id);
+  const nextProject = projects[(currentIndex + 1) % projects.length];
 
   return (
     <div className="min-h-screen">
@@ -127,11 +145,31 @@ const ProjectDetail = () => {
             {isFrench ? "Retour aux projets" : "Back to Projects"}
           </Button>
 
-          <div className="space-y-12">
+          <div className="space-y-16">
             {/* Hero Section */}
-            <div className="space-y-6">
-              <p className="eyebrow">{isFrench ? "Étude de projet" : "Project case study"}</p>
-              <h1 className="text-5xl md:text-6xl font-bold">
+            <div className="relative space-y-6 overflow-hidden">
+              <div className="absolute -top-10 -right-10 -z-10 opacity-40" aria-hidden="true">
+                <span className="ghost-text text-[9rem] sm:text-[12rem] leading-none">{project.title.slice(0, 2)}</span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="eyebrow">{isFrench ? "Étude de projet" : "Project case study"}</p>
+                <span className="text-muted-foreground">·</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {project.category
+                    .filter((c) => c !== "all")
+                    .map((c) => (
+                      <span
+                        key={c}
+                        className="px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide rounded-full bg-secondary text-secondary-foreground"
+                      >
+                        {isFrench ? categoryLabels[c].fr : categoryLabels[c].en}
+                      </span>
+                    ))}
+                </div>
+              </div>
+
+              <h1 className="text-5xl md:text-6xl font-bold leading-[1.05]">
                 {project.title}
               </h1>
 
@@ -164,21 +202,24 @@ const ProjectDetail = () => {
                 {isFrench ? fr.description : project.description}
               </p>
 
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-4 py-2 bg-secondary text-secondary-foreground text-sm font-medium rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div>
+                <p className="eyebrow mb-3">{isFrench ? "Stack technique" : "Tech stack"}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="px-4 py-2 bg-secondary text-secondary-foreground text-sm font-medium rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               {(project.githubUrl || (project.links && project.links.length > 0)) && (
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 pt-2">
                   {project.githubUrl && (
-                    <Button variant="outline" asChild>
+                    <Button asChild>
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github className="mr-2 h-4 w-4" />
                         {isFrench ? "Code source" : "Source Code"}
@@ -213,9 +254,13 @@ const ProjectDetail = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="space-y-4"
+              className="space-y-6"
             >
-              <h2 className="text-3xl font-bold">{isFrench ? "À propos du projet" : "About the Project"}</h2>
+              <SectionHeading
+                eyebrow={isFrench ? "Contexte" : "Overview"}
+                title={isFrench ? "À propos du " : "About the "}
+                accent={isFrench ? "projet." : "project."}
+              />
               {(() => {
                 const sections = isFrench ? fr.fullDescriptionSections : project.fullDescriptionSections;
                 if (sections && sections.length > 0) {
@@ -244,14 +289,18 @@ const ProjectDetail = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="space-y-4"
+              className="space-y-6"
             >
-              <h2 className="text-3xl font-bold">{isFrench ? "Fonctionnalités clés" : "Key Features"}</h2>
+              <SectionHeading
+                eyebrow={isFrench ? "Capacités" : "Capabilities"}
+                title={isFrench ? "Fonctionnalités " : "Key "}
+                accent={isFrench ? "clés." : "features."}
+              />
               {(() => {
                 const groups = isFrench ? fr.featureGroups : project.featureGroups;
                 if (groups && groups.length > 0) {
                   return (
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                       {groups.map((group, groupIndex) => (
                         <div key={groupIndex} className="space-y-3">
                           <h3 className="text-lg font-semibold text-warm">{group.heading}</h3>
@@ -259,9 +308,9 @@ const ProjectDetail = () => {
                             {group.items.map((feature, index) => (
                               <li
                                 key={index}
-                                className="flex items-start gap-3 p-4 rounded-xl card-soft"
+                                className="flex items-start gap-3 p-4 rounded-xl card-soft card-interactive"
                               >
-                                <span className="text-warm text-xl">•</span>
+                                <CheckCircle2 className="h-5 w-5 text-warm shrink-0 mt-0.5" />
                                 <span className="text-muted-foreground">{feature}</span>
                               </li>
                             ))}
@@ -276,9 +325,9 @@ const ProjectDetail = () => {
                     {(isFrench ? fr.features : project.features).map((feature, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-3 p-4 rounded-xl card-soft"
+                        className="flex items-start gap-3 p-4 rounded-xl card-soft card-interactive"
                       >
-                        <span className="text-warm text-xl">•</span>
+                        <CheckCircle2 className="h-5 w-5 text-warm shrink-0 mt-0.5" />
                         <span className="text-muted-foreground">{feature}</span>
                       </li>
                     ))}
@@ -294,9 +343,13 @@ const ProjectDetail = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="space-y-4"
+              className="space-y-6"
             >
-              <h2 className="text-3xl font-bold">{isFrench ? "Démo vidéo" : "Video Demo"}</h2>
+              <SectionHeading
+                eyebrow={isFrench ? "En action" : "In action"}
+                title={isFrench ? "Démo " : "Video "}
+                accent={isFrench ? "vidéo." : "demo."}
+              />
               <div className="relative rounded-2xl overflow-hidden card-soft">
                 <video
                   controls
@@ -309,6 +362,27 @@ const ProjectDetail = () => {
               </div>
             </motion.div>
             )}
+
+            {/* Next project */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <button
+                onClick={() => navigate(`/project/${nextProject.id}`)}
+                className="group w-full flex items-center justify-between gap-6 p-6 sm:p-8 rounded-2xl card-soft card-interactive text-left"
+              >
+                <div>
+                  <p className="eyebrow mb-2">{isFrench ? "Projet suivant" : "Next project"}</p>
+                  <p className="text-2xl sm:text-3xl font-bold">{nextProject.title}</p>
+                </div>
+                <div className="shrink-0 h-12 w-12 rounded-full tint-cool flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                  <ArrowUpRight className="h-5 w-5 text-primary" />
+                </div>
+              </button>
+            </motion.div>
           </div>
         </motion.div>
       </main>

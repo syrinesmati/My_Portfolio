@@ -324,12 +324,35 @@ export const projects: Project[] = [
       "An AI-powered restaurant analytics platform providing real-time visibility into table occupancy, customer wait times, and floor activity.",
     fullDescription:
       "DinePilot is a smart restaurant floor monitoring system that leverages advanced computer vision to transform how restaurants manage their operations. Using YOLOv11x for object detection and YOLOv8x-pose for pose and occupancy estimation, the system provides real-time insights into table status, customer flow, and floor activity. The custom React dashboard features color-coded status indicators and intelligent detection of personal belongings to automatically mark tables as reserved. Integrated automated monthly reports with predictive analytics enable proactive planning and resource optimization.",
+    fullDescriptionSections: [
+      {
+        heading: "The Challenge",
+        body: "Restaurant managers typically track table turnover, wait times, and staffing by gut feel — manual walkthroughs or static CCTV footage, with no running record of what actually happened on the floor. DinePilot turns an existing camera feed into a live operational picture: who's a customer versus staff, how long tables and zones stay occupied, how long people wait, and where bottlenecks form.",
+      },
+      {
+        heading: "Computer Vision Pipeline",
+        body: "A YOLOv11x detector locates people in every frame, and a DeepSORT-style tracker assigns each one a persistent ID so they're followed across frames instead of re-detected from scratch. A YOLOv8x-pose model estimates body pose, combined with an HSV-based uniform-color heuristic to tell staff apart from customers — a distinction that feeds every downstream metric, since a server passing through a zone shouldn't count the same as a table of diners.",
+      },
+      {
+        heading: "Zone & Wait-Time Analytics",
+        body: "Configurable polygonal zones — entrance, waiting area, dining room, VIP section, prayer room — each track live occupancy and dwell time. Paired with the staff/customer split, this produces queue wait-time estimates, staff idle-time and movement patterns, and a live customer-to-staff ratio: the numbers a manager needs to decide when to open another section or call in more staff.",
+      },
+      {
+        heading: "System & Dashboards",
+        body: "A FastAPI backend exposes detection, tracking, and analytics over REST, WebSocket, and MJPEG endpoints for live video. It drives two dashboards: an operational view with color-coded table and zone status, and a standalone 'Command Center' built as a dependency-free HTML/CSS/JS app that deploys independently and can point at any backend URL. Automated reports with predictive analytics export to SQLite, JSON, or Excel for offline review.",
+      },
+      {
+        heading: "Training & Extensibility",
+        body: "The detection model isn't fixed at deploy time: a CLI script and matching API endpoints fine-tune YOLO on footage pseudo-labeled directly from a venue's own cameras, and the backend hot-swaps the active model weights at runtime with no restart. A UAE-localization layer adds prayer-time-aware period labeling and a Ramadan operating mode.",
+      },
+    ],
     image: logoDinepilotImage,
     screenshots: [logoDinepilotImage, dinepilotImage, dinepilotImage1],
     videoPath: dinepilotVideo,
     tags: ["React", "YOLOv11x", "YOLOv8x-pose", "Computer Vision", "Real-time Analytics"],
     category: ["ai"],
     featured: true,
+    githubUrl: "https://github.com/syrinesmati/DinePilot",
     award: {
       emoji: "🥈",
       title: "2nd Place - Smart Service Challenge",
@@ -344,17 +367,107 @@ export const projects: Project[] = [
       "Color-coded status indicators",
       "Automated monthly reports with predictive analytics",
     ],
+    featureGroups: [
+      {
+        heading: "Computer Vision",
+        items: [
+          "YOLOv11x person detection with a DeepSORT-style tracker maintaining persistent IDs across frames",
+          "YOLOv8x-pose estimation combined with an HSV uniform-color heuristic to separate staff from customers",
+          "Footfall counting via virtual entry/exit line crossings",
+        ],
+      },
+      {
+        heading: "Analytics",
+        items: [
+          "Per-zone occupancy and dwell time across entrance, waiting area, dining room, VIP, and prayer room zones",
+          "Queue wait-time estimates, staff idle-time and movement tracking, and a live customer-to-staff ratio",
+          "Heatmaps, crowd-density maps, and behavior profiling for deeper floor analysis",
+          "SQLite, JSON, and Excel export of all collected analytics",
+        ],
+      },
+      {
+        heading: "Platform",
+        items: [
+          "FastAPI backend exposing REST and WebSocket/MJPEG endpoints for live detection and streaming",
+          "Two dashboards: a color-coded operational view and a standalone, independently deployable Command Center",
+          "Automated reports with predictive analytics for proactive floor planning",
+        ],
+      },
+      {
+        heading: "Training & Localization",
+        items: [
+          "CLI- and API-driven fine-tuning pipeline trained on footage pseudo-labeled directly from a venue's own cameras, with runtime hot-swap of model weights",
+          "UAE-localization layer with prayer-time-aware period labeling and a Ramadan operating mode",
+        ],
+      },
+    ],
     fr: {
       description:
         "Plateforme d'analyse pour restaurant propulsée par l'IA, avec vision en temps réel de l'occupation des tables et du flux client.",
       fullDescription:
         "DinePilot est un système intelligent de supervision de salle pour la restauration. Il utilise la vision par ordinateur pour détecter les objets, estimer l'occupation et produire des indicateurs en temps réel. Le dashboard React affiche des statuts visuels clairs et des rapports automatisés avec des insights prédictifs.",
+      fullDescriptionSections: [
+        {
+          heading: "Le défi",
+          body: "Les responsables de restaurant évaluent généralement la rotation des tables, les temps d'attente et les besoins en personnel à l'instinct — des rondes manuelles ou des images de vidéosurveillance statiques, sans aucune trace exploitable de ce qui se passe réellement en salle. DinePilot transforme un flux caméra existant en une vision opérationnelle en direct : qui est client ou membre du personnel, combien de temps les tables et zones restent occupées, combien de temps les clients attendent, et où se forment les points de blocage.",
+        },
+        {
+          heading: "Pipeline de vision par ordinateur",
+          body: "Un détecteur YOLOv11x localise les personnes dans chaque image, et un tracker de type DeepSORT attribue à chacune un identifiant persistant pour la suivre d'une image à l'autre plutôt que de la redétecter à chaque fois. Un modèle YOLOv8x-pose estime la posture du corps, combiné à une heuristique de couleur HSV pour distinguer le personnel des clients — une distinction qui alimente chaque indicateur en aval, puisqu'un serveur traversant une zone ne doit pas compter comme une table de clients attablés.",
+        },
+        {
+          heading: "Analyse des zones et des temps d'attente",
+          body: "Des zones polygonales configurables — entrée, zone d'attente, salle, section VIP, salle de prière — suivent chacune l'occupation et le temps de présence en direct. Combiné à la distinction personnel/client, cela produit des estimations de temps d'attente en file, le suivi des temps d'inactivité et des déplacements du personnel, et un ratio client/personnel en direct : les chiffres dont un responsable a besoin pour décider d'ouvrir une section supplémentaire ou d'appeler du renfort.",
+        },
+        {
+          heading: "Système et tableaux de bord",
+          body: "Un backend FastAPI expose la détection, le suivi et les analyses via des points d'accès REST, WebSocket et MJPEG pour la vidéo en direct. Il alimente deux tableaux de bord : une vue opérationnelle avec statuts de tables et de zones par code couleur, et un 'Command Center' autonome construit en HTML/CSS/JS sans dépendance, déployable indépendamment et pouvant pointer vers n'importe quelle URL de backend. Des rapports automatisés avec analytique prédictive s'exportent en SQLite, JSON ou Excel pour une relecture hors ligne.",
+        },
+        {
+          heading: "Entraînement et extensibilité",
+          body: "Le modèle de détection n'est pas figé au déploiement : un script CLI et des points d'accès API dédiés permettent de réentraîner YOLO sur des images pseudo-annotées directement à partir des caméras d'un établissement, et le backend permute le modèle actif à chaud, sans redémarrage. Une couche de localisation EAU ajoute un étiquetage des périodes tenant compte des horaires de prière et un mode de fonctionnement pour le Ramadan.",
+        },
+      ],
       features: [
         "Détection en temps réel de l'occupation des tables",
         "Détection d'objets avec YOLOv11x",
         "Estimation de pose avec YOLOv8x-pose",
         "Indicateurs visuels par code couleur",
         "Rapports mensuels automatisés et analytiques",
+      ],
+      featureGroups: [
+        {
+          heading: "Vision par ordinateur",
+          items: [
+            "Détection de personnes YOLOv11x avec un tracker de type DeepSORT maintenant des identifiants persistants entre les images",
+            "Estimation de pose YOLOv8x-pose combinée à une heuristique de couleur HSV pour distinguer le personnel des clients",
+            "Comptage de fréquentation via des franchissements de lignes d'entrée/sortie virtuelles",
+          ],
+        },
+        {
+          heading: "Analytique",
+          items: [
+            "Occupation et temps de présence par zone (entrée, attente, salle, VIP, salle de prière)",
+            "Estimations de temps d'attente en file, suivi des temps d'inactivité et déplacements du personnel, et ratio client/personnel en direct",
+            "Cartes de chaleur, densité de foule et profilage comportemental pour une analyse plus fine de la salle",
+            "Export des analyses en SQLite, JSON et Excel",
+          ],
+        },
+        {
+          heading: "Plateforme",
+          items: [
+            "Backend FastAPI exposant des points d'accès REST et WebSocket/MJPEG pour la détection et le streaming en direct",
+            "Deux tableaux de bord : une vue opérationnelle par code couleur et un Command Center autonome déployable indépendamment",
+            "Rapports automatisés avec analytique prédictive pour une planification proactive de la salle",
+          ],
+        },
+        {
+          heading: "Entraînement et localisation",
+          items: [
+            "Pipeline de réentraînement piloté par CLI et API, entraîné sur des images pseudo-annotées directement à partir des caméras d'un établissement, avec permutation à chaud des poids du modèle",
+            "Couche de localisation EAU avec étiquetage des périodes selon les horaires de prière et mode Ramadan",
+          ],
+        },
       ],
       award: {
         title: "2e place - Smart Service Challenge",
@@ -1108,39 +1221,6 @@ export const projects: Project[] = [
         "Communication d'équipe et assignation",
         "Stockage relationnel avec PostgreSQL",
         "Intégration Supabase",
-      ],
-    },
-  },
-  {
-    id: "rescuelink",
-    title: "RescueLink",
-    description:
-      "An emergency response application that connects people in need with nearby helpers and emergency services in real-time.",
-    fullDescription:
-      "RescueLink is a life-saving platform that leverages real-time location data to connect people in emergency situations with the nearest help. Whether it's medical emergencies, accidents, or disasters, the app instantly notifies nearby verified responders and emergency services. Built with modern web technologies for cross-platform compatibility, it includes features like real-time GPS tracking, emergency contact alerts, and direct communication channels with first responders.",
-    image: rescuelinkImage,
-    screenshots: [rescuelinkImage],
-    videoPath: rescuelinkVideo,
-    tags: ["React", "NestJS", "MySQL", "WebSockets", "GraphQL"],
-    category: ["fullstack"],
-    features: [
-      "Real-time emergency alerts",
-      "GPS-based helper matching",
-      "Direct emergency service connection",
-      "Emergency contact notifications",
-      "Verified responder network",
-    ],
-    fr: {
-      description:
-        "Application d'urgence qui connecte les personnes en détresse aux secours à proximité en temps réel.",
-      fullDescription:
-        "RescueLink exploite la géolocalisation temps réel pour orienter rapidement les demandes d'aide vers les bons intervenants. La plateforme permet des alertes immédiates, le suivi GPS et des canaux de communication directs avec les secours.",
-      features: [
-        "Alertes d'urgence en temps réel",
-        "Mise en relation basée GPS",
-        "Connexion directe aux services d'urgence",
-        "Notifications des contacts d'urgence",
-        "Réseau d'intervenants vérifiés",
       ],
     },
   },
